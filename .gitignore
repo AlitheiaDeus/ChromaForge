@@ -1,0 +1,12 @@
+# Agent landmarks & local scratchpads
+AGENTS.md
+GEMINI.md
+internal/
+scratch/
+
+# Editor & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
