@@ -1,32 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ChromaForge — Minimalist Color Palette Studio</title>
+  <title>CHROMA//FORGE — Industrial Color Smelter & Drafting Console</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
+            display: ['"Chakra Petch"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
-            studio: {
-              bg: '#111216',
-              bar: '#181A20',
-              panel: '#1F222B',
-              hover: '#272B36',
-              border: '#2A2E3B',
-              text: '#F3F4F6',
-              muted: '#8E94A5',
-            }
+            soot: '#110F0E',
+            kiln: '#1E1916',
+            recess: '#171311',
+            iron: '#332D29',
+            bevel: '#473E39',
+            ash: '#EAE6E1',
+            slag: '#9A9087',
+            molten: '#EA580C',
+            amberheat: '#F59E0B',
           }
         }
       }
@@ -36,78 +35,202 @@
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
+      border-radius: 2px;
     }
 
     html, body {
       margin: 0;
       padding: 0;
-      background-color: #111216;
-      color: #F3F4F6;
-      font-family: 'Inter', system-ui, sans-serif;
+      background-color: #110F0E;
+      color: #EAE6E1;
+      font-family: 'JetBrains Mono', monospace;
       overflow-x: hidden;
       height: 100%;
     }
 
-    /* Custom subtle studio scrollbars */
+    /* Heavy Industrial Scrollbars */
     ::-webkit-scrollbar {
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: #14161B;
+      background: #110F0E;
+      border-left: 1px solid #332D29;
+      border-top: 1px solid #332D29;
     }
     ::-webkit-scrollbar-thumb {
-      background: #2D3240;
-      border-radius: 9999px;
+      background: #332D29;
+      border: 1px solid #473E39;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #3F4659;
+      background: #EA580C;
     }
 
-    /* Custom range sliders for HSL popover */
-    input[type="range"].chroma-slider {
+    /* Recessed Kiln-Brick & Iron Plate Surfaces */
+    .iron-plate {
+      background-color: #1E1916;
+      border: 2px solid #332D29;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), inset 0 2px 6px rgba(0, 0, 0, 0.85);
+      position: relative;
+    }
+
+    .kiln-recess {
+      background-color: #171311;
+      border: 2px solid #332D29;
+      box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.92);
+    }
+
+    /* Corner Rivets Utility */
+    .riveted {
+      position: relative;
+    }
+    .riveted::before,
+    .riveted::after {
+      content: "";
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #473E39;
+      border: 1px solid #080706;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .riveted::before {
+      top: 4px;
+      left: 4px;
+      box-shadow: calc(100% - 8px) 0 0 #473E39;
+    }
+    .riveted::after {
+      bottom: 4px;
+      left: 4px;
+      box-shadow: 0 0 0 #473E39;
+    }
+
+    /* Tactile Mechanical Buttons */
+    .mech-btn {
+      background-color: #1E1916;
+      color: #EAE6E1;
+      border: 2px solid #332D29;
+      border-top-color: #473E39;
+      box-shadow: 0 3px 0 #080706;
+      transition: transform 0.06s ease, box-shadow 0.06s ease, border-color 0.12s ease, background-color 0.12s ease;
+      cursor: pointer;
+    }
+    .mech-btn:hover:not(:disabled) {
+      background-color: #28211D;
+      border-color: #574C46;
+      color: #FFFFFF;
+    }
+    .mech-btn:active:not(:disabled) {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #080706;
+    }
+    .mech-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* Active Switch State (Molten Indicator) */
+    .mech-switch-active {
+      background-color: #261B14 !important;
+      border-color: #EA580C !important;
+      color: #F59E0B !important;
+      box-shadow: inset 0 0 8px rgba(234, 88, 12, 0.25), 0 1px 0 #080706 !important;
+      transform: translateY(1px);
+    }
+
+    /* Primary Molten Ignite CTA */
+    .ignite-btn {
+      background: linear-gradient(180deg, #EA580C 0%, #B83B06 100%);
+      color: #110F0E;
+      font-weight: 700;
+      border: 2px solid #F59E0B;
+      box-shadow: 0 3px 0 #080706, 0 0 12px rgba(234, 88, 12, 0.35);
+      transition: transform 0.06s ease, box-shadow 0.15s ease, filter 0.15s ease;
+      cursor: pointer;
+    }
+    .ignite-btn:hover {
+      background: linear-gradient(180deg, #F59E0B 0%, #EA580C 100%);
+      box-shadow: 0 3px 0 #080706, 0 0 20px rgba(245, 158, 11, 0.65);
+    }
+    .ignite-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #080706, 0 0 10px rgba(234, 88, 12, 0.45);
+    }
+
+    /* Drafting Table Ruler Background Grid */
+    .drafting-surface {
+      background-color: #110F0E;
+      background-image:
+        linear-gradient(to right, rgba(51, 45, 41, 0.22) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(51, 45, 41, 0.22) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Top Horizontal Ruler Ticks */
+    .ruler-top {
+      background-color: #171311;
+      background-image: repeating-linear-gradient(
+        to right,
+        #332D29 0px,
+        #332D29 1px,
+        transparent 1px,
+        transparent 12px
+      );
+    }
+
+    /* Left Vertical Ruler Ticks */
+    .ruler-left {
+      background-color: #171311;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        #332D29 0px,
+        #332D29 1px,
+        transparent 1px,
+        transparent 12px
+      );
+    }
+
+    /* Industrial Range Sliders */
+    input[type="range"].smelter-slider {
       -webkit-appearance: none;
       appearance: none;
       width: 100%;
-      height: 10px;
-      border-radius: 9999px;
+      height: 12px;
       outline: none;
       cursor: pointer;
-      border: 1px solid rgba(255, 255, 255, 0.14);
+      border: 2px solid #332D29;
+      background: #110F0E;
     }
-    input[type="range"].chroma-slider::-webkit-slider-thumb {
+    input[type="range"].smelter-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: #FFFFFF;
-      border: 2px solid #111216;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+      width: 14px;
+      height: 20px;
+      background: #EAE6E1;
+      border: 2px solid #110F0E;
+      box-shadow: 0 2px 0 #080706;
       cursor: pointer;
-      transition: transform 0.1s ease;
     }
-    input[type="range"].chroma-slider::-webkit-slider-thumb:hover {
-      transform: scale(1.15);
+    input[type="range"].smelter-slider::-webkit-slider-thumb:hover {
+      background: #F59E0B;
     }
-    input[type="range"].chroma-slider::-moz-range-thumb {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: #FFFFFF;
-      border: 2px solid #111216;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    input[type="range"].smelter-slider::-moz-range-thumb {
+      width: 14px;
+      height: 20px;
+      background: #EAE6E1;
+      border: 2px solid #110F0E;
+      box-shadow: 0 2px 0 #080706;
       cursor: pointer;
     }
 
-    /* Drag & Drop visual cue */
+    /* Drag & Drop Target Highlight */
     .drag-over-target {
-      outline: 2px dashed rgba(255, 255, 255, 0.85) !important;
-      outline-offset: -4px;
-      transform: scale(0.985);
+      outline: 3px dashed #F59E0B !important;
+      outline-offset: -5px;
     }
 
-    /* Panning cursor */
+    /* Panning Cursors */
     .pan-grab {
       cursor: grab;
     }
@@ -116,19 +239,15 @@
       user-select: none;
     }
 
-    /* Subtle pulse for spirit orbs */
-    @keyframes floatSlow {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-6px); }
-    }
-    .animate-float {
-      animation: floatSlow 4s ease-in-out infinite;
+    /*Locked Swatch Molten Indicator */
+    .swatch-locked {
+      box-shadow: inset 0 0 0 2px #EA580C, 0 4px 10px rgba(0, 0, 0, 0.85) !important;
     }
   </style>
 </head>
-<body class="flex flex-col h-screen select-none bg-studio-bg text-studio-text">
+<body class="flex flex-col h-screen select-none bg-soot text-ash">
 
-  <!-- SVG Color Vision Deficiency (CVD) Filters -->
+  <!-- SVG Color Vision Deficiency (CVD) Optical Filters -->
   <svg class="hidden" aria-hidden="true">
     <defs>
       <filter id="cvd-protanopia">
@@ -155,323 +274,371 @@
     </defs>
   </svg>
 
-  <!-- TOP STUDIO HEADER -->
-  <header class="bg-studio-bar border-b border-studio-border px-3 sm:px-4 py-2.5 flex flex-wrap items-center justify-between gap-2.5 z-30 shrink-0">
-    <!-- Left: Brand + Primary Actions -->
-    <div class="flex items-center gap-2 sm:gap-3">
-      <!-- Logo -->
-      <div class="flex items-center gap-2 pr-1">
-        <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-amber-400 p-[1.5px] shadow-sm">
-          <div class="w-full h-full bg-studio-bar rounded-[6.5px] flex items-center justify-center">
-            <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <polygon points="12 2 21 7 21 17 12 22 3 17 3 7 12 2"></polygon>
-              <circle cx="12" cy="12" r="3"></circle>
-            </svg>
+  <!-- ===================================================================== -->
+  <!-- 1. TOP GANTRY CONTROL PLATE                                           -->
+  <!-- ===================================================================== -->
+  <header class="iron-plate border-b-2 border-iron px-3 sm:px-4 py-2 flex flex-wrap items-center justify-between gap-2.5 z-30 shrink-0">
+    <!-- Left: Foundry Brand + Primary Controls -->
+    <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+      <!-- Brand Stamp -->
+      <div class="flex items-center gap-2.5 pr-2 border-r-2 border-iron">
+        <div class="w-8 h-8 kiln-recess flex items-center justify-center border-2 border-molten">
+          <svg class="w-4 h-4 text-amberheat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+            <path d="M4 20h16"/>
+            <path d="M6 16h12l1-9H5l1 9Z"/>
+            <path d="M9 7V4h6v3"/>
+          </svg>
+        </div>
+        <div>
+          <div class="font-display font-bold tracking-wider text-sm sm:text-base text-ash leading-none">
+            CHROMA<span class="text-molten">//</span>FORGE
+          </div>
+          <div class="text-[9px] font-mono text-slag tracking-widest uppercase mt-0.5">
+            SMELTER UNIT MK-IV
           </div>
         </div>
-        <span class="font-semibold tracking-tight text-sm sm:text-base text-white hidden sm:inline">ChromaForge</span>
       </div>
 
-      <!-- Generate Button -->
-      <button id="btn-generate" title="Generate new unlocked colors (Spacebar)"
-        class="flex items-center gap-2 bg-white text-studio-bg hover:bg-gray-100 active:scale-[0.98] font-medium text-xs sm:text-sm px-3.5 py-1.5 rounded-lg shadow-sm transition cursor-pointer">
-        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-          <path d="M3 3v5h5"/>
-          <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
-          <path d="M16 16h5v5"/>
+      <!-- Crucible Slot Counter (N-Colors) -->
+      <div class="flex items-center kiln-recess p-0.5" title="Active Crucible Slot Count (1–24)">
+        <span class="text-[10px] font-mono text-slag uppercase px-2 hidden sm:inline">SLOTS</span>
+        <button id="btn-count-dec" aria-label="Decrease slot count"
+          class="mech-btn w-7 h-7 flex items-center justify-center font-mono font-bold text-xs">
+          -
+        </button>
+        <div id="count-display" class="px-2.5 text-xs font-mono font-bold text-amberheat min-w-[2.4rem] text-center">
+          07
+        </div>
+        <button id="btn-count-inc" aria-label="Increase slot count"
+          class="mech-btn w-7 h-7 flex items-center justify-center font-mono font-bold text-xs">
+          +
+        </button>
+      </div>
+
+      <!-- IGNITE FORGE Primary CTA -->
+      <button id="btn-generate" title="Smelt new unlocked colors (Spacebar)"
+        class="ignite-btn px-3.5 py-1.5 text-xs font-display tracking-wider uppercase flex items-center gap-2">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2c1.5 3.5 4 5.5 4 9a4 4 0 1 1-8 0c0-1.5.5-3 1.5-4.5C9.5 8 10.5 9 11 9c0-2.5.5-4.5 1-7z"/>
+          <path d="M12 22a7 7 0 0 0 7-7c0-3.5-2-6.5-5-8.5.5 2 0 3.5-1 4.5-.5-2-2-3.5-3-5-2.5 2-5 5-5 9a7 7 0 0 0 7 7z" fill-opacity="0.45"/>
         </svg>
-        <span>Generate</span>
-        <kbd class="hidden md:inline-block text-[10px] font-mono bg-black/10 text-black/70 px-1.5 py-0.5 rounded">Space</kbd>
+        <span>IGNITE FORGE</span>
+        <kbd class="hidden md:inline-block text-[10px] font-mono bg-soot/85 text-amberheat px-1.5 py-0.5 border border-iron">SPACE</kbd>
       </button>
 
-      <!-- Undo / Redo -->
-      <div class="flex items-center bg-studio-panel border border-studio-border rounded-lg p-0.5">
+      <!-- Undo / Redo Mechanical Keys -->
+      <div class="flex items-center gap-1">
         <button id="btn-undo" title="Undo (Ctrl+Z)" disabled
-          class="p-1.5 rounded-md text-studio-muted hover:text-white hover:bg-studio-hover disabled:opacity-35 disabled:pointer-events-none transition cursor-pointer">
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          class="mech-btn px-2 py-1.5 text-[11px] font-mono flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
             <path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/>
           </svg>
+          <span class="hidden xl:inline">UNDO</span>
         </button>
         <button id="btn-redo" title="Redo (Ctrl+Y)" disabled
-          class="p-1.5 rounded-md text-studio-muted hover:text-white hover:bg-studio-hover disabled:opacity-35 disabled:pointer-events-none transition cursor-pointer">
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          class="mech-btn px-2 py-1.5 text-[11px] font-mono flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
             <path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/>
           </svg>
-        </button>
-      </div>
-
-      <!-- N-Count Stepper -->
-      <div class="flex items-center bg-studio-panel border border-studio-border rounded-lg p-0.5" title="Number of colors in palette (1–24)">
-        <button id="btn-count-dec" aria-label="Decrease color count"
-          class="w-7 h-7 flex items-center justify-center rounded-md text-studio-muted hover:text-white hover:bg-studio-hover active:scale-95 transition cursor-pointer font-medium">
-          −
-        </button>
-        <div class="px-2 text-xs font-mono font-semibold text-white min-w-[2.4rem] text-center" id="count-display">7</div>
-        <button id="btn-count-inc" aria-label="Increase color count"
-          class="w-7 h-7 flex items-center justify-center rounded-md text-studio-muted hover:text-white hover:bg-studio-hover active:scale-95 transition cursor-pointer font-medium">
-          +
+          <span class="hidden xl:inline">REDO</span>
         </button>
       </div>
     </div>
 
-    <!-- Center: 7 View Mode Switcher -->
-    <nav id="view-switcher" aria-label="View Modes"
-      class="flex items-center bg-studio-panel border border-studio-border rounded-lg p-0.5 overflow-x-auto max-w-full order-3 lg:order-2">
-      <!-- Populated dynamically -->
-    </nav>
-
-    <!-- Right: CVD Simulator & Palettes Drawer -->
-    <div class="flex items-center gap-2 order-2 lg:order-3">
-      <!-- CVD Filter Selector -->
-      <div class="relative flex items-center">
-        <select id="cvd-select" title="Color Vision Deficiency Simulation"
-          class="bg-studio-panel border border-studio-border text-xs text-studio-text rounded-lg pl-2.5 pr-7 py-1.5 focus:outline-none focus:border-white/30 cursor-pointer appearance-none">
-          <option value="none">Vision: Normal</option>
-          <option value="protanopia">Protanopia</option>
-          <option value="deuteranopia">Deuteranopia</option>
-          <option value="tritanopia">Tritanopia</option>
+    <!-- Right: Perceptual Guard, Optical CVD Filter & Vault Trigger -->
+    <div class="flex flex-wrap items-center gap-2">
+      <!-- Anti-Similarity ΔE Guard Selector -->
+      <div class="kiln-recess px-2 py-1 flex items-center gap-1.5 text-[11px]" title="CIELAB Perceptual Anti-Similarity Guard">
+        <span class="text-slag uppercase hidden sm:inline">GUARD:</span>
+        <select id="guard-select" class="bg-transparent text-ash font-mono text-[11px] focus:outline-none cursor-pointer">
+          <option value="26" class="bg-kiln text-ash">STRICT (ΔE 26)</option>
+          <option value="22" selected class="bg-kiln text-ash">STANDARD (ΔE 22)</option>
+          <option value="14" class="bg-kiln text-ash">RELAXED (ΔE 14)</option>
         </select>
-        <svg class="w-3.5 h-3.5 text-studio-muted pointer-events-none absolute right-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="6 9 12 15 18 9"></polyline>
-        </svg>
       </div>
 
-      <!-- Palettes / Save & Export Drawer Trigger -->
+      <!-- Optical Vision Simulator (CVD) -->
+      <div class="kiln-recess px-2 py-1 flex items-center gap-1.5 text-[11px]" title="Color Vision Deficiency Optical Filter">
+        <span class="text-slag uppercase hidden sm:inline">OPTICS:</span>
+        <select id="cvd-select" class="bg-transparent text-ash font-mono text-[11px] focus:outline-none cursor-pointer">
+          <option value="none" class="bg-kiln text-ash">NORMAL</option>
+          <option value="protanopia" class="bg-kiln text-ash">PROTANOPIA</option>
+          <option value="deuteranopia" class="bg-kiln text-ash">DEUTERANOPIA</option>
+          <option value="tritanopia" class="bg-kiln text-ash">TRITANOPIA</option>
+        </select>
+      </div>
+
+      <!-- Vault / Export Trigger -->
       <button id="btn-open-drawer"
-        class="flex items-center gap-1.5 bg-studio-panel hover:bg-studio-hover border border-studio-border text-xs font-medium text-white px-3 py-1.5 rounded-lg transition cursor-pointer">
-        <svg class="w-3.5 h-3.5 text-studio-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-          <polyline points="17 21 17 13 7 13 7 21"/>
-          <polyline points="7 3 7 8 15 8"/>
+        class="mech-btn px-3 py-1.5 text-xs font-display font-bold tracking-wider uppercase flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5 text-amberheat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <circle cx="12" cy="12" r="4"/>
+          <line x1="12" y1="8" x2="12" y2="4"/>
+          <line x1="12" y1="20" x2="12" y2="16"/>
         </svg>
-        <span>Palettes</span>
+        <span>VAULT // IO</span>
       </button>
     </div>
   </header>
 
-  <!-- EXTERNAL PINNED SWATCHES DOCK -->
-  <section id="pinned-dock" class="bg-studio-bg border-b border-studio-border px-3 sm:px-4 py-1.5 flex items-center justify-between gap-3 shrink-0 z-20">
-    <div class="flex items-center gap-2.5 overflow-x-auto py-0.5 flex-1 min-w-0">
-      <div class="flex items-center gap-1.5 text-[11px] font-medium text-studio-muted shrink-0">
-        <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M16 3a1 1 0 0 1 .117 1.993L16 5v4.764l1.894 3.789a1 1 0 0 1-.764 1.44L17 15h-4v6a1 1 0 0 1-1.993.117L11 21v-6H7a1 1 0 0 1-.993-.883L6 14a1 1 0 0 1 .057-.335l.049-.112L8 9.764V5a1 1 0 0 1-.117-1.993L8 3h8z"/>
-        </svg>
-        <span>Pinned</span>
-        <span id="pinned-count" class="font-mono text-[10px] bg-studio-panel border border-studio-border px-1.5 py-0.2 rounded text-studio-text">0</span>
-      </div>
+  <!-- ===================================================================== -->
+  <!-- 2. MODE MANIFOLD & INGOT RACK (EXTERNAL PINNED DOCK)                  -->
+  <!-- ===================================================================== -->
+  <section class="bg-recess border-b-2 border-iron px-3 sm:px-4 py-1.5 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-2 shrink-0 z-20">
+    <!-- Left: 7 View Mode Selector Switches + Mode Context Controls -->
+    <div class="flex flex-wrap items-center gap-1.5">
+      <span class="text-[10px] font-mono uppercase tracking-widest text-slag mr-1 hidden sm:inline">MANIFOLD:</span>
+      <nav id="view-switcher" aria-label="View Modes" class="flex flex-wrap items-center gap-1">
+        <!-- Populated dynamically -->
+      </nav>
 
-      <div id="pinned-list" class="flex items-center gap-1.5">
-        <!-- Pinned chips injected here -->
+      <!-- Mode-specific auxiliary mechanical controls (Mosaic re-cut, Scatter options, Construct chassis) -->
+      <div id="mode-aux-controls" class="flex items-center gap-1.5 pl-2 border-l-2 border-iron ml-1 empty:hidden">
+        <!-- Populated dynamically per view -->
       </div>
     </div>
 
-    <div id="pinned-actions" class="hidden sm:flex items-center gap-1.5 shrink-0">
-      <button id="btn-load-pinned-to-active" title="Replace unlocked/active palette with pinned swatches"
-        class="text-[11px] text-studio-muted hover:text-white bg-studio-panel hover:bg-studio-hover border border-studio-border px-2 py-1 rounded-md transition cursor-pointer hidden">
-        Use as Palette
-      </button>
-      <button id="btn-clear-pinned" title="Clear all pinned swatches"
-        class="text-[11px] text-studio-muted hover:text-rose-400 px-1.5 py-1 rounded-md transition cursor-pointer hidden">
-        Clear
-      </button>
+    <!-- Right: Recessed Ingot Rack (External Pinned Swatches) -->
+    <div class="kiln-recess px-2.5 py-1 flex items-center justify-between gap-2 min-w-0 lg:max-w-[52%] flex-1">
+      <div class="flex items-center gap-2 overflow-x-auto py-0.5 flex-1 min-w-0">
+        <div class="flex items-center gap-1.5 text-[11px] font-display font-bold tracking-wider text-slag uppercase shrink-0">
+          <span class="w-2 h-2 bg-molten inline-block"></span>
+          <span>INGOT RACK</span>
+          <span id="pinned-count" class="font-mono text-[10px] bg-kiln border border-iron px-1.5 py-0.2 text-amberheat">0</span>
+        </div>
+
+        <div id="pinned-list" class="flex items-center gap-1.5">
+          <!-- Pinned Ingot Swatches Injected Here -->
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1 shrink-0">
+        <button id="btn-load-pinned-to-active" title="Load all pinned ingots into active crucible"
+          class="mech-btn text-[10px] font-mono uppercase px-2 py-0.5 text-amberheat hidden">
+          SMELT ALL
+        </button>
+        <button id="btn-clear-pinned" title="Purge Ingot Rack"
+          class="mech-btn text-[10px] font-mono uppercase px-2 py-0.5 text-slag hover:text-red-400 hidden">
+          PURGE
+        </button>
+      </div>
     </div>
   </section>
 
-  <!-- MAIN INTERACTIVE STAGE -->
-  <main id="stage-wrapper" class="flex-1 relative overflow-hidden flex flex-col bg-studio-bg">
-    <div id="stage" class="w-full h-full relative overflow-hidden">
-      <!-- Active View Mode renders here -->
+  <!-- ===================================================================== -->
+  <!-- 3. CENTRAL FRAMED DRAFTING TABLE VIEWPORT                             -->
+  <!-- ===================================================================== -->
+  <main class="flex-1 relative overflow-hidden flex flex-col bg-soot">
+    <!-- Top Horizontal Calibration Ruler -->
+    <div class="h-4 w-full ruler-top border-b-2 border-iron flex items-center justify-between px-3 text-[9px] font-mono text-slag shrink-0 select-none">
+      <span>000 MM // CRUCIBLE DRAFTING TABLE</span>
+      <span id="status-readout">MODE: 01.GRID // PERCEPTUAL ΔE GUARD ACTIVE</span>
+      <span>SCALE 1:1</span>
+    </div>
+
+    <div class="flex-1 flex overflow-hidden relative">
+      <!-- Left Vertical Calibration Ruler -->
+      <div class="w-4 h-full ruler-left border-r-2 border-iron hidden sm:flex flex-col items-center justify-between py-2 text-[8px] font-mono text-slag shrink-0 select-none">
+        <span>Y+</span>
+        <span>0</span>
+        <span>Y-</span>
+      </div>
+
+      <!-- Active View Stage -->
+      <div id="stage" class="flex-1 h-full relative overflow-hidden drafting-surface">
+        <!-- Active View Mode renders here -->
+      </div>
     </div>
   </main>
 
-  <!-- FLOATING MANUAL COLOR EDITOR POPOVER -->
-  <div id="color-popover" class="hidden fixed z-50 w-72 bg-studio-panel border border-studio-border rounded-xl shadow-2xl p-3.5 text-xs">
-    <div class="flex items-center justify-between mb-2.5">
-      <div class="flex items-center gap-2">
-        <span id="popover-preview" class="w-5 h-5 rounded-md border border-white/20 shadow-inner"></span>
+  <!-- ===================================================================== -->
+  <!-- 4. FLOATING MANUAL SMELTER COLOR TUNER POPOVER                        -->
+  <!-- ===================================================================== -->
+  <div id="color-popover" class="hidden fixed z-50 w-80 iron-plate p-3.5 text-xs shadow-2xl">
+    <div class="flex items-center justify-between pb-2 mb-3 border-b-2 border-iron">
+      <div class="flex items-center gap-2.5">
+        <span id="popover-preview" class="w-6 h-6 border-2 border-iron"></span>
         <div>
-          <div class="font-semibold text-white text-xs" id="popover-slot-label">Slot #1</div>
-          <div class="text-[11px] text-studio-muted truncate max-w-[150px]" id="popover-color-name">~ Cerulean</div>
+          <div class="font-display font-bold text-ash uppercase tracking-wider text-xs" id="popover-slot-label">CRUCIBLE #01</div>
+          <div class="text-[11px] font-mono text-amberheat truncate max-w-[170px]" id="popover-color-name">~ Obsidian</div>
         </div>
       </div>
-      <button id="popover-close" class="text-studio-muted hover:text-white p-1 rounded-lg hover:bg-studio-hover cursor-pointer">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
+      <button id="popover-close" class="mech-btn px-2 py-1 text-xs font-mono">✕</button>
     </div>
 
-    <!-- Hex + Native Picker Row -->
-    <div class="flex items-center gap-2 mb-3">
-      <label class="relative w-9 h-8 rounded-lg overflow-hidden border border-studio-border cursor-pointer shrink-0" title="System Color Picker">
+    <!-- Hex Input + System Color Well + Copy -->
+    <div class="flex items-center gap-2 mb-3.5">
+      <label class="relative w-10 h-8 kiln-recess cursor-pointer shrink-0 overflow-hidden" title="System Optical Picker">
         <input type="color" id="popover-native-picker" class="absolute -inset-2 w-14 h-14 cursor-pointer border-0 p-0" />
       </label>
       <input type="text" id="popover-hex-input" maxlength="7" placeholder="#RRGGBB"
-        class="flex-1 bg-studio-bg border border-studio-border rounded-lg px-2.5 py-1.5 font-mono text-xs text-white uppercase focus:outline-none focus:border-white/40" />
+        class="flex-1 kiln-recess px-2.5 py-1.5 font-mono text-xs text-ash uppercase focus:outline-none focus:border-molten" />
       <button id="popover-copy-btn" title="Copy HEX"
-        class="bg-studio-bg hover:bg-studio-hover border border-studio-border px-2.5 py-1.5 rounded-lg text-studio-muted hover:text-white transition cursor-pointer">
-        Copy
+        class="mech-btn px-2.5 py-1.5 font-mono text-[11px] uppercase">
+        COPY
       </button>
     </div>
 
-    <!-- HSL Sliders -->
-    <div class="space-y-2.5">
+    <!-- HSL Calibration Sliders -->
+    <div class="space-y-3">
       <div>
-        <div class="flex justify-between text-[11px] text-studio-muted mb-1">
-          <span>Hue</span>
-          <span class="font-mono text-studio-text" id="popover-h-val">180°</span>
+        <div class="flex justify-between text-[10px] font-mono uppercase text-slag mb-1">
+          <span>HUE ANGLE</span>
+          <span class="text-ash font-bold" id="popover-h-val">180°</span>
         </div>
-        <input type="range" id="popover-h" min="0" max="360" class="chroma-slider"
+        <input type="range" id="popover-h" min="0" max="360" class="smelter-slider"
           style="background: linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);" />
       </div>
 
       <div>
-        <div class="flex justify-between text-[11px] text-studio-muted mb-1">
-          <span>Saturation</span>
-          <span class="font-mono text-studio-text" id="popover-s-val">70%</span>
+        <div class="flex justify-between text-[10px] font-mono uppercase text-slag mb-1">
+          <span>CHROMA SATURATION</span>
+          <span class="text-ash font-bold" id="popover-s-val">70%</span>
         </div>
-        <input type="range" id="popover-s" min="0" max="100" class="chroma-slider" />
+        <input type="range" id="popover-s" min="0" max="100" class="smelter-slider" />
       </div>
 
       <div>
-        <div class="flex justify-between text-[11px] text-studio-muted mb-1">
-          <span>Lightness</span>
-          <span class="font-mono text-studio-text" id="popover-l-val">50%</span>
+        <div class="flex justify-between text-[10px] font-mono uppercase text-slag mb-1">
+          <span>LUMINANCE</span>
+          <span class="text-ash font-bold" id="popover-l-val">50%</span>
         </div>
-        <input type="range" id="popover-l" min="0" max="100" class="chroma-slider" />
+        <input type="range" id="popover-l" min="0" max="100" class="smelter-slider" />
       </div>
     </div>
   </div>
 
-  <!-- SLIDE-OVER PALETTES & EXPORT DRAWER -->
-  <div id="drawer-backdrop" class="hidden fixed inset-0 bg-black/60 backdrop-blur-[1px] z-40 transition-opacity"></div>
+  <!-- ===================================================================== -->
+  <!-- 5. FOUNDRY VAULT & EXPORT SLIDE-OVER CONSOLE                          -->
+  <!-- ===================================================================== -->
+  <div id="drawer-backdrop" class="hidden fixed inset-0 bg-black/75 z-40"></div>
   <aside id="palettes-drawer"
-    class="fixed top-0 right-0 h-full w-full max-w-md bg-studio-bar border-l border-studio-border z-50 transform translate-x-full transition-transform duration-200 flex flex-col shadow-2xl">
-    <div class="px-4 py-3.5 border-b border-studio-border flex items-center justify-between">
-      <h2 class="font-semibold text-sm text-white">Palettes, Pins & Export</h2>
-      <button id="btn-close-drawer" class="text-studio-muted hover:text-white p-1.5 rounded-lg hover:bg-studio-hover cursor-pointer">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
+    class="fixed top-0 right-0 h-full w-full max-w-md iron-plate border-l-2 border-iron z-50 transform translate-x-full transition-transform duration-150 flex flex-col">
+    <div class="px-4 py-3 border-b-2 border-iron bg-recess flex items-center justify-between">
+      <div>
+        <h2 class="font-display font-bold text-sm uppercase tracking-wider text-ash">FOUNDRY VAULT // DATA IO</h2>
+        <div class="text-[10px] font-mono text-slag">STORAGE, SCHEMATICS & EXPORT</div>
+      </div>
+      <button id="btn-close-drawer" class="mech-btn px-2.5 py-1 text-xs font-mono">CLOSE [ESC]</button>
     </div>
 
-    <div class="flex-1 overflow-y-auto p-4 space-y-6 text-xs">
-      <!-- Save Current Active Palette -->
-      <div class="bg-studio-panel border border-studio-border rounded-xl p-3.5 space-y-2.5">
-        <div class="font-semibold text-white flex items-center justify-between">
-          <span>Save Active Palette</span>
-          <span class="text-[11px] font-mono text-studio-muted" id="drawer-active-count">7 colors</span>
+    <div class="flex-1 overflow-y-auto p-4 space-y-5 text-xs">
+      <!-- Save Active Crucible Palette -->
+      <div class="kiln-recess p-3.5 space-y-2.5">
+        <div class="font-display font-bold uppercase tracking-wider text-ash flex items-center justify-between">
+          <span>STAMP ACTIVE CRUCIBLE</span>
+          <span class="text-[11px] font-mono text-amberheat" id="drawer-active-count">07 SLOTS</span>
         </div>
         <div class="flex gap-2">
-          <input type="text" id="save-active-name" placeholder="e.g., Midnight Studio Theme"
-            class="flex-1 bg-studio-bg border border-studio-border rounded-lg px-3 py-1.5 text-white placeholder-studio-muted focus:outline-none focus:border-white/30" />
-          <button id="btn-save-active"
-            class="bg-white text-studio-bg hover:bg-gray-200 font-medium px-3.5 py-1.5 rounded-lg transition cursor-pointer shrink-0">
-            Save
+          <input type="text" id="save-active-name" placeholder="DESIGNATION (E.G. IRONWORKS UI)"
+            class="flex-1 bg-soot border-2 border-iron px-2.5 py-1.5 font-mono text-xs text-ash placeholder-slag/60 focus:outline-none focus:border-molten" />
+          <button id="btn-save-active" class="ignite-btn px-3.5 py-1.5 text-xs font-display uppercase tracking-wider shrink-0">
+            STAMP
           </button>
         </div>
       </div>
 
-      <!-- Save Pinned Tray -->
-      <div class="bg-studio-panel border border-studio-border rounded-xl p-3.5 space-y-2.5">
-        <div class="font-semibold text-white flex items-center justify-between">
-          <span>Save Pinned Swatches</span>
-          <span class="text-[11px] font-mono text-studio-muted" id="drawer-pinned-count">0 pinned</span>
+      <!-- Save Ingot Rack (Pinned Swatches) -->
+      <div class="kiln-recess p-3.5 space-y-2.5">
+        <div class="font-display font-bold uppercase tracking-wider text-ash flex items-center justify-between">
+          <span>STAMP INGOT RACK (PINS)</span>
+          <span class="text-[11px] font-mono text-amberheat" id="drawer-pinned-count">00 INGOTS</span>
         </div>
         <div class="flex gap-2">
-          <input type="text" id="save-pinned-name" placeholder="e.g., Favorite Accents"
-            class="flex-1 bg-studio-bg border border-studio-border rounded-lg px-3 py-1.5 text-white placeholder-studio-muted focus:outline-none focus:border-white/30" />
-          <button id="btn-save-pinned"
-            class="bg-studio-hover hover:bg-white/15 border border-studio-border text-white font-medium px-3.5 py-1.5 rounded-lg transition cursor-pointer shrink-0">
-            Save Pins
+          <input type="text" id="save-pinned-name" placeholder="DESIGNATION (E.G. MOLTEN ACCENTS)"
+            class="flex-1 bg-soot border-2 border-iron px-2.5 py-1.5 font-mono text-xs text-ash placeholder-slag/60 focus:outline-none focus:border-molten" />
+          <button id="btn-save-pinned" class="mech-btn px-3 py-1.5 text-xs font-display font-bold uppercase tracking-wider shrink-0">
+            SAVE RACK
           </button>
         </div>
       </div>
 
-      <!-- Export & Import -->
-      <div class="bg-studio-panel border border-studio-border rounded-xl p-3.5 space-y-3">
-        <div class="font-semibold text-white">Export & Import</div>
+      <!-- Data Export & Import -->
+      <div class="kiln-recess p-3.5 space-y-3">
+        <div class="font-display font-bold uppercase tracking-wider text-ash">SCHEMATIC EXPORT // IMPORT</div>
         <div class="grid grid-cols-2 gap-2">
-          <button id="btn-export-css"
-            class="bg-studio-bg hover:bg-studio-hover border border-studio-border text-white py-2 px-3 rounded-lg font-medium transition cursor-pointer flex items-center justify-center gap-1.5">
-            <span>Copy CSS Vars</span>
+          <button id="btn-export-css" class="mech-btn py-2 px-3 font-mono text-[11px] uppercase text-center">
+            COPY CSS :ROOT
           </button>
-          <button id="btn-export-json"
-            class="bg-studio-bg hover:bg-studio-hover border border-studio-border text-white py-2 px-3 rounded-lg font-medium transition cursor-pointer flex items-center justify-center gap-1.5">
-            <span>Copy JSON</span>
+          <button id="btn-export-json" class="mech-btn py-2 px-3 font-mono text-[11px] uppercase text-center">
+            COPY JSON ARRAY
           </button>
         </div>
-        <div class="pt-1 border-t border-studio-border/60 space-y-2">
-          <label class="block text-[11px] text-studio-muted">Import Hex Array or JSON (e.g. ["#111216", "#6366F1"])</label>
+        <div class="pt-2 border-t-2 border-iron space-y-2">
+          <label class="block text-[10px] font-mono uppercase text-slag">LOAD HEX MANIFEST OR JSON</label>
           <div class="flex gap-2">
-            <input type="text" id="import-json-input" placeholder='["#1E293B", "#38BDF8", "#F43F5E"]'
-              class="flex-1 bg-studio-bg border border-studio-border rounded-lg px-2.5 py-1.5 font-mono text-[11px] text-white placeholder-studio-muted focus:outline-none focus:border-white/30" />
-            <button id="btn-import-json"
-              class="bg-studio-hover hover:bg-white/15 border border-studio-border text-white px-3 py-1.5 rounded-lg font-medium transition cursor-pointer">
-              Import
+            <input type="text" id="import-json-input" placeholder='["#110F0E", "#1E1916", "#EA580C"]'
+              class="flex-1 bg-soot border-2 border-iron px-2.5 py-1.5 font-mono text-[11px] text-ash placeholder-slag/60 focus:outline-none focus:border-molten" />
+            <button id="btn-import-json" class="mech-btn px-3 py-1.5 font-mono text-[11px] uppercase">
+              LOAD
             </button>
           </div>
         </div>
       </div>
 
-      <!-- Saved Library -->
-      <div class="space-y-2.5">
-        <div class="flex items-center justify-between">
-          <span class="font-semibold text-white">Saved Library</span>
-          <span class="text-[11px] text-studio-muted">Stored locally in browser</span>
+      <!-- Saved Vault Schematics -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between border-b-2 border-iron pb-1">
+          <span class="font-display font-bold uppercase tracking-wider text-ash">LOCAL VAULT ARCHIVE</span>
+          <span class="text-[10px] font-mono text-slag">BROWSER STORAGE</span>
         </div>
         <div id="saved-palettes-list" class="space-y-2">
-          <!-- Saved items injected here -->
+          <!-- Populated dynamically -->
         </div>
       </div>
 
-      <!-- Curated Starter Themes -->
-      <div class="space-y-2.5 pb-4">
-        <span class="font-semibold text-white block">Curated Starter Palettes</span>
+      <!-- Preloaded Foundry Master Schematics -->
+      <div class="space-y-2 pb-4">
+        <div class="border-b-2 border-iron pb-1">
+          <span class="font-display font-bold uppercase tracking-wider text-ash">STANDARD FOUNDRY SCHEMATICS</span>
+        </div>
         <div id="starter-palettes-list" class="space-y-2">
-          <!-- Starter items injected here -->
+          <!-- Populated dynamically -->
         </div>
       </div>
     </div>
   </aside>
 
-  <!-- SUBTLE TOAST FEEDBACK -->
+  <!-- ===================================================================== -->
+  <!-- MECHANICAL STAMP TOAST NOTIFICATION                                   -->
+  <!-- ===================================================================== -->
   <div id="toast"
-    class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-2 transition-all duration-200 bg-studio-panel border border-white/15 text-white text-xs font-medium px-3.5 py-2 rounded-full shadow-xl flex items-center gap-2">
-    <span id="toast-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-    <span id="toast-msg">Copied #FFFFFF</span>
+    class="fixed bottom-5 right-5 z-50 pointer-events-none opacity-0 translate-y-2 transition-all duration-150 iron-plate border-2 border-molten text-ash text-xs font-mono px-3.5 py-2 shadow-2xl flex items-center gap-2.5">
+    <span id="toast-dot" class="w-3 h-3 border border-ash bg-amberheat"></span>
+    <span id="toast-msg">COPIED #FFFFFF</span>
   </div>
 
   <script>
     /**
      * =========================================================================
-     * 1. EMBEDDED EVOCATIVE PIGMENT, ARTIST & X11 COLOR DATABASE (~320 NAMES)
+     * 1. EMBEDDED PIGMENT, METALLURGICAL & X11 COLOR DATABASE (~320 NAMES)
      * =========================================================================
      */
     const COLOR_DATABASE = [
-      // Deep Neutrals & Blacks
-      ["Obsidian", "#0B0C10"], ["Vantablack Mist", "#111216"], ["Carbon Ink", "#16181D"],
-      ["Midnight Slate", "#1E222B"], ["Charcoal", "#2B2F3A"], ["Graphite", "#383E4C"],
-      ["Iron Ore", "#474E5D"], ["Pewter", "#646B7A"], ["Steel Gray", "#7A8291"],
-      ["Silver Mist", "#9BA3B2"], ["Ash Gray", "#B4BBC7"], ["Dove Gray", "#CBD0D8"],
-      ["Cloud White", "#E5E8EE"], ["Alabaster", "#F4F3EF"], ["Ivory", "#FAF8F2"],
-      ["Pure Snow", "#FFFFFF"], ["Pitch Black", "#000000"], ["Onyx", "#141414"],
-      ["Basalt", "#262629"], ["Flint", "#52525B"], ["Zinc", "#71717A"],
-      ["Warm Stone", "#78716C"], ["Taupe", "#8B8178"], ["Greige", "#A8A29E"],
-      ["Sandstone", "#D6CFC7"], ["Parchment", "#EFECE6"], ["Bone", "#E3DEC9"],
+      // Soot, Iron, Slag & Neutrals
+      ["Anthracite Soot", "#110F0E"], ["Kiln Brick", "#1E1916"], ["Cast Iron", "#332D29"],
+      ["Warm Ash", "#EAE6E1"], ["Slag Gray", "#9A9087"], ["Obsidian", "#0B0C10"],
+      ["Carbon Black", "#16181D"], ["Foundry Slate", "#1E222B"], ["Charcoal", "#2B2F3A"],
+      ["Graphite", "#383E4C"], ["Iron Ore", "#474E5D"], ["Pewter", "#646B7A"],
+      ["Steel Gray", "#7A8291"], ["Silver Mist", "#9BA3B2"], ["Ash Gray", "#B4BBC7"],
+      ["Dove Gray", "#CBD0D8"], ["Cloud White", "#E5E8EE"], ["Alabaster", "#F4F3EF"],
+      ["Ivory", "#FAF8F2"], ["Pure Snow", "#FFFFFF"], ["Pitch Black", "#000000"],
+      ["Onyx", "#141414"], ["Basalt", "#262629"], ["Flint", "#52525B"],
+      ["Zinc", "#71717A"], ["Warm Stone", "#78716C"], ["Taupe", "#8B8178"],
+      ["Greige", "#A8A29E"], ["Sandstone", "#D6CFC7"], ["Parchment", "#EFECE6"],
+      ["Bone", "#E3DEC9"], ["Smelter Smoke", "#473E39"],
 
-      // Reds, Scarlets & Crimsons
+      // Molten Reds, Scarlets & Crimsons
       ["Crimson", "#DC143C"], ["Alizarin Crimson", "#E32636"], ["Vermilion", "#E34234"],
       ["Cinnabar", "#E44D2E"], ["Scarlet", "#FF2400"], ["Carmine", "#960018"],
       ["Venetian Red", "#C80815"], ["Ruby", "#E0115F"], ["Garnet", "#733635"],
       ["Oxblood", "#4A0404"], ["Burgundy", "#800020"], ["Maroon", "#6B1D2F"],
-      ["Sangria", "#92000A"], ["Rosewood", "#65000B"], ["Brick Red", "#B22222"],
-      ["Terracotta", "#C85A32"], ["Rust", "#B7410E"], ["Burnt Sienna", "#E97451"],
+      ["Sangria", "#92000A"], ["Rosewood", "#65000B"], ["Firebrick", "#B22222"],
+      ["Terracotta", "#C85A32"], ["Iron Rust", "#B7410E"], ["Burnt Sienna", "#E97451"],
       ["Coral Red", "#FF4040"], ["Salmon", "#FA8072"], ["Blush Rose", "#F4A4A4"],
 
-      // Pinks, Magentas & Roses
+      // Magentas, Rose & Pinks
       ["Amaranth", "#E52B50"], ["Cerise", "#DE3163"], ["Fuchsia", "#FF00FF"],
       ["Magenta", "#D9006C"], ["Hot Pink", "#FF69B4"], ["Flamingo", "#FC8EAC"],
       ["Bubblegum", "#FFC1CC"], ["Carnation", "#FFA6C9"], ["Blossom", "#F9C5D1"],
@@ -479,23 +646,24 @@
       ["Raspberry", "#E30B5D"], ["Hibiscus", "#B6316C"], ["Watermelon", "#FD4659"],
       ["Peony", "#DF7399"], ["Rhodonite", "#C96A88"], ["Mulberry", "#C54B8C"],
 
-      // Oranges, Ambers & Coppers
-      ["Tangerine", "#F28500"], ["Mandarin", "#F37A48"], ["Cadmium Orange", "#ED872D"],
-      ["Pumpkin", "#FF7518"], ["Persimmon", "#EC5800"], ["Apricot", "#FBCEB1"],
-      ["Peach", "#FFE5B4"], ["Cantaloupe", "#FFA62F"], ["Marigold", "#EAA221"],
-      ["Amber", "#FFBF00"], ["Copper", "#B87333"], ["Bronze", "#CD7F32"],
-      ["Cinnamon", "#D2691E"], ["Raw Sienna", "#D68A59"], ["Ochre", "#CC7722"],
-      ["Papaya", "#FFEFD5"], ["Marmalade", "#D16002"], ["Flame", "#E25822"],
+      // Molten Oranges, Ambers & Coppers
+      ["Molten Slag", "#EA580C"], ["Forge Amber", "#F59E0B"], ["Tangerine", "#F28500"],
+      ["Mandarin", "#F37A48"], ["Cadmium Orange", "#ED872D"], ["Pumpkin", "#FF7518"],
+      ["Persimmon", "#EC5800"], ["Apricot", "#FBCEB1"], ["Peach", "#FFE5B4"],
+      ["Cantaloupe", "#FFA62F"], ["Marigold", "#EAA221"], ["Amber", "#FFBF00"],
+      ["Smelted Copper", "#B87333"], ["Cast Bronze", "#CD7F32"], ["Cinnamon", "#D2691E"],
+      ["Raw Sienna", "#D68A59"], ["Ochre", "#CC7722"], ["Papaya", "#FFEFD5"],
+      ["Marmalade", "#D16002"], ["Furnace Flame", "#E25822"],
 
-      // Yellows, Golds & Chartreuse
+      // Yellows, Golds & Brass
       ["Cadmium Yellow", "#FFF600"], ["Lemon", "#FFF44F"], ["Canary", "#FFEF00"],
       ["Saffron", "#F4C430"], ["Gamboge", "#E49B0F"], ["Aureolin", "#FDEE00"],
-      ["Gold", "#FFD700"], ["Honey", "#EB9605"], ["Mustard", "#FFDB58"],
+      ["Bullion Gold", "#FFD700"], ["Honey", "#EB9605"], ["Mustard", "#FFDB58"],
       ["Dandelion", "#F0E130"], ["Buttercup", "#F3E5AB"], ["Cream", "#FFFDD0"],
-      ["Flax", "#EEDC82"], ["Brass", "#B5A642"], ["Citrine", "#E4D00A"],
+      ["Flax", "#EEDC82"], ["Tarnished Brass", "#B5A642"], ["Citrine", "#E4D00A"],
       ["Sulfur", "#E8E838"], ["Chartreuse", "#7FFF00"], ["Electric Lime", "#CCFF00"],
 
-      // Greens, Emeralds & Olives
+      // Greens, Patinas & Emeralds
       ["Viridian", "#40826D"], ["Emerald", "#50C878"], ["Malachite", "#0BDA51"],
       ["Jade", "#00A86B"], ["Celadon", "#ACE1AF"], ["Mint", "#98FF98"],
       ["Seafoam", "#93E9BE"], ["Pistachio", "#93C572"], ["Sage", "#8A9A5B"],
@@ -504,7 +672,7 @@
       ["Olive", "#808000"], ["Olive Drab", "#6B8E23"], ["Khaki", "#C3B091"],
       ["Avocado", "#568203"], ["Kelly Green", "#4CBB17"], ["Shamrock", "#009E60"],
       ["Spring Green", "#00FF7F"], ["Meadow", "#68B968"], ["Absinthe", "#7FDD4C"],
-      ["Eucalyptus", "#44D7A8"], ["Verdigris", "#43B3AE"], ["Lichen", "#8A9A86"],
+      ["Eucalyptus", "#44D7A8"], ["Copper Verdigris", "#43B3AE"], ["Lichen", "#8A9A86"],
 
       // Cyans, Teals & Aquas
       ["Cyan", "#00FFFF"], ["Aqua", "#00E5EE"], ["Turquoise", "#40E0D0"],
@@ -513,17 +681,17 @@
       ["Ice Blue", "#D6ECEF"], ["Robin Egg", "#00CCCC"], ["Cerulean Frost", "#6D9BC3"],
       ["Pacific Blue", "#1CA9C9"], ["Capri", "#00BFFF"], ["Aegean", "#1F456E"],
 
-      // Blues, Cobalts & Indigos
+      // Blues, Tempered Steels & Cobalts
       ["Cobalt Blue", "#0047AB"], ["Ultramarine", "#120A8F"], ["Prussian Blue", "#003153"],
       ["Cerulean", "#007BA7"], ["Sapphire", "#0F52BA"], ["Lapis Lazuli", "#26619C"],
       ["Indigo", "#4B0082"], ["Navy", "#000080"], ["Midnight Blue", "#191970"],
       ["Royal Blue", "#4169E1"], ["Cornflower", "#6495ED"], ["Periwinkle", "#CCCCFF"],
       ["Sky Blue", "#87CEEB"], ["Baby Blue", "#89CFF0"], ["Powder Blue", "#B0E0E6"],
-      ["Steel Blue", "#4682B4"], ["Denim", "#1560BD"], ["Azure", "#007FFF"],
+      ["Tempered Steel", "#4682B4"], ["Denim", "#1560BD"], ["Azure", "#007FFF"],
       ["Dodger Blue", "#1E90FF"], ["Electric Blue", "#7DF9FF"], ["Yale Blue", "#0F4D92"],
       ["Delft Blue", "#1F305E"], ["Slate Blue", "#6A5ACD"], ["Dusk Blue", "#47597E"],
 
-      // Violets, Purples & Plums
+      // Violets & Plums
       ["Tyrian Purple", "#66023C"], ["Violet", "#8F00FF"], ["Amethyst", "#9966CC"],
       ["Lavender", "#E6E6FA"], ["Lilac", "#C8A2C8"], ["Wisteria", "#C9A0DC"],
       ["Heliotrope", "#DF73FF"], ["Plum", "#8E4585"], ["Eggplant", "#614051"],
@@ -531,19 +699,13 @@
       ["Iris", "#5A4FCF"], ["Grape", "#6F2DA8"], ["Mulberry Wine", "#5E214B"],
       ["Thistle", "#D8BFD8"], ["Lavender Mist", "#B57EDC"], ["Ultra Violet", "#645394"],
 
-      // Browns, Umbers & Earth Tones
+      // Browns, Umbers & Earth
       ["Raw Umber", "#826644"], ["Burnt Umber", "#8A3324"], ["Sepia", "#704214"],
       ["Chocolate", "#7B3F00"], ["Espresso", "#3C2415"], ["Coffee", "#6F4E37"],
       ["Mocha", "#967969"], ["Chestnut", "#954535"], ["Mahogany", "#C04000"],
       ["Walnut", "#5D432C"], ["Hazel", "#8E7618"], ["Caramel", "#FFD59A"],
       ["Toffee", "#755139"], ["Tan", "#D2B48C"], ["Beige", "#F5F5DC"],
-      ["Ecru", "#C2B280"], ["Fawn", "#E5AA70"], ["Bistre", "#3D2B1F"],
-
-      // Modern UI / Tailwind-inspired Nuanced Tones
-      ["Slate 900", "#0F172A"], ["Slate 800", "#1E293B"], ["Slate 600", "#475569"],
-      ["Slate 400", "#94A3B8"], ["Indigo Glow", "#6366F1"], ["Violet Pulse", "#8B5CF6"],
-      ["Emerald Mint", "#10B981"], ["Amber Gold", "#F59E0B"], ["Rose Coral", "#F43F5E"],
-      ["Sky Cyan", "#0EA5E9"], ["Teal Wave", "#14B8A6"], ["Fuchsia Neon", "#D946EF"]
+      ["Ecru", "#C2B280"], ["Fawn", "#E5AA70"], ["Bistre", "#3D2B1F"]
     ];
 
     /**
@@ -630,7 +792,6 @@
       return rgbToHsl(r, g, b);
     }
 
-    // RGB -> CIELAB (D65 illuminant)
     function rgbToLab(r, g, b) {
       let sr = r / 255, sg = g / 255, sb = b / 255;
       sr = sr > 0.04045 ? Math.pow((sr + 0.055) / 1.055, 2.4) : sr / 12.92;
@@ -656,7 +817,6 @@
       return rgbToLab(r, g, b);
     }
 
-    // Perceptual CIE76 / Weighted Delta-E distance
     function deltaE(lab1, lab2) {
       const dL = lab1.L - lab2.L;
       const da = lab1.a - lab2.a;
@@ -664,7 +824,6 @@
       return Math.sqrt(dL * dL + da * da + db * db);
     }
 
-    // Precompute LAB coordinates for the embedded color database
     const PARSED_COLOR_DB = COLOR_DATABASE.map(([name, hex]) => ({
       name,
       hex: hex.toUpperCase(),
@@ -692,7 +851,6 @@
       return res;
     }
 
-    // Perceived luminance for crisp foreground text contrast
     function getRelativeLuminance(hex) {
       const { r, g, b } = hexToRgb(hex);
       const srgb = [r, g, b].map(v => {
@@ -703,7 +861,7 @@
     }
 
     function getContrastText(hex) {
-      return getRelativeLuminance(hex) > 0.34 ? "#111216" : "#F8FAFC";
+      return getRelativeLuminance(hex) > 0.34 ? "#110F0E" : "#EAE6E1";
     }
 
     function hexWithAlpha(hex, alpha) {
@@ -713,57 +871,55 @@
 
     /**
      * =========================================================================
-     * 3. APPLICATION STATE, PERSISTENCE & UNDO/REDO HISTORY
+     * 3. APPLICATION STATE, SCHEMATICS & HISTORY
      * =========================================================================
      */
-    const STORAGE_KEY_SAVED = "chromaforge_saved_v1";
-    const STORAGE_KEY_PINNED = "chromaforge_pinned_v1";
+    const STORAGE_KEY_SAVED = "chromaforge_smelter_saved_v2";
+    const STORAGE_KEY_PINNED = "chromaforge_smelter_pinned_v2";
 
     const STARTER_PALETTES = [
       {
-        name: "Studio Obsidian UI (7)",
-        colors: ["#111216", "#1A1D26", "#F3F4F6", "#F43F5E", "#222632", "#2E3446", "#6366F1"]
+        name: "DWARVEN SMELTER MK-I (7)",
+        colors: ["#110F0E", "#1E1916", "#EAE6E1", "#EA580C", "#26201C", "#332D29", "#F59E0B"]
       },
       {
-        name: "Nordic Glacier (7)",
-        colors: ["#141B24", "#1E293B", "#E2E8F0", "#FB7185", "#243244", "#334155", "#38BDF8"]
+        name: "CAST IRON & VERDIGRIS (7)",
+        colors: ["#121615", "#1C2422", "#E2ECE9", "#E34234", "#232E2B", "#32423E", "#43B3AE"]
       },
       {
-        name: "Botanical Alchemist (8)",
-        colors: ["#121714", "#1B241E", "#ECFDF5", "#F59E0B", "#222E26", "#2F4035", "#10B981", "#A78BFA"]
+        name: "BESSEMER STEELWORKS (8)",
+        colors: ["#0F1318", "#182029", "#E6ECF2", "#FF7518", "#202B38", "#2E3D4F", "#4682B4", "#F4C430"]
       },
       {
-        name: "Cyber-Nomad Sunset (9)",
-        colors: ["#16111D", "#23192D", "#FDF4FF", "#FF4D6D", "#2D203B", "#3E2C52", "#F97316", "#FACC15", "#06B6D4"]
+        name: "VOLCANIC SLAG & BRASS (9)",
+        colors: ["#141010", "#211A1A", "#F4EFEA", "#FF2400", "#2B2222", "#3D3131", "#CD7F32", "#B5A642", "#7A8291"]
       }
     ];
 
     const VIEW_MODES = [
-      { id: "grid", label: "Grid" },
-      { id: "mosaic", label: "Mosaic" },
-      { id: "ui", label: "UI Mockup" },
-      { id: "dots", label: "Dots" },
-      { id: "strips", label: "Strips" },
-      { id: "gradients", label: "Gradients" },
-      { id: "creature", label: "Creature" }
+      { id: "grid", code: "01.GRID" },
+      { id: "mosaic", code: "02.MOSAIC" },
+      { id: "ui", code: "03.CONSOLE UI" },
+      { id: "dots", code: "04.SCATTER" },
+      { id: "strips", code: "05.STRIPS" },
+      { id: "gradients", code: "06.RAMP" },
+      { id: "creature", code: "07.CONSTRUCT" }
     ];
 
     const state = {
-      slots: [], // Array of { id, hex, locked }
+      slots: [],
       view: "grid",
       cvd: "none",
-      pinned: [], // Array of hex strings
-      savedLibraries: [], // Array of { id, name, type: 'palette'|'pinned', colors, createdAt }
+      baseDeltaE: 22,
+      pinned: [],
+      savedLibraries: [],
       history: [],
       historyIndex: -1,
       editingSlotIndex: null,
-      // Mode-specific ephemeral states
       mosaicSeed: 42,
       dotsSeed: 101,
-      dotsBackdrop: "dark", // 'dark' | 'gray' | 'light'
-      creatureArchetype: "nomad", // 'nomad' | 'fox' | 'valkyrie'
-      hoveredCreatureZone: null,
-      gridPan: { x: 0, y: 0 },
+      dotsBackdrop: "soot", // 'soot' | 'iron' | 'ash'
+      creatureArchetype: "sentinel", // 'sentinel' | 'walker' | 'valkyrie'
       dragSourceIndex: null
     };
 
@@ -778,31 +934,27 @@
      * =========================================================================
      */
     function generateDistinctColor(existingLabs, minThreshold) {
-      let bestHex = "#6366F1";
+      let bestHex = "#EA580C";
       let bestMinDist = -1;
+      const maxAttempts = 52;
 
-      // Try up to 48 candidates; accept immediately if above threshold, else take best
-      const maxAttempts = 48;
       for (let attempt = 0; attempt < maxAttempts; attempt++) {
         let h, s, l;
         if (attempt % 3 === 0 && existingLabs.length > 0) {
-          // Harmonic jump from an existing color for cohesive variety
           const baseHue = Math.floor(Math.random() * 360);
           h = (baseHue + [30, 60, 120, 150, 180, 210][attempt % 6]) % 360;
-          s = 35 + Math.floor(Math.random() * 58);
-          l = 18 + Math.floor(Math.random() * 68);
+          s = 28 + Math.floor(Math.random() * 62);
+          l = 16 + Math.floor(Math.random() * 70);
         } else {
           h = Math.floor(Math.random() * 360);
-          s = 12 + Math.floor(Math.random() * 83);
+          s = 10 + Math.floor(Math.random() * 84);
           l = 10 + Math.floor(Math.random() * 80);
         }
 
         const candidateHex = hslToHex(h, s, l);
         const candidateLab = hexToLab(candidateHex);
 
-        if (existingLabs.length === 0) {
-          return candidateHex;
-        }
+        if (existingLabs.length === 0) return candidateHex;
 
         let minDist = Infinity;
         for (let i = 0; i < existingLabs.length; i++) {
@@ -823,16 +975,15 @@
     }
 
     function getEffectiveThreshold(count) {
-      // Base perceptual threshold Delta-E 24, gently scaled for very high N so generation is instant
-      if (count <= 7) return 24;
-      return Math.max(9.5, 24 - (count - 7) * 0.85);
+      const base = state.baseDeltaE;
+      if (count <= 7) return base;
+      return Math.max(9.0, base - (count - 7) * 0.8);
     }
 
     function generatePalette(pushToHistory = true) {
       const count = state.slots.length;
       const threshold = getEffectiveThreshold(count);
 
-      // Start with all locked colors as protected perceptual anchors
       const acceptedLabs = state.slots
         .filter(s => s.locked)
         .map(s => hexToLab(s.hex));
@@ -874,7 +1025,6 @@
 
     function pushHistory() {
       const snapshot = state.slots.map(s => ({ hex: s.hex, locked: s.locked }));
-      // Trim forward history if we branched
       if (state.historyIndex < state.history.length - 1) {
         state.history = state.history.slice(0, state.historyIndex + 1);
       }
@@ -954,13 +1104,13 @@
       const normalized = normalizeHex(hex);
       if (!normalized) return;
       if (state.pinned.includes(normalized)) {
-        showToast(`${normalized} is already pinned`, normalized);
+        showToast(`INGOT ${normalized} ALREADY IN RACK`, normalized);
         return;
       }
       state.pinned.push(normalized);
       savePinnedToStorage();
       renderPinnedDock();
-      showToast(`Pinned ${normalized}`, normalized);
+      showToast(`CAST ${normalized} TO INGOT RACK`, normalized);
     }
 
     function unpinColor(hex) {
@@ -970,14 +1120,13 @@
     }
 
     function applyPinnedToSlot(hex) {
-      // Apply to currently open popover slot, or first unlocked slot, or slot 0
       let targetIdx = state.editingSlotIndex;
       if (targetIdx === null || targetIdx >= state.slots.length) {
         targetIdx = state.slots.findIndex(s => !s.locked);
       }
       if (targetIdx === -1) targetIdx = 0;
       updateSlotHex(targetIdx, hex, true);
-      showToast(`Applied ${hex} to Slot #${targetIdx + 1}`, hex);
+      showToast(`APPLIED ${hex} -> SLOT #${String(targetIdx + 1).padStart(2, "0")}`, hex);
     }
 
     function copyTextToClipboard(text, toastLabel) {
@@ -993,16 +1142,16 @@
         if (navigator.clipboard) navigator.clipboard.writeText(text).catch(() => {});
       }
       document.body.removeChild(textarea);
-      showToast(toastLabel || `Copied ${text}`, text.startsWith("#") ? text : "#10B981");
+      showToast(toastLabel || `STAMPED ${text} TO CLIPBOARD`, text.startsWith("#") ? text : "#EA580C");
     }
 
     let toastTimer = null;
-    function showToast(message, dotColor = "#10B981") {
+    function showToast(message, dotColor = "#EA580C") {
       const toast = document.getElementById("toast");
       const msgEl = document.getElementById("toast-msg");
       const dotEl = document.getElementById("toast-dot");
-      msgEl.textContent = message;
-      dotEl.style.backgroundColor = normalizeHex(dotColor) || "#10B981";
+      msgEl.textContent = message.toUpperCase();
+      dotEl.style.backgroundColor = normalizeHex(dotColor) || "#EA580C";
       toast.classList.remove("opacity-0", "translate-y-2");
       toast.classList.add("opacity-100", "translate-y-0");
       clearTimeout(toastTimer);
@@ -1014,7 +1163,7 @@
 
     /**
      * =========================================================================
-     * 6. MANUAL COLOR PICKER POPOVER
+     * 6. MANUAL SMELTER COLOR TUNER POPOVER
      * =========================================================================
      */
     function openColorPopover(index, anchorEl) {
@@ -1024,10 +1173,11 @@
       popover.classList.remove("hidden");
       syncPopoverValues();
 
-      // Position near anchorEl while keeping within viewport bounds
-      const rect = anchorEl ? anchorEl.getBoundingClientRect() : { left: window.innerWidth / 2 - 144, top: window.innerHeight / 2 - 120, bottom: window.innerHeight / 2 };
-      const popW = 288;
-      const popH = 265;
+      const rect = anchorEl
+        ? anchorEl.getBoundingClientRect()
+        : { left: window.innerWidth / 2 - 160, top: window.innerHeight / 2 - 130, bottom: window.innerHeight / 2 };
+      const popW = 320;
+      const popH = 280;
       let left = rect.left + (rect.width ? rect.width / 2 - popW / 2 : 0);
       let top = rect.bottom + 8;
 
@@ -1054,7 +1204,7 @@
       const nameInfo = getClosestColorName(hex);
 
       document.getElementById("popover-preview").style.backgroundColor = hex;
-      document.getElementById("popover-slot-label").textContent = `Slot #${idx + 1}`;
+      document.getElementById("popover-slot-label").textContent = `CRUCIBLE #${String(idx + 1).padStart(2, "0")}`;
       document.getElementById("popover-color-name").textContent = nameInfo.label;
       document.getElementById("popover-native-picker").value = hex;
       document.getElementById("popover-hex-input").value = hex;
@@ -1083,9 +1233,7 @@
         updateSlotHex(state.editingSlotIndex, e.target.value, false);
         syncPopoverValues();
       });
-      document.getElementById("popover-native-picker").addEventListener("change", () => {
-        pushHistory();
-      });
+      document.getElementById("popover-native-picker").addEventListener("change", () => pushHistory());
 
       document.getElementById("popover-hex-input").addEventListener("input", e => {
         if (state.editingSlotIndex === null) return;
@@ -1095,14 +1243,12 @@
           syncPopoverValues();
         }
       });
-      document.getElementById("popover-hex-input").addEventListener("change", () => {
-        pushHistory();
-      });
+      document.getElementById("popover-hex-input").addEventListener("change", () => pushHistory());
 
       document.getElementById("popover-copy-btn").addEventListener("click", () => {
         if (state.editingSlotIndex === null) return;
         const hex = state.slots[state.editingSlotIndex].hex;
-        copyTextToClipboard(hex, `Copied ${hex}`);
+        copyTextToClipboard(hex);
       });
 
       const handleHslSlide = (commitHistory) => {
@@ -1121,7 +1267,6 @@
         el.addEventListener("change", () => handleHslSlide(true));
       });
 
-      // Close popover on outside click
       document.addEventListener("mousedown", e => {
         const pop = document.getElementById("color-popover");
         if (!pop.classList.contains("hidden") && !pop.contains(e.target) && !e.target.closest("[data-open-popover]")) {
@@ -1170,68 +1315,54 @@
 
     /**
      * =========================================================================
-     * 8. REUSABLE COMPACT SLOT ACTION PILL BAR
+     * 8. MECHANICAL SLOT ACTION BAR (ZERO GLASSMORPHISM)
      * =========================================================================
      */
-    function createSlotControlsBar(index, fgColor, compact = false) {
+    function createSlotControlsBar(index, compact = false) {
       const slot = state.slots[index];
       const isPinned = state.pinned.includes(slot.hex);
       const bar = document.createElement("div");
-      bar.className = `flex items-center justify-center gap-1 rounded-full px-1.5 py-1 backdrop-blur-md transition-opacity ${
-        fgColor === "#111216" ? "bg-black/10 text-[#111216]" : "bg-white/15 text-white"
-      }`;
+      bar.className = "inline-flex items-center gap-0.5 bg-soot border-2 border-iron p-0.5 shadow-md";
 
-      const btnClass = `p-1 rounded-full transition cursor-pointer ${
-        fgColor === "#111216" ? "hover:bg-black/15" : "hover:bg-white/20"
-      }`;
+      const makeBtn = (title, html, onClick, active = false) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.title = title;
+        b.className = `px-1.5 py-1 text-[10px] font-mono transition cursor-pointer ${
+          active
+            ? "bg-molten text-soot font-bold"
+            : "bg-kiln text-ash hover:bg-iron hover:text-amberheat"
+        }`;
+        b.innerHTML = html;
+        b.onclick = e => {
+          e.stopPropagation();
+          onClick(e, b);
+        };
+        return b;
+      };
 
-      // Swap Left (<)
       if (!compact && index > 0) {
-        const leftBtn = document.createElement("button");
-        leftBtn.className = btnClass;
-        leftBtn.title = "Swap with previous color";
-        leftBtn.innerHTML = `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="15 18 9 12 15 6"></polyline></svg>`;
-        leftBtn.onclick = e => { e.stopPropagation(); swapSlots(index, index - 1); };
-        bar.appendChild(leftBtn);
+        bar.appendChild(makeBtn("Swap Left (<)", "&lt;", () => swapSlots(index, index - 1)));
       }
 
-      // Lock Toggle
-      const lockBtn = document.createElement("button");
-      lockBtn.className = btnClass;
-      lockBtn.title = slot.locked ? "Unlock color" : "Lock color against Generate";
-      lockBtn.innerHTML = slot.locked
-        ? `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 5a3 3 0 1 1 6 0v3H9V7z"/></svg>`
-        : `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>`;
-      lockBtn.onclick = e => { e.stopPropagation(); toggleLock(index); };
-      bar.appendChild(lockBtn);
+      // Lock Bolt
+      const lockIcon = slot.locked
+        ? `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a5 5 0 0 0-5 5v3H5v12h14V10h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 1 1 6 0v3H9V7z"/></svg>`
+        : `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="11" width="16" height="10"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>`;
+      bar.appendChild(makeBtn(slot.locked ? "Unbolt Slot" : "Bolt Slot (Lock)", lockIcon, () => toggleLock(index), slot.locked));
 
-      // Manual Edit Picker
-      const editBtn = document.createElement("button");
-      editBtn.className = btnClass;
-      editBtn.setAttribute("data-open-popover", "true");
-      editBtn.title = "Edit color manually";
-      editBtn.innerHTML = `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>`;
-      editBtn.onclick = e => { e.stopPropagation(); openColorPopover(index, editBtn); };
-      bar.appendChild(editBtn);
+      // Manual Tuner
+      const tuneIcon = `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`;
+      const tuneBtn = makeBtn("Manual Smelter Tuner", tuneIcon, (e, btn) => openColorPopover(index, btn));
+      tuneBtn.setAttribute("data-open-popover", "true");
+      bar.appendChild(tuneBtn);
 
-      // Pin to External Dock
-      const pinBtn = document.createElement("button");
-      pinBtn.className = btnClass;
-      pinBtn.title = isPinned ? "Already in Pinned Swatches" : "Pin color to external tray";
-      pinBtn.innerHTML = isPinned
-        ? `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M16 3a1 1 0 0 1 .117 1.993L16 5v4.764l1.894 3.789a1 1 0 0 1-.764 1.44L17 15h-4v6a1 1 0 0 1-1.993.117L11 21v-6H7a1 1 0 0 1-.993-.883L6 14a1 1 0 0 1 .057-.335l.049-.112L8 9.764V5a1 1 0 0 1-.117-1.993L8 3h8z"/></svg>`
-        : `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg>`;
-      pinBtn.onclick = e => { e.stopPropagation(); pinColor(slot.hex); };
-      bar.appendChild(pinBtn);
+      // Pin to Ingot Rack
+      const pinIcon = `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="${isPinned ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2.2"><path d="M16 3H8v6l-2 4v2h5v6h2v-6h5v-2l-2-4V3z"/></svg>`;
+      bar.appendChild(makeBtn(isPinned ? "Pinned in Ingot Rack" : "Cast to Ingot Rack (Pin)", pinIcon, () => pinColor(slot.hex), isPinned));
 
-      // Swap Right (>)
       if (!compact && index < state.slots.length - 1) {
-        const rightBtn = document.createElement("button");
-        rightBtn.className = btnClass;
-        rightBtn.title = "Swap with next color";
-        rightBtn.innerHTML = `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
-        rightBtn.onclick = e => { e.stopPropagation(); swapSlots(index, index + 1); };
-        bar.appendChild(rightBtn);
+        bar.appendChild(makeBtn("Swap Right (>)", "&gt;", () => swapSlots(index, index + 1)));
       }
 
       return bar;
@@ -1239,7 +1370,7 @@
 
     /**
      * =========================================================================
-     * 9. VIEW MODE 1: SQUARE(ISH) GRID (PANNABLE WHEN LARGE)
+     * 9. VIEW MODE 01: SQUARE(ISH) GRID (PANNABLE WHEN LARGE)
      * =========================================================================
      */
     function renderGridView(container) {
@@ -1248,17 +1379,15 @@
       const vw = Math.max(320, rect.width);
       const vh = Math.max(300, rect.height);
 
-      const minTile = 165;
+      const minTile = 168;
       const gap = 12;
       const pad = 20;
 
-      // Choose balanced column count
       const aspect = vw / vh;
       let cols = Math.max(1, Math.round(Math.sqrt(n * aspect)));
       if (n <= 4) cols = Math.min(n, vw < 520 ? 2 : n);
       const rows = Math.ceil(n / cols);
 
-      // Calculate tile size so all tiles are strictly evenly sized squares
       const fitW = Math.floor((vw - pad * 2 - gap * (cols - 1)) / cols);
       const fitH = Math.floor((vh - pad * 2 - gap * (rows - 1)) / rows);
       const idealSize = Math.min(fitW, fitH);
@@ -1276,9 +1405,7 @@
       grid.style.gridTemplateColumns = `repeat(${cols}, ${tileSize}px)`;
       grid.style.gap = `${gap}px`;
       grid.style.padding = `${pad}px`;
-      if (needsPan) {
-        grid.style.margin = "auto";
-      }
+      if (needsPan) grid.style.margin = "auto";
 
       state.slots.forEach((slot, idx) => {
         const fg = getContrastText(slot.hex);
@@ -1289,38 +1416,40 @@
         card.style.height = `${tileSize}px`;
         card.style.backgroundColor = slot.hex;
         card.style.color = fg;
-        card.className = "rounded-2xl p-3.5 flex flex-col justify-between shadow-lg border border-white/10 transition-transform duration-150 hover:scale-[1.015] relative group";
+        card.className = `border-2 border-iron p-3 flex flex-col justify-between relative group transition-transform duration-100 ${
+          slot.locked ? "swatch-locked" : "shadow-lg"
+        }`;
         attachSlotDragHandlers(card, idx);
 
-        // Top row: Slot number + Lock badge
+        // Top Plate Stamp
         const top = document.createElement("div");
-        top.className = "flex items-center justify-between text-[11px] font-mono opacity-80";
+        top.className = "flex items-center justify-between text-[10px] font-mono";
         top.innerHTML = `
-          <span>#${idx + 1}</span>
-          ${slot.locked ? `<span class="px-1.5 py-0.5 rounded bg-black/20 text-[10px] font-sans font-medium">Locked</span>` : `<span></span>`}
+          <span class="bg-soot text-ash border border-iron px-1.5 py-0.5 font-bold">#${String(idx + 1).padStart(2, "0")}</span>
+          ${slot.locked ? `<span class="bg-molten text-soot font-bold px-1.5 py-0.5 uppercase tracking-wider">BOLTED</span>` : `<span></span>`}
         `;
 
-        // Middle: HEX & Name
+        // Center Readout Plate
         const mid = document.createElement("div");
-        mid.className = "flex flex-col items-center text-center my-auto";
+        mid.className = "my-auto flex flex-col items-center text-center";
 
         const hexBtn = document.createElement("button");
-        hexBtn.className = "font-mono font-semibold text-base sm:text-lg tracking-wide hover:underline cursor-pointer";
+        hexBtn.className = "font-mono font-bold text-base sm:text-lg tracking-wider uppercase hover:underline cursor-pointer";
         hexBtn.textContent = slot.hex;
         hexBtn.title = "Click to copy HEX";
         hexBtn.onclick = e => { e.stopPropagation(); copyTextToClipboard(slot.hex); };
 
         const nameEl = document.createElement("div");
-        nameEl.className = "text-xs opacity-85 mt-0.5 truncate max-w-full px-1";
+        nameEl.className = "text-[11px] font-mono opacity-85 mt-0.5 truncate max-w-full px-1";
         nameEl.textContent = nameInfo.label;
 
         mid.appendChild(hexBtn);
         mid.appendChild(nameEl);
 
-        // Bottom: Action controls
+        // Bottom Mechanical Controls
         const bottom = document.createElement("div");
-        bottom.className = `flex justify-center transition-opacity ${slot.locked ? "opacity-100" : "opacity-85 sm:opacity-0 sm:group-hover:opacity-100"}`;
-        bottom.appendChild(createSlotControlsBar(idx, fg, false));
+        bottom.className = `flex justify-center transition-opacity ${slot.locked ? "opacity-100" : "opacity-90 sm:opacity-0 sm:group-hover:opacity-100"}`;
+        bottom.appendChild(createSlotControlsBar(idx, false));
 
         card.appendChild(top);
         card.appendChild(mid);
@@ -1331,7 +1460,6 @@
       viewport.appendChild(grid);
       container.appendChild(viewport);
 
-      // Drag-to-pan behavior when grid exceeds viewport
       if (needsPan) {
         let isPanning = false;
         let startX = 0, startY = 0, scrollLeft = 0, scrollTop = 0;
@@ -1360,27 +1488,27 @@
           viewport.scrollTop = scrollTop - (y - startY);
         });
 
-        const panHint = document.createElement("div");
-        panHint.className = "absolute bottom-3 right-3 bg-studio-panel/90 backdrop-blur border border-studio-border text-[11px] text-studio-muted px-3 py-1.5 rounded-full flex items-center gap-2 shadow-lg";
-        panHint.innerHTML = `<span>Scroll or drag background to pan (${cols}×${rows})</span>`;
-        const resetBtn = document.createElement("button");
-        resetBtn.className = "text-white hover:underline font-medium cursor-pointer";
-        resetBtn.textContent = "Center";
-        resetBtn.onclick = () => {
+        const panBadge = document.createElement("div");
+        panBadge.className = "absolute bottom-3 right-3 iron-plate px-3 py-1.5 text-[11px] font-mono text-slag flex items-center gap-2.5 shadow-xl";
+        panBadge.innerHTML = `<span>GANTRY PAN ACTIVE (${cols}×${rows})</span>`;
+        const centerBtn = document.createElement("button");
+        centerBtn.className = "text-amberheat hover:underline font-bold cursor-pointer uppercase";
+        centerBtn.textContent = "[CENTER]";
+        centerBtn.onclick = () => {
           viewport.scrollTo({
             left: (viewport.scrollWidth - viewport.clientWidth) / 2,
             top: (viewport.scrollHeight - viewport.clientHeight) / 2,
             behavior: "smooth"
           });
         };
-        panHint.appendChild(resetBtn);
-        container.appendChild(panHint);
+        panBadge.appendChild(centerBtn);
+        container.appendChild(panBadge);
       }
     }
 
     /**
      * =========================================================================
-     * 10. VIEW MODE 2: RANDOM MOSAIC (EQUAL-AREA GEOMETRIC TESSELLATION)
+     * 10. VIEW MODE 02: RANDOM MOSAIC (EQUAL-AREA TESSELLATION)
      * =========================================================================
      */
     function seededRng(seed) {
@@ -1389,13 +1517,11 @@
       return () => (s = (s * 16807) % 2147483647) / 2147483647;
     }
 
-    // Recursively partition a polygon into N equal-area convex sub-polygons
     function partitionPolygonEqualArea(poly, count, rng) {
       if (count <= 1) return [poly];
       const k = Math.floor(count / 2);
       const ratio = k / count;
 
-      // Compute bounding box to pick split orientation
       let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
       poly.forEach(([x, y]) => {
         if (x < minX) minX = x; if (x > maxX) maxX = x;
@@ -1403,10 +1529,8 @@
       });
 
       const horizontal = (maxY - minY) > (maxX - minX);
-      // Slight diagonal tilt for artistic mosaic character while preserving exact area ratio
       const tilt = (rng() - 0.5) * 0.28;
 
-      // Binary search cut offset so clipped polygon area equals ratio * totalArea
       const polyArea = pts => {
         let a = 0;
         for (let i = 0; i < pts.length; i++) {
@@ -1417,16 +1541,10 @@
         return Math.abs(a) / 2;
       };
 
-      const clipHalfPlane = (pts, sign) => {
-        // Line: (x - cx)*nx + (y - cy)*ny = c
-        const nx = horizontal ? tilt : 1;
-        const ny = horizontal ? 1 : tilt;
-        const proj = pts.map(([x, y]) => x * nx + y * ny);
-        const lo = Math.min(...proj), hi = Math.max(...proj);
-        return { nx, ny, lo, hi };
-      };
-
-      const { nx, ny, lo, hi } = clipHalfPlane(poly, 1);
+      const nx = horizontal ? tilt : 1;
+      const ny = horizontal ? 1 : tilt;
+      const proj = poly.map(([x, y]) => x * nx + y * ny);
+      const lo = Math.min(...proj), hi = Math.max(...proj);
       const total = polyArea(poly);
       const target = total * ratio;
 
@@ -1476,7 +1594,7 @@
       wrapper.className = "w-full h-full p-3 sm:p-5 flex flex-col items-center justify-center relative";
 
       const frame = document.createElement("div");
-      frame.className = "w-full h-full rounded-2xl overflow-hidden border border-studio-border shadow-2xl relative bg-studio-panel";
+      frame.className = "w-full h-full border-2 border-iron shadow-2xl relative bg-soot overflow-hidden";
 
       const svgNS = "http://www.w3.org/2000/svg";
       const svg = document.createElementNS(svgNS, "svg");
@@ -1487,10 +1605,8 @@
       cells.forEach((pts, idx) => {
         const slot = state.slots[idx];
         if (!slot) return;
-        const fg = getContrastText(slot.hex);
         const nameInfo = getClosestColorName(slot.hex);
 
-        // Compute centroid
         let cx = 0, cy = 0;
         pts.forEach(([x, y]) => { cx += x; cy += y; });
         cx /= pts.length;
@@ -1502,41 +1618,44 @@
         const poly = document.createElementNS(svgNS, "polygon");
         poly.setAttribute("points", pts.map(p => `${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(" "));
         poly.setAttribute("fill", slot.hex);
-        poly.setAttribute("stroke", "#111216");
-        poly.setAttribute("stroke-width", "3");
-        poly.setAttribute("stroke-linejoin", "round");
+        poly.setAttribute("stroke", "#110F0E");
+        poly.setAttribute("stroke-width", "4");
+        poly.setAttribute("stroke-linejoin", "miter");
 
         poly.addEventListener("click", () => copyTextToClipboard(slot.hex));
         g.appendChild(poly);
 
-        // Overlay HTML-style foreignObject at centroid for crisp interactive badges
         const fo = document.createElementNS(svgNS, "foreignObject");
-        const boxW = 160, boxH = 74;
+        const boxW = 175, boxH = 84;
         fo.setAttribute("x", Math.max(8, Math.min(W - boxW - 8, cx - boxW / 2)));
         fo.setAttribute("y", Math.max(8, Math.min(H - boxH - 8, cy - boxH / 2)));
         fo.setAttribute("width", boxW);
         fo.setAttribute("height", boxH);
 
         const badge = document.createElement("div");
-        badge.style.color = fg;
         badge.className = "w-full h-full flex flex-col items-center justify-center text-center select-none";
         attachSlotDragHandlers(badge, idx);
 
+        const plate = document.createElement("div");
+        plate.className = `bg-soot/90 border border-iron px-2 py-1 text-ash ${slot.locked ? "border-molten" : ""}`;
+
         const hexLine = document.createElement("div");
-        hexLine.className = "font-mono font-semibold text-xs tracking-wide drop-shadow-sm cursor-pointer hover:underline";
-        hexLine.textContent = `${slot.locked ? "🔒 " : ""}${slot.hex}`;
+        hexLine.className = "font-mono font-bold text-xs tracking-wider cursor-pointer hover:text-amberheat";
+        hexLine.textContent = `${slot.locked ? "[L] " : ""}${slot.hex}`;
         hexLine.onclick = e => { e.stopPropagation(); copyTextToClipboard(slot.hex); };
 
         const nameLine = document.createElement("div");
-        nameLine.className = "text-[10px] opacity-85 truncate max-w-[140px]";
+        nameLine.className = "text-[10px] font-mono text-slag truncate max-w-[140px]";
         nameLine.textContent = nameInfo.label;
+
+        plate.appendChild(hexLine);
+        plate.appendChild(nameLine);
 
         const ctrlWrap = document.createElement("div");
         ctrlWrap.className = "mt-1 opacity-0 group-hover:opacity-100 transition-opacity";
-        ctrlWrap.appendChild(createSlotControlsBar(idx, fg, true));
+        ctrlWrap.appendChild(createSlotControlsBar(idx, true));
 
-        badge.appendChild(hexLine);
-        badge.appendChild(nameLine);
+        badge.appendChild(plate);
         badge.appendChild(ctrlWrap);
         fo.appendChild(badge);
         g.appendChild(fo);
@@ -1545,66 +1664,49 @@
 
       frame.appendChild(svg);
       wrapper.appendChild(frame);
-
-      // Re-roll mosaic layout floating button
-      const rerollBtn = document.createElement("button");
-      rerollBtn.className = "absolute bottom-7 right-7 bg-studio-bar/90 hover:bg-studio-panel border border-studio-border text-white text-xs font-medium px-3.5 py-2 rounded-full shadow-xl flex items-center gap-1.5 backdrop-blur-md transition cursor-pointer";
-      rerollBtn.innerHTML = `
-        <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-          <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
-          <rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
-        </svg>
-        <span>Re-roll Mosaic</span>
-      `;
-      rerollBtn.onclick = () => {
-        state.mosaicSeed += 13;
-        renderAll();
-      };
-      wrapper.appendChild(rerollBtn);
       container.appendChild(wrapper);
     }
 
     /**
      * =========================================================================
-     * 11. VIEW MODE 3: INTERACTIVE UI MOCKUP (10-ROLE THEME PREVIEW)
+     * 11. VIEW MODE 03: CONSOLE UI MOCKUP (10-TOKEN INDUSTRIAL TELEMETRY)
      * =========================================================================
      */
     const UI_ROLES = [
-      { key: "bg", label: "BG", desc: "Canvas Background" },
-      { key: "bgAccent", label: "BG Accent", desc: "Subtle Section Tint" },
-      { key: "text", label: "Plain Text", desc: "Primary Typography" },
-      { key: "urgent", label: "Urgent Text", desc: "Alerts & Priority" },
-      { key: "panel", label: "UI Panel", desc: "Cards & Containers" },
-      { key: "hover", label: "UI Hover", desc: "Interactive Highlight" },
-      { key: "button", label: "Button", desc: "Primary CTA Fill" },
-      { key: "muted", label: "Muted Text", desc: "Secondary Labels" },
-      { key: "border", label: "Border", desc: "1px Dividers" },
-      { key: "accent2", label: "Accent 2", desc: "Secondary Highlight" }
+      { key: "bg", label: "BG", desc: "Primary Console Background" },
+      { key: "bgAccent", label: "BG ACCENT", desc: "Recessed Header/Sub-surface" },
+      { key: "text", label: "PLAIN TEXT", desc: "Primary Readout Text" },
+      { key: "urgent", label: "URGENT TEXT", desc: "Critical Thermal Alert" },
+      { key: "panel", label: "UI PANEL", desc: "Instrument Plate Fill" },
+      { key: "hover", label: "UI HOVER", desc: "Active Row Highlight" },
+      { key: "button", label: "BUTTON", desc: "Primary Actuator CTA" },
+      { key: "muted", label: "MUTED TEXT", desc: "Secondary Gauge Labels" },
+      { key: "border", label: "BORDER", desc: "2px Structural Seam" },
+      { key: "accent2", label: "ACCENT II", desc: "Auxiliary Telemetry Trace" }
     ];
 
     function renderUiMockupView(container) {
       const slots = state.slots;
       const n = slots.length;
 
-      // Resolve 10 UI tokens with readable smart fallbacks when N < 10
-      const bg = slots[0]?.hex || "#111216";
-      const bgAccent = slots[1]?.hex || (getRelativeLuminance(bg) > 0.4 ? "#E5E7EB" : "#191C24");
+      const bg = slots[0]?.hex || "#110F0E";
+      const bgAccent = slots[1]?.hex || (getRelativeLuminance(bg) > 0.4 ? "#DCD7D0" : "#171311");
       const plainText = slots[2]?.hex || getContrastText(bg);
-      const urgentText = slots[3]?.hex || "#F43F5E";
+      const urgentText = slots[3]?.hex || "#EA580C";
       const panel = slots[4]?.hex || bgAccent;
-      const hover = slots[5]?.hex || hexWithAlpha(plainText, 0.08);
-      const button = slots[6]?.hex || "#6366F1";
+      const hover = slots[5]?.hex || hexWithAlpha(plainText, 0.1);
+      const button = slots[6]?.hex || "#F59E0B";
       const buttonFg = getContrastText(button);
-      const mutedText = slots[7]?.hex || hexWithAlpha(plainText, 0.58);
-      const border = slots[8]?.hex || hexWithAlpha(plainText, 0.14);
+      const mutedText = slots[7]?.hex || hexWithAlpha(plainText, 0.6);
+      const border = slots[8]?.hex || hexWithAlpha(plainText, 0.22);
       const accent2 = slots[9]?.hex || button;
 
       const wrapper = document.createElement("div");
       wrapper.className = "w-full h-full flex flex-col overflow-y-auto p-3 sm:p-5 gap-3";
 
-      // Top Role Mapping Strip (drag or swap slots to re-assign UI roles!)
+      // Top Token Mapping Manifold Strip
       const roleBar = document.createElement("div");
-      roleBar.className = "bg-studio-panel border border-studio-border rounded-xl p-2.5 flex flex-wrap items-center justify-between gap-2 shrink-0";
+      roleBar.className = "iron-plate p-2.5 flex flex-wrap items-center justify-between gap-2 shrink-0";
 
       const roleChips = document.createElement("div");
       roleChips.className = "flex flex-wrap items-center gap-1.5";
@@ -1613,81 +1715,77 @@
         const hasSlot = idx < n;
         const hex = hasSlot ? slots[idx].hex : [bg, bgAccent, plainText, urgentText, panel, hover, button, mutedText, border, accent2][idx];
         const chip = document.createElement("div");
-        chip.className = `flex items-center gap-1.5 px-2 py-1 rounded-lg border text-[11px] ${
-          hasSlot ? "bg-studio-bg border-studio-border text-white cursor-grab" : "bg-studio-bg/40 border-studio-border/50 text-studio-muted opacity-75"
+        chip.className = `flex items-center gap-1.5 px-2 py-1 border-2 text-[10px] font-mono ${
+          hasSlot
+            ? "bg-recess border-iron text-ash cursor-grab hover:border-molten"
+            : "bg-recess/40 border-iron/50 text-slag opacity-70"
         }`;
         if (hasSlot) attachSlotDragHandlers(chip, idx);
 
         chip.innerHTML = `
-          <span class="w-3 h-3 rounded-sm border border-white/20 shrink-0" style="background:${hex}"></span>
-          <span class="font-medium">${idx + 1}. ${role.label}</span>
-          ${!hasSlot ? `<span class="text-[9px] italic">(auto)</span>` : ``}
+          <span class="w-3 h-3 border border-ash/30 shrink-0" style="background:${hex}"></span>
+          <span class="font-bold">${String(idx + 1).padStart(2, "0")}.${role.label}</span>
+          ${!hasSlot ? `<span class="text-[9px]">[AUTO]</span>` : ``}
         `;
         if (hasSlot) {
-          chip.title = `${role.desc} — Click to edit Slot #${idx + 1}, or drag to swap roles`;
+          chip.title = `${role.desc} — Click to tune Slot #${idx + 1}, or drag to swap role`;
           chip.onclick = () => openColorPopover(idx, chip);
         }
         roleChips.appendChild(chip);
       });
 
       roleBar.appendChild(roleChips);
-
-      if (n > 10) {
-        const capNote = document.createElement("span");
-        capNote.className = "text-[11px] text-amber-300/90 font-medium px-2";
-        capNote.textContent = `10 core UI roles mapped; ${n - 10} extra color(s) shown as status tags below.`;
-        roleBar.appendChild(capNote);
-      }
       wrapper.appendChild(roleBar);
 
-      // Realistic Interactive App Mockup Canvas
+      // Live Interactive Smelter Telemetry Mockup
       const mockup = document.createElement("div");
       mockup.style.backgroundColor = bg;
       mockup.style.color = plainText;
       mockup.style.borderColor = border;
-      mockup.className = "flex-1 rounded-2xl border shadow-2xl overflow-hidden flex flex-col min-h-[430px] transition-colors duration-200";
+      mockup.className = "flex-1 border-2 shadow-2xl overflow-hidden flex flex-col min-h-[430px]";
 
-      // Mockup Top Navbar
+      // Mockup Header Bar
       const nav = document.createElement("div");
       nav.style.backgroundColor = bgAccent;
       nav.style.borderColor = border;
-      nav.className = "px-5 py-3 border-b flex items-center justify-between gap-4";
+      nav.className = "px-4 py-3 border-b-2 flex flex-wrap items-center justify-between gap-4";
       nav.innerHTML = `
         <div class="flex items-center gap-3">
-          <div class="w-3.5 h-3.5 rounded-full" style="background:${button}"></div>
-          <span class="font-semibold text-sm tracking-tight">Workspace Overview</span>
-          <span class="text-xs px-2 py-0.5 rounded-full font-medium" style="background:${hexWithAlpha(accent2, 0.18)}; color:${accent2}">v2.4 Live</span>
+          <div class="w-3.5 h-3.5" style="background:${button}"></div>
+          <span class="font-display font-bold text-sm uppercase tracking-wider">SECTOR 04 // BLAST FURNACE TELEMETRY</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border font-bold uppercase" style="background:${hexWithAlpha(accent2, 0.15)}; border-color:${accent2}; color:${accent2}">PRESSURE NOMINAL</span>
         </div>
-        <div class="flex items-center gap-2">
-          <span class="text-xs hidden sm:inline" style="color:${mutedText}">Synced just now</span>
-          <button type="button" style="background:${button}; color:${buttonFg}" class="text-xs font-semibold px-3.5 py-1.5 rounded-lg shadow-sm hover:opacity-90 transition cursor-pointer">
-            New Deployment
+        <div class="flex items-center gap-3">
+          <span class="text-[11px] font-mono hidden sm:inline" style="color:${mutedText}">CORE TEMP: 1,420°C</span>
+          <button type="button" style="background:${button}; color:${buttonFg}; border-color:${plainText}" class="text-xs font-display font-bold uppercase tracking-wider px-3.5 py-1.5 border-2 shadow-sm cursor-pointer">
+            VENT MANIFOLD
           </button>
         </div>
       `;
       mockup.appendChild(nav);
 
-      // Mockup Body Layout
+      // Mockup Console Body
       const body = document.createElement("div");
-      body.className = "flex-1 grid grid-cols-1 md:grid-cols-12 gap-4 p-4 sm:p-5";
+      body.className = "flex-1 grid grid-cols-1 md:grid-cols-12 gap-4 p-4";
 
-      // Left Sidebar Navigation (Interactive Hover Test)
+      // Left Conduit Column
       const sidebar = document.createElement("div");
       sidebar.style.backgroundColor = panel;
       sidebar.style.borderColor = border;
-      sidebar.className = "md:col-span-3 rounded-xl border p-3 flex flex-col justify-between gap-3";
+      sidebar.className = "md:col-span-4 border-2 p-3 flex flex-col justify-between gap-3";
 
       const navList = document.createElement("div");
-      navList.className = "space-y-1";
-      const menuItems = [
-        { name: "Dashboard", active: true },
-        { name: "Telemetry & Logs", active: false },
-        { name: "Access Tokens", active: false },
-        { name: "Billing & Quotas", active: false }
+      navList.className = "space-y-1.5";
+      const conduits = [
+        { name: "01. CRUCIBLE PRESSURE", active: true },
+        { name: "02. SLAG SEPARATOR VALVES", active: false },
+        { name: "03. BELLOWS TURBINE RPM", active: false },
+        { name: "04. INGOT QUENCH TANKS", active: false }
       ];
-      menuItems.forEach(item => {
+      conduits.forEach(item => {
         const row = document.createElement("div");
-        row.className = "px-3 py-2 rounded-lg text-xs font-medium flex items-center justify-between transition-colors cursor-pointer";
+        row.style.borderColor = item.active ? accent2 : "transparent";
+        row.className = "px-3 py-2 border-l-4 text-xs font-mono font-semibold flex items-center justify-between transition-colors cursor-pointer";
         if (item.active) {
           row.style.backgroundColor = hover;
           row.style.color = plainText;
@@ -1704,112 +1802,111 @@
             row.style.color = mutedText;
           }
         });
-        row.innerHTML = `<span>${item.name}</span>${item.active ? `<span class="w-1.5 h-1.5 rounded-full" style="background:${accent2}"></span>` : ""}`;
+        row.innerHTML = `<span>${item.name}</span>${item.active ? `<span class="w-2 h-2" style="background:${accent2}"></span>` : ""}`;
         navList.appendChild(row);
       });
       sidebar.appendChild(navList);
 
-      // Urgent Alert Callout inside Sidebar
+      // Urgent Thermal Warning Box
       const urgentBox = document.createElement("div");
       urgentBox.style.backgroundColor = hexWithAlpha(urgentText, 0.12);
-      urgentBox.style.borderColor = hexWithAlpha(urgentText, 0.35);
-      urgentBox.className = "rounded-lg border p-2.5 text-xs space-y-1";
+      urgentBox.style.borderColor = urgentText;
+      urgentBox.className = "border-2 p-3 text-xs space-y-1";
       urgentBox.innerHTML = `
-        <div class="font-semibold flex items-center gap-1.5" style="color:${urgentText}">
-          <span>●</span><span>Urgent Notice</span>
+        <div class="font-display font-bold uppercase tracking-wider flex items-center gap-1.5" style="color:${urgentText}">
+          <span>▲</span><span>URGENT OVERHEAT WARNING</span>
         </div>
-        <p class="text-[11px] leading-relaxed" style="color:${plainText}">
-          SSL certificate renews in 48h. Verify webhook signature before rotation.
+        <p class="text-[11px] font-mono leading-relaxed" style="color:${plainText}">
+          Conduit #03 exceeds thermal threshold. Engage secondary coolant pump immediately.
         </p>
       `;
       sidebar.appendChild(urgentBox);
       body.appendChild(sidebar);
 
-      // Main Content Area
+      // Right Telemetry Gauges & Valve Matrix
       const mainCol = document.createElement("div");
-      mainCol.className = "md:col-span-9 flex flex-col gap-4";
+      mainCol.className = "md:col-span-8 flex flex-col gap-4";
 
-      // Metric Cards Row
       const metricsRow = document.createElement("div");
       metricsRow.className = "grid grid-cols-1 sm:grid-cols-3 gap-3";
       const metrics = [
-        { label: "Active Sessions", value: "14,820", delta: "+12.4%", isUrgent: false },
-        { label: "Mean Latency", value: "28.4 ms", delta: "Optimal", isUrgent: false },
-        { label: "Failed Webhooks", value: "3 Alerts", delta: "Action Needed", isUrgent: true }
+        { label: "KILN OUTPUT", value: "840 TONS", delta: "+6.2% YIELD", isUrgent: false },
+        { label: "LINE VOLTAGE", value: "480.2 KV", delta: "STABLE", isUrgent: false },
+        { label: "VALVE #03 TEMP", value: "1,690 °C", delta: "CRITICAL", isUrgent: true }
       ];
       metrics.forEach(m => {
         const card = document.createElement("div");
         card.style.backgroundColor = panel;
         card.style.borderColor = border;
-        card.className = "rounded-xl border p-3.5 flex flex-col justify-between";
+        card.className = "border-2 p-3 flex flex-col justify-between";
         card.innerHTML = `
-          <span class="text-[11px] font-medium" style="color:${mutedText}">${m.label}</span>
+          <span class="text-[10px] font-mono uppercase" style="color:${mutedText}">${m.label}</span>
           <div class="flex items-baseline justify-between mt-2">
-            <span class="text-lg font-bold tracking-tight" style="color:${m.isUrgent ? urgentText : plainText}">${m.value}</span>
-            <span class="text-[11px] font-medium" style="color:${m.isUrgent ? urgentText : accent2}">${m.delta}</span>
+            <span class="text-lg font-display font-bold tracking-wide" style="color:${m.isUrgent ? urgentText : plainText}">${m.value}</span>
+            <span class="text-[10px] font-mono font-bold" style="color:${m.isUrgent ? urgentText : accent2}">${m.delta}</span>
           </div>
         `;
         metricsRow.appendChild(card);
       });
       mainCol.appendChild(metricsRow);
 
-      // Interactive Table / Panel with Hover Rows
+      // Interactive Valve Row Table (Tests UI Hover Token)
       const tableCard = document.createElement("div");
       tableCard.style.backgroundColor = panel;
       tableCard.style.borderColor = border;
-      tableCard.className = "flex-1 rounded-xl border p-4 flex flex-col justify-between gap-3";
+      tableCard.className = "flex-1 border-2 p-4 flex flex-col justify-between gap-3";
 
       const tableHeader = document.createElement("div");
-      tableHeader.className = "flex flex-wrap items-center justify-between gap-2";
+      tableHeader.className = "flex flex-wrap items-center justify-between gap-2 pb-2 border-b-2";
+      tableHeader.style.borderColor = border;
       tableHeader.innerHTML = `
         <div>
-          <h3 class="text-sm font-semibold">Service Endpoints</h3>
-          <p class="text-xs" style="color:${mutedText}">Hover rows below to preview UI Hover Highlight contrast</p>
+          <h3 class="text-xs font-display font-bold uppercase tracking-wider">SMELTER MANIFOLD GATES (HOVER ROWS TO TEST HOVER TOKEN)</h3>
+          <p class="text-[11px] font-mono" style="color:${mutedText}">Click any token badge above to calibrate colors live</p>
         </div>
         <div class="flex items-center gap-2">
-          <span style="background:${bgAccent}; border-color:${border}; color:${mutedText}" class="text-xs px-3 py-1.5 rounded-lg border">Filter nodes...</span>
-          <button type="button" style="background:${button}; color:${buttonFg}" class="text-xs font-medium px-3 py-1.5 rounded-lg cursor-pointer">Apply</button>
+          <span style="background:${bgAccent}; border-color:${border}; color:${mutedText}" class="text-[11px] font-mono px-2.5 py-1 border-2">FILTER: ALL GATES</span>
+          <button type="button" style="background:${button}; color:${buttonFg}" class="text-[11px] font-mono font-bold px-3 py-1 cursor-pointer uppercase">ENGAGE</button>
         </div>
       `;
       tableCard.appendChild(tableHeader);
 
       const rowsWrap = document.createElement("div");
-      rowsWrap.className = "divide-y";
+      rowsWrap.className = "divide-y-2";
       rowsWrap.style.borderColor = border;
-      const endpoints = [
-        { service: "auth-gateway-sg1", status: "Healthy", urgent: false, latency: "14ms" },
-        { service: "vector-index-core", status: "High Load", urgent: true, latency: "92ms" },
-        { service: "edge-cache-worker", status: "Healthy", urgent: false, latency: "9ms" }
+      const gates = [
+        { id: "GATE-ALPHA-01", status: "SEALED // NOMINAL", urgent: false, psi: "2,400 PSI" },
+        { id: "GATE-BETA-02", status: "THERMAL SPIKE", urgent: true, psi: "3,950 PSI" },
+        { id: "GATE-GAMMA-03", status: "FLOWING // ACTIVE", urgent: false, psi: "2,180 PSI" }
       ];
-      endpoints.forEach(ep => {
+      gates.forEach(ep => {
         const r = document.createElement("div");
         r.style.borderColor = border;
-        r.className = "py-2.5 px-2.5 rounded-lg flex items-center justify-between text-xs transition-colors cursor-pointer";
+        r.className = "py-2.5 px-3 flex items-center justify-between text-xs font-mono transition-colors cursor-pointer";
         r.addEventListener("mouseenter", () => { r.style.backgroundColor = hover; });
         r.addEventListener("mouseleave", () => { r.style.backgroundColor = "transparent"; });
         r.innerHTML = `
           <div class="flex items-center gap-2.5">
-            <span class="w-2 h-2 rounded-full" style="background:${ep.urgent ? urgentText : accent2}"></span>
-            <span class="font-mono font-medium">${ep.service}</span>
+            <span class="w-2.5 h-2.5" style="background:${ep.urgent ? urgentText : accent2}"></span>
+            <span class="font-bold">${ep.id}</span>
           </div>
           <div class="flex items-center gap-4">
-            <span class="font-medium" style="color:${ep.urgent ? urgentText : mutedText}">${ep.status}</span>
-            <span class="font-mono" style="color:${mutedText}">${ep.latency}</span>
+            <span class="font-bold" style="color:${ep.urgent ? urgentText : mutedText}">${ep.status}</span>
+            <span style="color:${mutedText}">${ep.psi}</span>
           </div>
         `;
         rowsWrap.appendChild(r);
       });
       tableCard.appendChild(rowsWrap);
 
-      // Extra overflow colors (slots 11..N) rendered as status tags
       if (n > 10) {
         const extraBar = document.createElement("div");
         extraBar.style.borderColor = border;
-        extraBar.className = "pt-2.5 border-t flex flex-wrap items-center gap-1.5";
+        extraBar.className = "pt-2.5 border-t-2 flex flex-wrap items-center gap-1.5";
         const lbl = document.createElement("span");
         lbl.style.color = mutedText;
-        lbl.className = "text-[11px] mr-1";
-        lbl.textContent = "Extended Series:";
+        lbl.className = "text-[10px] font-mono uppercase mr-1";
+        lbl.textContent = "AUXILIARY INGOTS:";
         extraBar.appendChild(lbl);
 
         for (let i = 10; i < n; i++) {
@@ -1817,8 +1914,8 @@
           const tag = document.createElement("span");
           tag.style.backgroundColor = hex;
           tag.style.color = getContrastText(hex);
-          tag.className = "text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full cursor-pointer";
-          tag.textContent = `#${i + 1} ${hex}`;
+          tag.className = "text-[10px] font-mono font-bold px-2 py-0.5 border border-black/30 cursor-pointer";
+          tag.textContent = `#${String(i + 1).padStart(2, "0")} ${hex}`;
           tag.onclick = () => openColorPopover(i, tag);
           extraBar.appendChild(tag);
         }
@@ -1834,7 +1931,7 @@
 
     /**
      * =========================================================================
-     * 12. VIEW MODE 4: RANDOM SCATTERED DOTS (NON-OVERLAPPING EVEN ORBS)
+     * 12. VIEW MODE 04: RANDOM SCATTERED DOTS (EVEN NON-OVERLAPPING ORBS)
      * =========================================================================
      */
     function renderScatteredDotsView(container) {
@@ -1844,20 +1941,19 @@
       const H = Math.max(340, rect.height);
 
       const bgMap = {
-        dark: { bg: "#111216", text: "#F3F4F6", sub: "#8E94A5" },
-        gray: { bg: "#7B808C", text: "#FFFFFF", sub: "#E5E7EB" },
-        light: { bg: "#F4F3EF", text: "#111216", sub: "#52525B" }
+        soot: "#110F0E",
+        iron: "#26211E",
+        ash: "#D6D1C9"
       };
-      const theme = bgMap[state.dotsBackdrop] || bgMap.dark;
+      const boardBg = bgMap[state.dotsBackdrop] || bgMap.soot;
 
       const board = document.createElement("div");
-      board.style.backgroundColor = theme.bg;
-      board.className = "w-full h-full relative overflow-hidden transition-colors duration-200";
+      board.style.backgroundColor = boardBg;
+      board.className = "w-full h-full relative overflow-hidden transition-colors duration-150";
 
-      // Compute evenly sized orb radius that safely fits all N orbs with generous breathing room
-      const usableArea = (W - 80) * (H - 110);
+      const usableArea = (W - 80) * (H - 90);
       const maxDiameter = Math.sqrt((usableArea * 0.44) / Math.max(1, n));
-      const diameter = Math.max(66, Math.min(168, Math.floor(maxDiameter)));
+      const diameter = Math.max(68, Math.min(168, Math.floor(maxDiameter)));
       const radius = diameter / 2;
       const minGap = Math.max(14, radius * 0.25);
 
@@ -1865,7 +1961,7 @@
       const positions = [];
       const padX = radius + 28;
       const padTop = radius + 28;
-      const padBottom = radius + 64;
+      const padBottom = radius + 44;
 
       for (let i = 0; i < n; i++) {
         let placed = null;
@@ -1886,13 +1982,12 @@
             break;
           }
         }
-        // Fallback grid jitter if density is super high on a tiny mobile screen
         if (!placed) {
           const cols = Math.ceil(Math.sqrt(n * (W / H)));
           const col = i % cols;
           const row = Math.floor(i / cols);
           const cellW = (W - 60) / cols;
-          const cellH = (H - 90) / Math.ceil(n / cols);
+          const cellH = (H - 70) / Math.ceil(n / cols);
           placed = {
             x: 30 + cellW * (col + 0.5),
             y: 30 + cellH * (row + 0.5)
@@ -1913,67 +2008,39 @@
         orb.style.top = `${pos.y - radius}px`;
         orb.style.backgroundColor = slot.hex;
         orb.style.color = fg;
-        orb.className = "absolute rounded-full shadow-2xl flex flex-col items-center justify-center text-center p-2 transition-transform duration-150 hover:scale-105 hover:z-20 group cursor-pointer border border-white/15";
+        orb.style.borderRadius = "9999px";
+        orb.className = `absolute border-2 border-iron shadow-2xl flex flex-col items-center justify-center text-center p-2 transition-transform duration-100 hover:scale-105 hover:z-20 group cursor-pointer ${
+          slot.locked ? "swatch-locked" : ""
+        }`;
         attachSlotDragHandlers(orb, idx);
 
         const hexEl = document.createElement("div");
-        hexEl.className = `font-mono font-semibold ${diameter < 90 ? "text-[10px]" : "text-xs"} tracking-tight hover:underline`;
-        hexEl.textContent = `${slot.locked ? "🔒" : ""}${slot.hex}`;
+        hexEl.className = `font-mono font-bold ${diameter < 90 ? "text-[10px]" : "text-xs"} tracking-tight hover:underline`;
+        hexEl.textContent = `${slot.locked ? "[L] " : ""}${slot.hex}`;
         hexEl.onclick = e => { e.stopPropagation(); copyTextToClipboard(slot.hex); };
         orb.appendChild(hexEl);
 
         if (diameter >= 88) {
           const nameEl = document.createElement("div");
-          nameEl.className = "text-[10px] opacity-85 truncate max-w-[85%] mt-0.5";
+          nameEl.className = "text-[10px] font-mono opacity-85 truncate max-w-[85%] mt-0.5";
           nameEl.textContent = nameInfo.label;
           orb.appendChild(nameEl);
         }
 
-        // Hover action pill floating right under the orb
         const actionWrap = document.createElement("div");
-        actionWrap.className = "absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-30 shadow-xl rounded-full bg-studio-panel border border-studio-border";
-        actionWrap.appendChild(createSlotControlsBar(idx, "#F8FAFC", true));
+        actionWrap.className = "absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-30";
+        actionWrap.appendChild(createSlotControlsBar(idx, true));
         orb.appendChild(actionWrap);
 
         board.appendChild(orb);
       });
 
-      // Bottom Floating Controls: Backdrop Switcher + Re-scatter
-      const controls = document.createElement("div");
-      controls.className = "absolute bottom-4 left-1/2 -translate-x-1/2 bg-studio-panel/95 backdrop-blur border border-studio-border rounded-full px-3 py-1.5 flex items-center gap-2 shadow-xl z-20 text-xs";
-
-      const bgModes = [
-        { id: "dark", label: "Dark" },
-        { id: "gray", label: "Gray" },
-        { id: "light", label: "Light" }
-      ];
-      bgModes.forEach(m => {
-        const b = document.createElement("button");
-        b.className = `px-2.5 py-1 rounded-full font-medium transition cursor-pointer ${
-          state.dotsBackdrop === m.id ? "bg-white text-studio-bg" : "text-studio-muted hover:text-white"
-        }`;
-        b.textContent = m.label;
-        b.onclick = () => { state.dotsBackdrop = m.id; renderAll(); };
-        controls.appendChild(b);
-      });
-
-      const sep = document.createElement("span");
-      sep.className = "w-px h-4 bg-studio-border mx-0.5";
-      controls.appendChild(sep);
-
-      const rescatter = document.createElement("button");
-      rescatter.className = "text-white hover:text-amber-300 font-medium px-2 py-1 rounded-full transition cursor-pointer flex items-center gap-1";
-      rescatter.innerHTML = `<span>Re-scatter</span>`;
-      rescatter.onclick = () => { state.dotsSeed += 19; renderAll(); };
-      controls.appendChild(rescatter);
-
-      board.appendChild(controls);
       container.appendChild(board);
     }
 
     /**
      * =========================================================================
-     * 13. VIEW MODE 5: STRIPS (SCROLLABLE FULL-HEIGHT COLUMNS)
+     * 13. VIEW MODE 05: STRIPS (SCROLLABLE FULL-HEIGHT COLUMNS)
      * =========================================================================
      */
     function renderStripsView(container) {
@@ -1987,33 +2054,34 @@
         const col = document.createElement("div");
         col.style.backgroundColor = slot.hex;
         col.style.color = fg;
-        col.style.flex = "1 0 140px";
-        col.style.minWidth = "140px";
-        col.className = "h-full flex flex-col justify-between items-center py-6 px-3 relative group transition-[background-color] duration-150 border-r border-black/10 last:border-r-0";
+        col.style.flex = "1 0 148px";
+        col.style.minWidth = "148px";
+        col.className = `h-full flex flex-col justify-between items-center py-6 px-3 relative group border-r-2 border-iron last:border-r-0 ${
+          slot.locked ? "swatch-locked" : ""
+        }`;
         attachSlotDragHandlers(col, idx);
 
-        // Top Slot Index
         const top = document.createElement("div");
-        top.className = "text-xs font-mono opacity-65";
-        top.textContent = `#${idx + 1}`;
+        top.className = "flex flex-col items-center gap-1";
+        top.innerHTML = `
+          <span class="bg-soot text-ash border border-iron px-2 py-0.5 text-[10px] font-mono font-bold">#${String(idx + 1).padStart(2, "0")}</span>
+          ${slot.locked ? `<span class="bg-molten text-soot text-[9px] font-mono font-bold px-1.5 py-0.5 uppercase">BOLTED</span>` : ""}
+        `;
 
-        // Center Controls
         const center = document.createElement("div");
-        center.className = `transition-opacity ${slot.locked ? "opacity-100" : "opacity-85 sm:opacity-0 sm:group-hover:opacity-100"}`;
-        center.appendChild(createSlotControlsBar(idx, fg, false));
+        center.className = `transition-opacity ${slot.locked ? "opacity-100" : "opacity-90 sm:opacity-0 sm:group-hover:opacity-100"}`;
+        center.appendChild(createSlotControlsBar(idx, false));
 
-        // Bottom HEX + Name
         const bottom = document.createElement("div");
-        bottom.className = "flex flex-col items-center text-center w-full";
+        bottom.className = "bg-soot/90 border-2 border-iron px-3 py-2 text-center w-full";
 
         const hexBtn = document.createElement("button");
-        hexBtn.className = "font-mono font-semibold text-base sm:text-lg tracking-wider hover:underline cursor-pointer";
+        hexBtn.className = "font-mono font-bold text-sm sm:text-base text-ash hover:text-amberheat tracking-wider cursor-pointer block mx-auto";
         hexBtn.textContent = slot.hex;
-        hexBtn.title = "Click to copy HEX";
         hexBtn.onclick = () => copyTextToClipboard(slot.hex);
 
         const nameEl = document.createElement("div");
-        nameEl.className = "text-xs opacity-85 mt-1 truncate max-w-full px-1";
+        nameEl.className = "text-[10px] font-mono text-slag mt-0.5 truncate max-w-full";
         nameEl.textContent = nameInfo.label;
 
         bottom.appendChild(hexBtn);
@@ -2030,7 +2098,7 @@
 
     /**
      * =========================================================================
-     * 14. VIEW MODE 6: GRADIENT STRIPS (WITH ACTIVE POSITION ARROWS & SCRUB)
+     * 14. VIEW MODE 06: RAMP (GRADIENT STRIPS WITH MECHANICAL NEEDLE ARROWS)
      * =========================================================================
      */
     function renderGradientStripsView(container) {
@@ -2042,70 +2110,68 @@
         const fg = getContrastText(slot.hex);
         const nameInfo = getClosestColorName(slot.hex);
 
-        // Build vertical perceptual lightness gradient: top = bright tint (L=96%), mid = exact active color at (100-L)%, bottom = deep shade (L=6%)
-        const topTint = hslToHex(hsl.h, hsl.s, 96);
+        const topTint = hslToHex(hsl.h, hsl.s, 95);
         const botShade = hslToHex(hsl.h, hsl.s, 6);
-        const stopPct = Math.max(4, Math.min(96, 100 - hsl.l));
+        const stopPct = Math.max(5, Math.min(95, 100 - hsl.l));
 
         const col = document.createElement("div");
-        col.style.flex = "1 0 150px";
-        col.style.minWidth = "150px";
+        col.style.flex = "1 0 154px";
+        col.style.minWidth = "154px";
         col.style.background = `linear-gradient(to bottom, ${topTint} 0%, ${slot.hex} ${stopPct}%, ${botShade} 100%)`;
-        col.className = "h-full relative flex flex-col justify-between items-center py-5 px-2.5 border-r border-black/15 last:border-r-0 group cursor-crosshair";
-        col.title = "Click anywhere along gradient to pick shade";
+        col.className = "h-full relative flex flex-col justify-between items-center py-5 px-2.5 border-r-2 border-iron last:border-r-0 group cursor-crosshair";
+        col.title = "Click anywhere along vertical ramp to calibrate luminance";
 
-        // Clicking along the vertical gradient picks that exact lightness shade
         col.addEventListener("click", e => {
           if (e.target.closest("button") || e.target.closest("[data-no-scrub]")) return;
           const rect = col.getBoundingClientRect();
           const ratio = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
-          const pickedL = Math.round(96 - ratio * 90);
+          const pickedL = Math.round(95 - ratio * 89);
           const newHex = hslToHex(hsl.h, hsl.s, pickedL);
           updateSlotHex(idx, newHex, true);
         });
 
-        // Subtle Horizontal Marker Line & Dual Arrows showing exact active color position
+        // Mechanical Needle Marker showing where the active color sits on the gradient
         const marker = document.createElement("div");
         marker.style.top = `${stopPct}%`;
         marker.style.color = fg;
         marker.className = "absolute left-0 right-0 -translate-y-1/2 pointer-events-none flex items-center justify-between px-1 z-10";
         marker.innerHTML = `
-          <svg class="w-3.5 h-3.5 drop-shadow" viewBox="0 0 24 24" fill="currentColor"><polygon points="4,4 20,12 4,20"/></svg>
-          <div class="flex-1 h-[1.5px] mx-1 opacity-70" style="background:${fg}"></div>
-          <svg class="w-3.5 h-3.5 drop-shadow" viewBox="0 0 24 24" fill="currentColor"><polygon points="20,4 4,12 20,20"/></svg>
+          <div class="bg-soot text-amberheat border border-iron px-1 py-0.5 text-[9px] font-mono font-bold leading-none">▶</div>
+          <div class="flex-1 h-[2px] mx-1" style="background:${fg}"></div>
+          <div class="bg-soot text-amberheat border border-iron px-1 py-0.5 text-[9px] font-mono font-bold leading-none">◀</div>
         `;
         col.appendChild(marker);
 
-        // Top Floating Info Pill (High contrast against top light tint)
-        const topPill = document.createElement("div");
-        topPill.setAttribute("data-no-scrub", "true");
-        topPill.className = "z-20 bg-studio-bar/85 backdrop-blur-md border border-white/10 text-white rounded-xl px-2.5 py-2 text-center shadow-lg w-full max-w-[140px]";
-        attachSlotDragHandlers(topPill, idx);
+        // Top Readout Plate
+        const topPlate = document.createElement("div");
+        topPlate.setAttribute("data-no-scrub", "true");
+        topPlate.className = `z-20 iron-plate px-2.5 py-2 text-center w-full max-w-[144px] ${slot.locked ? "border-molten" : ""}`;
+        attachSlotDragHandlers(topPlate, idx);
 
         const hexBtn = document.createElement("button");
-        hexBtn.className = "font-mono font-semibold text-xs tracking-wide hover:underline cursor-pointer block mx-auto";
+        hexBtn.className = "font-mono font-bold text-xs text-ash hover:text-amberheat tracking-wider cursor-pointer block mx-auto";
         hexBtn.textContent = slot.hex;
         hexBtn.onclick = e => { e.stopPropagation(); copyTextToClipboard(slot.hex); };
 
         const nameEl = document.createElement("div");
-        nameEl.className = "text-[10px] text-studio-muted truncate mt-0.5";
+        nameEl.className = "text-[10px] font-mono text-slag truncate mt-0.5";
         nameEl.textContent = nameInfo.label;
 
         const lumTag = document.createElement("div");
-        lumTag.className = "text-[9px] font-mono text-studio-muted/80 mt-0.5";
-        lumTag.textContent = `L ${hsl.l}% · H ${hsl.h}°`;
+        lumTag.className = "text-[9px] font-mono text-amberheat mt-0.5";
+        lumTag.textContent = `LUM ${hsl.l}% // H ${hsl.h}°`;
 
-        topPill.appendChild(hexBtn);
-        topPill.appendChild(nameEl);
-        topPill.appendChild(lumTag);
+        topPlate.appendChild(hexBtn);
+        topPlate.appendChild(nameEl);
+        topPlate.appendChild(lumTag);
 
-        // Bottom Controls Pill (High contrast against dark shade)
+        // Bottom Controls
         const botWrap = document.createElement("div");
         botWrap.setAttribute("data-no-scrub", "true");
         botWrap.className = "z-20";
-        botWrap.appendChild(createSlotControlsBar(idx, "#F8FAFC", false));
+        botWrap.appendChild(createSlotControlsBar(idx, false));
 
-        col.appendChild(topPill);
+        col.appendChild(topPlate);
         col.appendChild(botWrap);
         track.appendChild(col);
       });
@@ -2115,31 +2181,30 @@
 
     /**
      * =========================================================================
-     * 15. VIEW MODE 7: HUMANOID CREATURE SILHOUETTE (11 ANATOMICAL ZONES)
+     * 15. VIEW MODE 07: CONSTRUCT (HUMANOID SILHOUETTE CREATURE — 11 ZONES)
      * =========================================================================
      */
     const CREATURE_ZONES = [
-      { key: "skin", label: "Skin / Body" },
-      { key: "accent", label: "Primary Accent" },
-      { key: "eyeoutL", label: "Left Eye Outer" },
-      { key: "eyeinL", label: "Left Eye Inner" },
-      { key: "eyeoutR", label: "Right Eye Outer" },
-      { key: "eyeinR", label: "Right Eye Inner" },
-      { key: "mouth", label: "Mouth" },
-      { key: "hair", label: "Hair / Crest" },
-      { key: "outfit", label: "Outfit / Cloak" },
-      { key: "accessories", label: "Accessories" },
-      { key: "aura", label: "Aura / Backdrop" }
+      { key: "skin", label: "SKIN // CHASSIS" },
+      { key: "accent", label: "PRIMARY ACCENT" },
+      { key: "eyeoutL", label: "EYE OUTER [L]" },
+      { key: "eyeinL", label: "EYE INNER [L]" },
+      { key: "eyeoutR", label: "EYE OUTER [R]" },
+      { key: "eyeinR", label: "EYE INNER [R]" },
+      { key: "mouth", label: "MOUTH // VENT" },
+      { key: "hair", label: "CREST // HELM" },
+      { key: "outfit", label: "MANTLE // ARMOR" },
+      { key: "accessories", label: "GEAR // CLASPS" },
+      { key: "aura", label: "CORE HALO" }
     ];
 
     function renderCreatureView(container) {
       const slots = state.slots;
       const n = slots.length;
 
-      // Map slots 0..10 to the 11 anatomical/stylistic zones with fallback tones if N < 11
       const fallbackColors = [
-        "#CBD5E1", "#38BDF8", "#0F172A", "#38BDF8", "#0F172A",
-        "#F43F5E", "#94A3B8", "#334155", "#1E293B", "#F59E0B", "#161922"
+        "#9A9087", "#EA580C", "#110F0E", "#F59E0B", "#110F0E",
+        "#EA580C", "#EAE6E1", "#332D29", "#1E1916", "#CD7F32", "#473E39"
       ];
       const z = {};
       CREATURE_ZONES.forEach((zone, idx) => {
@@ -2149,103 +2214,81 @@
       const layout = document.createElement("div");
       layout.className = "w-full h-full grid grid-cols-1 lg:grid-cols-12 overflow-y-auto";
 
-      // Left / Main Character Stage (7 cols)
+      // Left Character Crucible Bay (7 columns)
       const stageCol = document.createElement("div");
-      stageCol.style.background = `radial-gradient(circle at 50% 45%, ${hexWithAlpha(z.aura, 0.35)} 0%, #111216 74%)`;
-      stageCol.className = "lg:col-span-7 relative flex flex-col items-center justify-center p-4 min-h-[380px] border-b lg:border-b-0 lg:border-r border-studio-border";
+      stageCol.style.background = `radial-gradient(circle at 50% 45%, ${hexWithAlpha(z.aura, 0.32)} 0%, #110F0E 74%)`;
+      stageCol.className = "lg:col-span-7 relative flex flex-col items-center justify-center p-4 min-h-[390px] border-b-2 lg:border-b-0 lg:border-r-2 border-iron";
 
-      // Archetype Selector Pill at top of Creature Stage
-      const archBar = document.createElement("div");
-      archBar.className = "bg-studio-panel/90 backdrop-blur border border-studio-border rounded-full p-1 flex items-center gap-1 z-20 mb-2";
-      const archetypes = [
-        { id: "nomad", label: "Cyber-Nomad" },
-        { id: "fox", label: "Arcane Fox-Kin" },
-        { id: "valkyrie", label: "Mecha-Valkyrie" }
-      ];
-      archetypes.forEach(a => {
-        const b = document.createElement("button");
-        b.className = `px-3 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-          state.creatureArchetype === a.id ? "bg-white text-studio-bg" : "text-studio-muted hover:text-white"
-        }`;
-        b.textContent = a.label;
-        b.onclick = () => { state.creatureArchetype = a.id; renderAll(); };
-        archBar.appendChild(b);
-      });
-      stageCol.appendChild(archBar);
-
-      // Stylized Humanoid Silhouette Vector SVG
       const svgWrap = document.createElement("div");
       svgWrap.className = "relative w-full max-w-[380px] aspect-[4/4.4] flex items-center justify-center";
 
-      const crestSVG = state.creatureArchetype === "fox"
-        ? `<!-- Tall Fox Ears & Mane -->
-           <path d="M138 118 L112 36 L168 88 Z" fill="${z.hair}" stroke="#111216" stroke-width="2.5"/>
-           <path d="M136 105 L122 55 L156 88 Z" fill="${z.accent}" opacity="0.85"/>
-           <path d="M262 118 L288 36 L232 88 Z" fill="${z.hair}" stroke="#111216" stroke-width="2.5"/>
-           <path d="M264 105 L278 55 L244 88 Z" fill="${z.accent}" opacity="0.85"/>
-           <path d="M132 135 Q200 62 268 135 Q278 180 256 205 Q200 120 144 205 Q122 180 132 135 Z" fill="${z.hair}" stroke="#111216" stroke-width="2.5"/>`
+      const crestSVG = state.creatureArchetype === "walker"
+        ? `<!-- Forge Walker Horned Respirator Crest -->
+           <path d="M138 118 L108 42 L168 88 Z" fill="${z.hair}" stroke="#110F0E" stroke-width="3"/>
+           <path d="M136 105 L120 58 L156 88 Z" fill="${z.accent}"/>
+           <path d="M262 118 L292 42 L232 88 Z" fill="${z.hair}" stroke="#110F0E" stroke-width="3"/>
+           <path d="M264 105 L280 58 L244 88 Z" fill="${z.accent}"/>
+           <path d="M132 135 Q200 66 268 135 L256 198 Q200 124 144 198 Z" fill="${z.hair}" stroke="#110F0E" stroke-width="3"/>`
         : state.creatureArchetype === "valkyrie"
-        ? `<!-- Winged Helm Crest -->
-           <path d="M136 122 L84 68 L122 116 L94 114 L134 146 Z" fill="${z.hair}" stroke="#111216" stroke-width="2.5"/>
-           <path d="M264 122 L316 68 L278 116 L306 114 L266 146 Z" fill="${z.hair}" stroke="#111216" stroke-width="2.5"/>
-           <path d="M142 124 Q200 65 258 124 L250 145 L200 112 L150 145 Z" fill="${z.hair}" stroke="#111216" stroke-width="2.5"/>
-           <polygon points="200,56 212,95 200,112 188,95" fill="${z.accent}"/>`
-        : `<!-- Cyber-Nomad Swept Hair & Hood Silhouette -->
-           <path d="M126 145 Q134 72 200 72 Q266 72 274 145 Q282 195 255 215 L145 215 Q118 195 126 145 Z" fill="${z.hair}" stroke="#111216" stroke-width="2.5"/>
-           <path d="M142 128 Q175 92 224 104 Q248 112 258 136 Q215 116 175 134 Q154 142 142 128 Z" fill="${z.accent}" opacity="0.9"/>`;
+        ? `<!-- Cyber-Valkyrie Winged Iron Crest -->
+           <path d="M136 122 L80 64 L122 116 L90 114 L134 146 Z" fill="${z.hair}" stroke="#110F0E" stroke-width="3"/>
+           <path d="M264 122 L320 64 L278 116 L310 114 L266 146 Z" fill="${z.hair}" stroke="#110F0E" stroke-width="3"/>
+           <path d="M142 124 Q200 65 258 124 L250 145 L200 112 L150 145 Z" fill="${z.hair}" stroke="#110F0E" stroke-width="3"/>
+           <polygon points="200,52 214,95 200,114 186,95" fill="${z.accent}" stroke="#110F0E" stroke-width="2"/>`
+        : `<!-- Automaton Sentinel Heavy Plated Cowl -->
+           <path d="M126 145 L138 74 L200 66 L262 74 L274 145 L258 212 L142 212 Z" fill="${z.hair}" stroke="#110F0E" stroke-width="3"/>
+           <polygon points="150,122 200,96 250,122 242,136 200,116 158,136" fill="${z.accent}"/>`;
 
       svgWrap.innerHTML = `
-        <svg viewBox="0 0 400 440" class="w-full h-full drop-shadow-2xl overflow-visible">
-          <!-- Aura Ring -->
-          <circle cx="200" cy="215" r="165" fill="none" stroke="${z.aura}" stroke-width="2.5" stroke-dasharray="8 6" opacity="0.75"/>
-          <circle cx="200" cy="215" r="142" fill="${z.aura}" opacity="0.18"/>
+        <svg viewBox="0 0 400 440" class="w-full h-full overflow-visible">
+          <!-- Core Halo Ring -->
+          <circle cx="200" cy="215" r="164" fill="none" stroke="${z.aura}" stroke-width="3" stroke-dasharray="10 6" opacity="0.8"/>
+          <circle cx="200" cy="215" r="138" fill="${z.aura}" opacity="0.16"/>
 
-          <!-- Back Cloak / Mantle -->
-          <path d="M110 235 Q85 330 74 415 L326 415 Q315 330 290 235 Z" fill="${z.outfit}" stroke="#111216" stroke-width="3"/>
+          <!-- Heavy Mantle / Cloak -->
+          <path d="M108 235 L74 415 L326 415 L292 235 Z" fill="${z.outfit}" stroke="#110F0E" stroke-width="3.5"/>
 
-          <!-- Neck & Shoulders (Skin) -->
-          <path d="M176 195 L224 195 L232 238 L168 238 Z" fill="${z.skin}" stroke="#111216" stroke-width="2.5"/>
-          <path d="M122 248 Q155 224 200 224 Q245 224 278 248 L296 365 L262 372 L248 290 L248 415 L152 415 L152 290 L138 372 L104 365 Z" fill="${z.skin}" stroke="#111216" stroke-width="2.5"/>
+          <!-- Neck & Articulated Shoulders (Skin / Chassis) -->
+          <path d="M174 195 L226 195 L234 238 L166 238 Z" fill="${z.skin}" stroke="#110F0E" stroke-width="3"/>
+          <path d="M118 246 L200 222 L282 246 L298 368 L262 374 L248 290 L248 415 L152 415 L152 290 L138 374 L102 368 Z" fill="${z.skin}" stroke="#110F0E" stroke-width="3"/>
 
-          <!-- Outfit Tunic / Armor Plates -->
-          <path d="M144 236 L200 264 L256 236 L268 415 L132 415 Z" fill="${z.outfit}" stroke="#111216" stroke-width="2.5"/>
-          <!-- Outfit Accent Trim -->
-          <path d="M156 244 L200 278 L244 244 L236 262 L200 292 L164 262 Z" fill="${z.accent}"/>
-          <path d="M194 290 L206 290 L206 415 L194 415 Z" fill="${z.accent}" opacity="0.85"/>
+          <!-- Chest Cuirass / Tunic -->
+          <path d="M142 236 L200 266 L258 236 L270 415 L130 415 Z" fill="${z.outfit}" stroke="#110F0E" stroke-width="3"/>
+          <!-- Primary Accent Trim -->
+          <path d="M154 244 L200 280 L246 244 L236 264 L200 294 L164 264 Z" fill="${z.accent}"/>
+          <rect x="193" y="290" width="14" height="125" fill="${z.accent}"/>
 
-          <!-- Accessories: Belt, Buckle, Shoulder Clasps & Floating Charm -->
-          <rect x="142" y="324" width="116" height="14" rx="4" fill="${z.accessories}" stroke="#111216" stroke-width="2"/>
-          <circle cx="200" cy="331" r="11" fill="${z.accent}" stroke="${z.accessories}" stroke-width="3"/>
-          <circle cx="145" cy="252" r="9" fill="${z.accessories}" stroke="#111216" stroke-width="2"/>
-          <circle cx="255" cy="252" r="9" fill="${z.accessories}" stroke="#111216" stroke-width="2"/>
-          <polygon points="325,165 338,185 325,205 312,185" fill="${z.accessories}" stroke="#111216" stroke-width="2"/>
+          <!-- Gear, Pauldron Rivets & Belt Clasp -->
+          <rect x="140" y="324" width="120" height="16" fill="${z.accessories}" stroke="#110F0E" stroke-width="2.5"/>
+          <rect x="188" y="319" width="24" height="26" fill="${z.accent}" stroke="${z.accessories}" stroke-width="3"/>
+          <rect x="134" y="244" width="18" height="18" fill="${z.accessories}" stroke="#110F0E" stroke-width="2.5"/>
+          <rect x="248" y="244" width="18" height="18" fill="${z.accessories}" stroke="#110F0E" stroke-width="2.5"/>
+          <polygon points="325,162 340,185 325,208 310,185" fill="${z.accessories}" stroke="#110F0E" stroke-width="2.5"/>
 
-          <!-- Head Silhouette (Skin) -->
-          <path d="M146 135 Q146 92 200 92 Q254 92 254 135 Q254 188 200 205 Q146 188 146 135 Z" fill="${z.skin}" stroke="#111216" stroke-width="2.5"/>
+          <!-- Head Chassis (Skin) -->
+          <path d="M146 132 L162 92 L238 92 L254 132 L242 188 L200 206 L158 188 Z" fill="${z.skin}" stroke="#110F0E" stroke-width="3"/>
 
-          <!-- Cheek / Brow Markings (Primary Accent) -->
-          <path d="M153 162 L168 167 L156 172 Z" fill="${z.accent}"/>
-          <path d="M247 162 L232 167 L244 172 Z" fill="${z.accent}"/>
+          <!-- Facial Cheek Markings (Primary Accent) -->
+          <polygon points="152,160 170,166 155,173" fill="${z.accent}"/>
+          <polygon points="248,160 230,166 245,173" fill="${z.accent}"/>
 
-          <!-- Hair / Crest -->
+          <!-- Helm / Crest -->
           ${crestSVG}
 
           <!-- Left Eye (eyeoutL & eyeinL) -->
-          <ellipse cx="175" cy="148" rx="14" ry="10" fill="${z.eyeoutL}" stroke="#111216" stroke-width="2"/>
-          <circle cx="176" cy="148" r="5.5" fill="${z.eyeinL}"/>
-          <circle cx="174" cy="146" r="1.8" fill="#FFFFFF" opacity="0.85"/>
+          <polygon points="160,146 175,138 190,146 175,156" fill="${z.eyeoutL}" stroke="#110F0E" stroke-width="2.5"/>
+          <circle cx="175" cy="147" r="5" fill="${z.eyeinL}"/>
 
           <!-- Right Eye (eyeoutR & eyeinR) -->
-          <ellipse cx="225" cy="148" rx="14" ry="10" fill="${z.eyeoutR}" stroke="#111216" stroke-width="2"/>
-          <circle cx="224" cy="148" r="5.5" fill="${z.eyeinR}"/>
-          <circle cx="222" cy="146" r="1.8" fill="#FFFFFF" opacity="0.85"/>
+          <polygon points="210,146 225,138 240,146 225,156" fill="${z.eyeoutR}" stroke="#110F0E" stroke-width="2.5"/>
+          <circle cx="225" cy="147" r="5" fill="${z.eyeinR}"/>
 
-          <!-- Mouth -->
-          <path d="M188 180 Q200 187 212 180" fill="none" stroke="${z.mouth}" stroke-width="3.2" stroke-linecap="round"/>
+          <!-- Mouth / Respirator Vent -->
+          <path d="M184 180 L200 185 L216 180" fill="none" stroke="${z.mouth}" stroke-width="4" stroke-linecap="square"/>
         </svg>
       `;
 
-      // If N > 11, render extra colors 12..N as floating Spirit Orbs around the creature
+      // Extra slots > 11 rendered as orbiting iron ember nodes
       if (n > 11) {
         const orbCoords = [
           { top: "14%", left: "10%" }, { top: "14%", right: "10%" },
@@ -2259,33 +2302,30 @@
         for (let i = 11; i < n; i++) {
           const pos = orbCoords[(i - 11) % orbCoords.length];
           const hex = slots[i].hex;
-          const orb = document.createElement("button");
-          orb.style.backgroundColor = hex;
-          orb.style.color = getContrastText(hex);
-          orb.style.animationDelay = `${(i % 5) * 0.6}s`;
-          Object.assign(orb.style, pos);
-          orb.className = "animate-float absolute w-10 h-10 rounded-full border-2 border-white/25 shadow-lg flex items-center justify-center font-mono text-[10px] font-bold cursor-pointer hover:scale-110 transition";
-          orb.textContent = `#${i + 1}`;
-          orb.title = `Spirit Orb #${i + 1}: ${hex} (Click to edit)`;
-          orb.onclick = () => openColorPopover(i, orb);
-          stageCol.appendChild(orb);
+          const node = document.createElement("button");
+          node.style.backgroundColor = hex;
+          node.style.color = getContrastText(hex);
+          Object.assign(node.style, pos);
+          node.className = "absolute w-10 h-10 border-2 border-iron shadow-xl flex items-center justify-center font-mono text-[10px] font-bold cursor-pointer hover:border-molten transition";
+          node.textContent = `#${String(i + 1).padStart(2, "0")}`;
+          node.title = `Auxiliary Node #${i + 1}: ${hex} (Click to tune)`;
+          node.onclick = () => openColorPopover(i, node);
+          stageCol.appendChild(node);
         }
       }
 
       stageCol.appendChild(svgWrap);
       layout.appendChild(stageCol);
 
-      // Right Zone Legend & Slot Mapper (5 cols)
+      // Right Anatomical Zone Legend & Slot Mapper (5 columns)
       const legendCol = document.createElement("div");
-      legendCol.className = "lg:col-span-5 p-4 flex flex-col gap-2.5 overflow-y-auto bg-studio-bg";
+      legendCol.className = "lg:col-span-5 p-4 flex flex-col gap-2.5 overflow-y-auto bg-soot";
 
       const header = document.createElement("div");
-      header.className = "flex items-center justify-between";
+      header.className = "border-b-2 border-iron pb-2";
       header.innerHTML = `
-        <div>
-          <h3 class="text-xs font-semibold uppercase tracking-wider text-white">Character Zone Mapping (11 Zones)</h3>
-          <p class="text-[11px] text-studio-muted">Drag or swap slots to re-assign anatomical colors</p>
-        </div>
+        <h3 class="text-xs font-display font-bold uppercase tracking-wider text-ash">CONSTRUCT ZONE MANIFOLD (11 ZONES)</h3>
+        <p class="text-[11px] font-mono text-slag">Drag rows or click <span class="text-amberheat">&lt; &gt;</span> to swap zone assignments</p>
       `;
       legendCol.appendChild(header);
 
@@ -2298,20 +2338,20 @@
         const nameInfo = getClosestColorName(hex);
 
         const row = document.createElement("div");
-        row.className = `flex items-center justify-between gap-2 px-3 py-2 rounded-xl border text-xs transition ${
+        row.className = `flex items-center justify-between gap-2 px-3 py-2 border-2 text-xs ${
           hasSlot
-            ? "bg-studio-panel border-studio-border hover:border-white/25"
-            : "bg-studio-panel/40 border-studio-border/50 opacity-70"
+            ? "bg-kiln border-iron hover:border-bevel"
+            : "bg-recess/50 border-iron/50 opacity-65"
         }`;
         if (hasSlot) attachSlotDragHandlers(row, idx);
 
         const left = document.createElement("div");
         left.className = "flex items-center gap-2.5 min-w-0";
         left.innerHTML = `
-          <span class="w-6 h-6 rounded-lg border border-white/20 shrink-0 shadow-inner cursor-pointer" style="background:${hex}" data-swatch-trigger="true"></span>
+          <span class="w-6 h-6 border-2 border-iron shrink-0 cursor-pointer" style="background:${hex}" data-swatch-trigger="true"></span>
           <div class="min-w-0">
-            <div class="font-medium text-white truncate">${idx + 1}. ${zone.label}</div>
-            <div class="text-[11px] font-mono text-studio-muted truncate">${hex} · ${nameInfo.label}</div>
+            <div class="font-display font-bold text-ash tracking-wide truncate">${String(idx + 1).padStart(2, "0")}. ${zone.label}</div>
+            <div class="text-[10px] font-mono text-slag truncate">${hex} // ${nameInfo.label}</div>
           </div>
         `;
         if (hasSlot) {
@@ -2321,11 +2361,11 @@
         row.appendChild(left);
 
         if (hasSlot) {
-          row.appendChild(createSlotControlsBar(idx, "#F8FAFC", false));
+          row.appendChild(createSlotControlsBar(idx, false));
         } else {
           const autoTag = document.createElement("span");
-          autoTag.className = "text-[10px] font-mono text-studio-muted px-2 py-0.5 rounded bg-studio-bg";
-          autoTag.textContent = "Fallback";
+          autoTag.className = "text-[10px] font-mono text-slag px-2 py-0.5 bg-soot border border-iron";
+          autoTag.textContent = "DEFAULT";
           row.appendChild(autoTag);
         }
 
@@ -2339,7 +2379,7 @@
 
     /**
      * =========================================================================
-     * 16. PINNED SWATCHES BAR & PALETTE LIBRARY DRAWER
+     * 16. INGOT RACK (PINNED SWATCHES) & FOUNDRY VAULT DRAWER
      * =========================================================================
      */
     function renderPinnedDock() {
@@ -2348,11 +2388,11 @@
       const loadBtn = document.getElementById("btn-load-pinned-to-active");
       const clearBtn = document.getElementById("btn-clear-pinned");
 
-      countBadge.textContent = state.pinned.length;
+      countBadge.textContent = String(state.pinned.length).padStart(2, "0");
       list.innerHTML = "";
 
       if (state.pinned.length === 0) {
-        list.innerHTML = `<span class="text-[11px] text-studio-muted/70 italic">Pin favorite colors across rolls to collect them here</span>`;
+        list.innerHTML = `<span class="text-[10px] font-mono text-slag/70 uppercase">NO INGOTS PINNED — CAST FAVORITE SWATCHES HERE ACROSS ROLLS</span>`;
         loadBtn.classList.add("hidden");
         clearBtn.classList.add("hidden");
         return;
@@ -2364,28 +2404,28 @@
       state.pinned.forEach(hex => {
         const nameInfo = getClosestColorName(hex);
         const chip = document.createElement("div");
-        chip.title = `${hex} (${nameInfo.label}) — Click hex to copy, or + to apply to active palette`;
-        chip.className = "flex items-center gap-1.5 bg-studio-panel hover:bg-studio-hover border border-studio-border rounded-lg pl-1.5 pr-1 py-0.5 text-[11px] shrink-0 transition";
+        chip.title = `${hex} (${nameInfo.label}) — Click hex to copy, [+] to load into active crucible`;
+        chip.className = "flex items-center gap-1.5 bg-kiln border border-iron pl-1.5 pr-1 py-0.5 text-[11px] font-mono shrink-0";
 
         const dot = document.createElement("span");
         dot.style.backgroundColor = hex;
-        dot.className = "w-3.5 h-3.5 rounded border border-white/20 cursor-pointer";
+        dot.className = "w-3.5 h-3.5 border border-iron cursor-pointer";
         dot.onclick = () => copyTextToClipboard(hex);
 
         const label = document.createElement("button");
-        label.className = "font-mono text-studio-text hover:text-white cursor-pointer";
+        label.className = "text-ash hover:text-amberheat cursor-pointer font-bold";
         label.textContent = hex;
         label.onclick = () => copyTextToClipboard(hex);
 
         const applyBtn = document.createElement("button");
-        applyBtn.className = "text-studio-muted hover:text-emerald-400 px-1 rounded cursor-pointer font-bold";
-        applyBtn.title = "Apply color to active palette slot";
+        applyBtn.className = "text-slag hover:text-amberheat px-1 cursor-pointer font-bold";
+        applyBtn.title = "Inject into active crucible slot";
         applyBtn.textContent = "+";
         applyBtn.onclick = () => applyPinnedToSlot(hex);
 
         const delBtn = document.createElement("button");
-        delBtn.className = "text-studio-muted hover:text-rose-400 px-1 rounded cursor-pointer";
-        delBtn.title = "Remove pin";
+        delBtn.className = "text-slag hover:text-red-400 px-1 cursor-pointer";
+        delBtn.title = "Discard ingot";
         delBtn.textContent = "×";
         delBtn.onclick = () => unpinColor(hex);
 
@@ -2403,9 +2443,7 @@
         if (rawSaved) state.savedLibraries = JSON.parse(rawSaved);
         const rawPinned = localStorage.getItem(STORAGE_KEY_PINNED);
         if (rawPinned) state.pinned = JSON.parse(rawPinned);
-      } catch (e) {
-        // Ignore storage errors in restricted environments
-      }
+      } catch (e) {}
     }
 
     function saveLibraryToStorage() {
@@ -2421,53 +2459,53 @@
     }
 
     function renderDrawerContents() {
-      document.getElementById("drawer-active-count").textContent = `${state.slots.length} colors`;
-      document.getElementById("drawer-pinned-count").textContent = `${state.pinned.length} pinned`;
+      document.getElementById("drawer-active-count").textContent = `${String(state.slots.length).padStart(2, "0")} SLOTS`;
+      document.getElementById("drawer-pinned-count").textContent = `${String(state.pinned.length).padStart(2, "0")} INGOTS`;
 
       const savedList = document.getElementById("saved-palettes-list");
       savedList.innerHTML = "";
 
       if (state.savedLibraries.length === 0) {
-        savedList.innerHTML = `<div class="text-studio-muted text-[11px] bg-studio-panel/50 border border-studio-border rounded-xl p-3 text-center">No saved palettes yet. Save your active palette or pinned swatches above.</div>`;
+        savedList.innerHTML = `<div class="text-slag text-[11px] font-mono kiln-recess p-3 text-center">VAULT EMPTY — STAMP YOUR CRUCIBLE OR INGOT RACK ABOVE.</div>`;
       } else {
         state.savedLibraries.forEach(item => {
           const card = document.createElement("div");
-          card.className = "bg-studio-panel border border-studio-border rounded-xl p-3 space-y-2";
+          card.className = "kiln-recess p-3 space-y-2";
 
           const top = document.createElement("div");
           top.className = "flex items-center justify-between gap-2";
           top.innerHTML = `
             <div class="min-w-0">
-              <div class="font-medium text-white truncate">${item.name}</div>
-              <div class="text-[10px] text-studio-muted uppercase tracking-wider">${item.type === "pinned" ? "Pinned Set" : "Palette"} · ${item.colors.length} colors</div>
+              <div class="font-display font-bold text-ash uppercase truncate">${item.name}</div>
+              <div class="text-[10px] font-mono text-slag uppercase">${item.type === "pinned" ? "INGOT RACK" : "CRUCIBLE"} // ${item.colors.length} UNITS</div>
             </div>
           `;
 
           const actions = document.createElement("div");
-          actions.className = "flex items-center gap-1.5 shrink-0";
+          actions.className = "flex items-center gap-1 shrink-0";
 
           const loadActiveBtn = document.createElement("button");
-          loadActiveBtn.className = "bg-white text-studio-bg hover:bg-gray-200 font-medium px-2.5 py-1 rounded-md text-[11px] cursor-pointer";
-          loadActiveBtn.textContent = "Load";
+          loadActiveBtn.className = "mech-btn px-2 py-1 text-[10px] font-mono font-bold text-amberheat uppercase";
+          loadActiveBtn.textContent = "SMELT";
           loadActiveBtn.onclick = () => {
             loadColorsIntoActive(item.colors);
             closeDrawer();
-            showToast(`Loaded "${item.name}"`);
+            showToast(`LOADED "${item.name}"`);
           };
 
           const loadPinsBtn = document.createElement("button");
-          loadPinsBtn.className = "bg-studio-bg hover:bg-studio-hover border border-studio-border text-white px-2 py-1 rounded-md text-[11px] cursor-pointer";
-          loadPinsBtn.textContent = "To Pins";
+          loadPinsBtn.className = "mech-btn px-2 py-1 text-[10px] font-mono uppercase";
+          loadPinsBtn.textContent = "-> RACK";
           loadPinsBtn.onclick = () => {
             state.pinned = [...new Set([...state.pinned, ...item.colors])];
             savePinnedToStorage();
             renderPinnedDock();
-            showToast(`Added ${item.colors.length} colors to Pinned`);
+            showToast(`CAST ${item.colors.length} INGOTS TO RACK`);
           };
 
           const delBtn = document.createElement("button");
-          delBtn.className = "text-studio-muted hover:text-rose-400 px-1.5 py-1 rounded text-xs cursor-pointer";
-          delBtn.textContent = "×";
+          delBtn.className = "mech-btn px-2 py-1 text-[10px] font-mono text-slag hover:text-red-400";
+          delBtn.textContent = "✕";
           delBtn.onclick = () => {
             state.savedLibraries = state.savedLibraries.filter(x => x.id !== item.id);
             saveLibraryToStorage();
@@ -2480,7 +2518,7 @@
           top.appendChild(actions);
 
           const strip = document.createElement("div");
-          strip.className = "h-5 rounded-md overflow-hidden flex border border-white/10";
+          strip.className = "h-5 flex border-2 border-iron";
           item.colors.forEach(c => {
             const seg = document.createElement("div");
             seg.style.backgroundColor = c;
@@ -2494,23 +2532,22 @@
         });
       }
 
-      // Starter Palettes
       const starterList = document.getElementById("starter-palettes-list");
       starterList.innerHTML = "";
       STARTER_PALETTES.forEach(sp => {
         const card = document.createElement("div");
-        card.className = "bg-studio-panel border border-studio-border rounded-xl p-3 space-y-2 hover:border-white/20 transition cursor-pointer";
+        card.className = "kiln-recess p-3 space-y-2 hover:border-molten transition cursor-pointer";
         card.onclick = () => {
           loadColorsIntoActive(sp.colors);
           closeDrawer();
-          showToast(`Loaded "${sp.name}"`);
+          showToast(`LOADED "${sp.name}"`);
         };
         card.innerHTML = `
           <div class="flex items-center justify-between">
-            <span class="font-medium text-white">${sp.name}</span>
-            <span class="text-[11px] text-studio-muted">Click to load</span>
+            <span class="font-display font-bold text-ash uppercase">${sp.name}</span>
+            <span class="text-[10px] font-mono text-amberheat">[LOAD]</span>
           </div>
-          <div class="h-4 rounded-md overflow-hidden flex border border-white/10">
+          <div class="h-4 flex border-2 border-iron">
             ${sp.colors.map(c => `<div style="background:${c}" class="flex-1 h-full"></div>`).join("")}
           </div>
         `;
@@ -2543,7 +2580,7 @@
 
     /**
      * =========================================================================
-     * 17. MASTER RENDER & INITIALIZATION
+     * 17. MASTER RENDER & AUXILIARY MANIFOLD CONTROLS
      * =========================================================================
      */
     function renderViewSwitcher() {
@@ -2552,24 +2589,77 @@
       VIEW_MODES.forEach(mode => {
         const btn = document.createElement("button");
         const active = state.view === mode.id;
-        btn.className = `px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap transition cursor-pointer ${
-          active ? "bg-white text-studio-bg shadow-sm" : "text-studio-muted hover:text-white hover:bg-studio-hover"
+        btn.className = `mech-btn px-2.5 py-1 text-[11px] font-mono font-bold uppercase whitespace-nowrap ${
+          active ? "mech-switch-active" : "text-slag"
         }`;
-        btn.textContent = mode.label;
+        btn.textContent = mode.code;
         btn.onclick = () => {
           state.view = mode.id;
           renderViewSwitcher();
+          renderAuxControls();
           renderStage();
         };
         nav.appendChild(btn);
       });
     }
 
+    function renderAuxControls() {
+      const aux = document.getElementById("mode-aux-controls");
+      aux.innerHTML = "";
+
+      if (state.view === "mosaic") {
+        const btn = document.createElement("button");
+        btn.className = "mech-btn px-2.5 py-1 text-[10px] font-mono font-bold text-amberheat uppercase";
+        btn.textContent = "RE-CUT MOSAIC";
+        btn.onclick = () => { state.mosaicSeed += 13; renderStage(); };
+        aux.appendChild(btn);
+      } else if (state.view === "dots") {
+        const backdrops = [
+          { id: "soot", label: "BG:SOOT" },
+          { id: "iron", label: "BG:IRON" },
+          { id: "ash", label: "BG:ASH" }
+        ];
+        backdrops.forEach(b => {
+          const btn = document.createElement("button");
+          btn.className = `mech-btn px-2 py-1 text-[10px] font-mono uppercase ${
+            state.dotsBackdrop === b.id ? "mech-switch-active" : "text-slag"
+          }`;
+          btn.textContent = b.label;
+          btn.onclick = () => { state.dotsBackdrop = b.id; renderAuxControls(); renderStage(); };
+          aux.appendChild(btn);
+        });
+
+        const rescatter = document.createElement("button");
+        rescatter.className = "mech-btn px-2.5 py-1 text-[10px] font-mono font-bold text-amberheat uppercase";
+        rescatter.textContent = "RE-SCATTER";
+        rescatter.onclick = () => { state.dotsSeed += 19; renderStage(); };
+        aux.appendChild(rescatter);
+      } else if (state.view === "creature") {
+        const archetypes = [
+          { id: "sentinel", label: "SENTINEL" },
+          { id: "walker", label: "WALKER" },
+          { id: "valkyrie", label: "VALKYRIE" }
+        ];
+        archetypes.forEach(a => {
+          const btn = document.createElement("button");
+          btn.className = `mech-btn px-2 py-1 text-[10px] font-mono uppercase ${
+            state.creatureArchetype === a.id ? "mech-switch-active" : "text-slag"
+          }`;
+          btn.textContent = a.label;
+          btn.onclick = () => { state.creatureArchetype = a.id; renderAuxControls(); renderStage(); };
+          aux.appendChild(btn);
+        });
+      }
+    }
+
     function renderStage() {
       const stage = document.getElementById("stage");
       stage.innerHTML = "";
 
-      // Apply CVD Filter if active
+      const activeModeObj = VIEW_MODES.find(m => m.id === state.view);
+      document.getElementById("status-readout").textContent =
+        `MODE: ${activeModeObj ? activeModeObj.code : "01.GRID"} // PERCEPTUAL GUARD ΔE ≥ ${getEffectiveThreshold(state.slots.length).toFixed(1)}`;
+
       if (state.cvd === "none") {
         stage.style.filter = "none";
       } else {
@@ -2588,61 +2678,69 @@
     }
 
     function renderAll() {
-      document.getElementById("count-display").textContent = state.slots.length;
+      document.getElementById("count-display").textContent = String(state.slots.length).padStart(2, "0");
       document.getElementById("btn-count-dec").disabled = state.slots.length <= 1;
       document.getElementById("btn-count-inc").disabled = state.slots.length >= 24;
       renderPinnedDock();
+      renderAuxControls();
       renderStage();
     }
 
     function initApp() {
       loadSavedFromStorage();
 
-      // Default N = 7 slots
-      state.slots = Array.from({ length: 7 }, () => ({
+      // Initialize with the 7-slot Dwarven Smelter theme unlocked and ready
+      const initialHexes = ["#110F0E", "#1E1916", "#EAE6E1", "#EA580C", "#28211D", "#38302B", "#F59E0B"];
+      state.slots = initialHexes.map(hex => ({
         id: nextSlotId(),
-        hex: "#111216",
+        hex,
         locked: false
       }));
-      generatePalette(true);
+      pushHistory();
 
       renderViewSwitcher();
       bindPopoverEvents();
+      renderAll();
 
-      // Primary Toolbar Controls
+      // Primary Gantry Controls
       document.getElementById("btn-generate").addEventListener("click", () => generatePalette(true));
       document.getElementById("btn-undo").addEventListener("click", undo);
       document.getElementById("btn-redo").addEventListener("click", redo);
       document.getElementById("btn-count-dec").addEventListener("click", () => setPaletteCount(state.slots.length - 1));
       document.getElementById("btn-count-inc").addEventListener("click", () => setPaletteCount(state.slots.length + 1));
 
+      document.getElementById("guard-select").addEventListener("change", e => {
+        state.baseDeltaE = parseInt(e.target.value, 10) || 22;
+        renderStage();
+      });
+
       document.getElementById("cvd-select").addEventListener("change", e => {
         state.cvd = e.target.value;
         renderStage();
       });
 
-      // Pinned Dock Bulk Actions
+      // Ingot Rack Actions
       document.getElementById("btn-load-pinned-to-active").addEventListener("click", () => {
         if (state.pinned.length === 0) return;
         loadColorsIntoActive(state.pinned);
-        showToast("Loaded Pinned Swatches into active palette");
+        showToast("SMELTED INGOT RACK INTO ACTIVE CRUCIBLE");
       });
 
       document.getElementById("btn-clear-pinned").addEventListener("click", () => {
         state.pinned = [];
         savePinnedToStorage();
         renderPinnedDock();
-        showToast("Cleared pinned swatches");
+        showToast("PURGED INGOT RACK");
       });
 
-      // Drawer Controls
+      // Vault Drawer Controls
       document.getElementById("btn-open-drawer").addEventListener("click", openDrawer);
       document.getElementById("btn-close-drawer").addEventListener("click", closeDrawer);
       document.getElementById("drawer-backdrop").addEventListener("click", closeDrawer);
 
       document.getElementById("btn-save-active").addEventListener("click", () => {
         const input = document.getElementById("save-active-name");
-        const name = input.value.trim() || `Palette (${state.slots.length} colors)`;
+        const name = input.value.trim() || `CRUCIBLE (${state.slots.length} SLOTS)`;
         state.savedLibraries.unshift({
           id: Date.now().toString(),
           name,
@@ -2653,16 +2751,16 @@
         input.value = "";
         saveLibraryToStorage();
         renderDrawerContents();
-        showToast(`Saved "${name}"`);
+        showToast(`STAMPED "${name}" TO VAULT`);
       });
 
       document.getElementById("btn-save-pinned").addEventListener("click", () => {
         if (state.pinned.length === 0) {
-          showToast("Pin at least 1 color first", "#F43F5E");
+          showToast("CAST AT LEAST 1 INGOT TO RACK FIRST", "#EA580C");
           return;
         }
         const input = document.getElementById("save-pinned-name");
-        const name = input.value.trim() || `Pinned Set (${state.pinned.length})`;
+        const name = input.value.trim() || `INGOT RACK (${state.pinned.length})`;
         state.savedLibraries.unshift({
           id: Date.now().toString(),
           name,
@@ -2673,17 +2771,17 @@
         input.value = "";
         saveLibraryToStorage();
         renderDrawerContents();
-        showToast(`Saved "${name}"`);
+        showToast(`SAVED "${name}" TO VAULT`);
       });
 
       document.getElementById("btn-export-css").addEventListener("click", () => {
-        const css = `:root {\n${state.slots.map((s, i) => `  --color-${i + 1}: ${s.hex}; /* ${getClosestColorName(s.hex).label} */`).join("\n")}\n}`;
-        copyTextToClipboard(css, "Copied CSS variables to clipboard");
+        const css = `:root {\n${state.slots.map((s, i) => `  --ingot-${String(i + 1).padStart(2, "0")}: ${s.hex}; /* ${getClosestColorName(s.hex).label} */`).join("\n")}\n}`;
+        copyTextToClipboard(css, "COPIED CSS :ROOT VARIABLES");
       });
 
       document.getElementById("btn-export-json").addEventListener("click", () => {
         const json = JSON.stringify(state.slots.map(s => s.hex));
-        copyTextToClipboard(json, "Copied JSON array to clipboard");
+        copyTextToClipboard(json, "COPIED JSON MANIFEST");
       });
 
       document.getElementById("btn-import-json").addEventListener("click", () => {
@@ -2691,16 +2789,16 @@
         if (!raw) return;
         const matches = raw.match(/#?[0-9A-Fa-f]{6}\b/g);
         if (!matches || matches.length === 0) {
-          showToast("No valid hex codes found", "#F43F5E");
+          showToast("NO VALID HEX CODES FOUND", "#EA580C");
           return;
         }
         loadColorsIntoActive(matches);
         document.getElementById("import-json-input").value = "";
         closeDrawer();
-        showToast(`Imported ${Math.min(24, matches.length)} colors`);
+        showToast(`LOADED ${Math.min(24, matches.length)} UNITS INTO CRUCIBLE`);
       });
 
-      // Global Keyboard Shortcuts (Spacebar Generate, Ctrl/Cmd+Z Undo, Ctrl/Cmd+Y Redo)
+      // Keyboard Shortcuts
       document.addEventListener("keydown", e => {
         const tag = document.activeElement?.tagName;
         const isTyping = tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
@@ -2729,7 +2827,6 @@
         }
       });
 
-      // Re-compute responsive layouts smoothly on resize
       let resizeTimer = null;
       window.addEventListener("resize", () => {
         clearTimeout(resizeTimer);
