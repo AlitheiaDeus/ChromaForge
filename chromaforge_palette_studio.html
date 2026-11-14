@@ -3,29 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CHROMA//FORGE — Industrial Color Smelter & Drafting Console</title>
+  <title>Color Palette Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            display: ['"Chakra Petch"', 'sans-serif'],
+            display: ['"Cinzel"', 'serif'],
+            sans: ['"Inter"', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
-            soot: '#110F0E',
-            kiln: '#1E1916',
-            recess: '#171311',
-            iron: '#332D29',
-            bevel: '#473E39',
-            ash: '#EAE6E1',
-            slag: '#9A9087',
-            molten: '#EA580C',
-            amberheat: '#F59E0B',
+            basalt: '#0B090A',
+            cavern: '#120E0D',
+            slab: '#191311',
+            chisel: '#2C201B',
+            bronze: '#4A3325',
+            ash: '#F3EDE4',
+            cinder: '#A69588',
+            magma: '#EA580C',
+            whitehot: '#FEF08A',
           }
         }
       }
@@ -35,199 +36,172 @@
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
-      border-radius: 2px;
     }
 
     html, body {
       margin: 0;
       padding: 0;
-      background-color: #110F0E;
-      color: #EAE6E1;
-      font-family: 'JetBrains Mono', monospace;
-      overflow-x: hidden;
+      background-color: #0B090A;
+      color: #F3EDE4;
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
       height: 100%;
     }
 
-    /* Heavy Industrial Scrollbars */
+    /* Subtle Scrollbars */
     ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
     }
     ::-webkit-scrollbar-track {
-      background: #110F0E;
-      border-left: 1px solid #332D29;
-      border-top: 1px solid #332D29;
+      background: #0B090A;
     }
     ::-webkit-scrollbar-thumb {
-      background: #332D29;
-      border: 1px solid #473E39;
+      background: #2C201B;
+      border: 1px solid #4A3325;
     }
     ::-webkit-scrollbar-thumb:hover {
       background: #EA580C;
     }
 
-    /* Recessed Kiln-Brick & Iron Plate Surfaces */
-    .iron-plate {
-      background-color: #1E1916;
-      border: 2px solid #332D29;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), inset 0 2px 6px rgba(0, 0, 0, 0.85);
+    /* Carved Dark Basalt Stone Slabs */
+    .basalt-slab {
+      background: linear-gradient(180deg, #1C1513 0%, #130E0D 100%);
+      border-top: 1px solid rgba(255, 190, 110, 0.16);
+      border-bottom: 2px solid #050404;
+      box-shadow: inset 0 1px 0 rgba(255, 220, 160, 0.06), 0 6px 20px rgba(0, 0, 0, 0.75);
       position: relative;
     }
 
-    .kiln-recess {
-      background-color: #171311;
-      border: 2px solid #332D29;
-      box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.92);
+    .carved-recess {
+      background-color: #0D0A09;
+      border: 1px solid #2A1E19;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(255, 180, 100, 0.07);
     }
 
-    /* Corner Rivets Utility */
-    .riveted {
-      position: relative;
-    }
-    .riveted::before,
-    .riveted::after {
-      content: "";
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: #473E39;
-      border: 1px solid #080706;
-      pointer-events: none;
-      z-index: 10;
-    }
-    .riveted::before {
-      top: 4px;
-      left: 4px;
-      box-shadow: calc(100% - 8px) 0 0 #473E39;
-    }
-    .riveted::after {
-      bottom: 4px;
-      left: 4px;
-      box-shadow: 0 0 0 #473E39;
-    }
-
-    /* Tactile Mechanical Buttons */
-    .mech-btn {
-      background-color: #1E1916;
-      color: #EAE6E1;
-      border: 2px solid #332D29;
-      border-top-color: #473E39;
-      box-shadow: 0 3px 0 #080706;
-      transition: transform 0.06s ease, box-shadow 0.06s ease, border-color 0.12s ease, background-color 0.12s ease;
+    /* Chiseled Stone Buttons */
+    .forge-btn {
+      background: linear-gradient(180deg, #241B18 0%, #17110F 100%);
+      color: #E7DFD5;
+      border: 1px solid #3A281E;
+      border-top-color: rgba(255, 195, 120, 0.22);
+      border-bottom: 2px solid #070505;
+      box-shadow: 0 2px 0 #050404;
+      transition: all 0.1s ease;
       cursor: pointer;
     }
-    .mech-btn:hover:not(:disabled) {
-      background-color: #28211D;
-      border-color: #574C46;
+    .forge-btn:hover:not(:disabled) {
+      background: linear-gradient(180deg, #2F231E 0%, #1F1714 100%);
+      border-color: #6E4730;
       color: #FFFFFF;
+      box-shadow: 0 2px 0 #050404, 0 0 10px rgba(234, 88, 12, 0.2);
     }
-    .mech-btn:active:not(:disabled) {
-      transform: translateY(2px);
-      box-shadow: 0 1px 0 #080706;
+    .forge-btn:active:not(:disabled) {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 #050404;
     }
-    .mech-btn:disabled {
+    .forge-btn:disabled {
       opacity: 0.35;
       cursor: not-allowed;
     }
 
-    /* Active Switch State (Molten Indicator) */
-    .mech-switch-active {
-      background-color: #261B14 !important;
+    /* Active Mode / Toggle Button State */
+    .forge-btn-active {
+      background: linear-gradient(180deg, #331C12 0%, #1F100A 100%) !important;
       border-color: #EA580C !important;
-      color: #F59E0B !important;
-      box-shadow: inset 0 0 8px rgba(234, 88, 12, 0.25), 0 1px 0 #080706 !important;
-      transform: translateY(1px);
+      border-top-color: #FDBA74 !important;
+      color: #FEF08A !important;
+      box-shadow: inset 0 0 10px rgba(234, 88, 12, 0.35), 0 1px 0 #050404 !important;
     }
 
-    /* Primary Molten Ignite CTA */
-    .ignite-btn {
-      background: linear-gradient(180deg, #EA580C 0%, #B83B06 100%);
-      color: #110F0E;
+    /* White-Hot Metal Billet Generate Button */
+    .whitehot-btn {
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF08A 24%, #FB923C 62%, #EA580C 100%);
+      color: #140B07;
       font-weight: 700;
-      border: 2px solid #F59E0B;
-      box-shadow: 0 3px 0 #080706, 0 0 12px rgba(234, 88, 12, 0.35);
-      transition: transform 0.06s ease, box-shadow 0.15s ease, filter 0.15s ease;
+      border: 1px solid #FFFBEB;
+      border-bottom: 2px solid #9A3412;
+      box-shadow:
+        0 3px 0 #2A0F05,
+        0 0 18px rgba(251, 146, 60, 0.55),
+        inset 0 1px 2px rgba(255, 255, 255, 0.9);
+      transition: transform 0.07s ease, box-shadow 0.15s ease, filter 0.15s ease;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
     }
-    .ignite-btn:hover {
-      background: linear-gradient(180deg, #F59E0B 0%, #EA580C 100%);
-      box-shadow: 0 3px 0 #080706, 0 0 20px rgba(245, 158, 11, 0.65);
+    .whitehot-btn:hover {
+      filter: brightness(1.07);
+      box-shadow:
+        0 3px 0 #2A0F05,
+        0 0 26px rgba(254, 240, 138, 0.8),
+        0 0 42px rgba(234, 88, 12, 0.55),
+        inset 0 1px 3px #FFFFFF;
     }
-    .ignite-btn:active {
-      transform: translateY(2px);
-      box-shadow: 0 1px 0 #080706, 0 0 10px rgba(234, 88, 12, 0.45);
-    }
-
-    /* Drafting Table Ruler Background Grid */
-    .drafting-surface {
-      background-color: #110F0E;
-      background-image:
-        linear-gradient(to right, rgba(51, 45, 41, 0.22) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(51, 45, 41, 0.22) 1px, transparent 1px);
-      background-size: 24px 24px;
-    }
-
-    /* Top Horizontal Ruler Ticks */
-    .ruler-top {
-      background-color: #171311;
-      background-image: repeating-linear-gradient(
-        to right,
-        #332D29 0px,
-        #332D29 1px,
-        transparent 1px,
-        transparent 12px
-      );
+    .whitehot-btn:active, .whitehot-btn.anvil-struck {
+      transform: translateY(2px) scale(0.985);
+      box-shadow:
+        0 1px 0 #2A0F05,
+        0 0 34px rgba(255, 255, 255, 0.95),
+        0 0 60px rgba(249, 115, 22, 0.9);
     }
 
-    /* Left Vertical Ruler Ticks */
-    .ruler-left {
-      background-color: #171311;
-      background-image: repeating-linear-gradient(
-        to bottom,
-        #332D29 0px,
-        #332D29 1px,
-        transparent 1px,
-        transparent 12px
-      );
+    /* Anvil Strike Frame Flash */
+    @keyframes anvilFlash {
+      0% {
+        box-shadow: inset 0 0 0 2px #FFFBEB, inset 0 0 38px rgba(254, 240, 138, 0.65);
+      }
+      100% {
+        box-shadow: inset 0 0 0 0 transparent, inset 0 0 0 transparent;
+      }
+    }
+    .strike-flash {
+      animation: anvilFlash 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Industrial Range Sliders */
-    input[type="range"].smelter-slider {
+    /* Ambient Lava Lake Underglow at Bottom of Viewport */
+    .lava-underglow {
+      background: radial-gradient(ellipse 80% 55% at 50% 105%, rgba(234, 88, 12, 0.22) 0%, rgba(154, 52, 18, 0.08) 50%, transparent 80%);
+    }
+
+    /* Range Sliders */
+    input[type="range"].forge-slider {
       -webkit-appearance: none;
       appearance: none;
       width: 100%;
-      height: 12px;
+      height: 8px;
       outline: none;
       cursor: pointer;
-      border: 2px solid #332D29;
-      background: #110F0E;
+      border: 1px solid #3A281E;
+      background: #0D0A09;
+      border-radius: 2px;
     }
-    input[type="range"].smelter-slider::-webkit-slider-thumb {
+    input[type="range"].forge-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
       width: 14px;
-      height: 20px;
-      background: #EAE6E1;
-      border: 2px solid #110F0E;
-      box-shadow: 0 2px 0 #080706;
+      height: 18px;
+      background: linear-gradient(180deg, #FEF08A 0%, #EA580C 100%);
+      border: 1px solid #FFFBEB;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
       cursor: pointer;
+      border-radius: 1px;
     }
-    input[type="range"].smelter-slider::-webkit-slider-thumb:hover {
-      background: #F59E0B;
-    }
-    input[type="range"].smelter-slider::-moz-range-thumb {
+    input[type="range"].forge-slider::-moz-range-thumb {
       width: 14px;
-      height: 20px;
-      background: #EAE6E1;
-      border: 2px solid #110F0E;
-      box-shadow: 0 2px 0 #080706;
+      height: 18px;
+      background: linear-gradient(180deg, #FEF08A 0%, #EA580C 100%);
+      border: 1px solid #FFFBEB;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
       cursor: pointer;
+      border-radius: 1px;
     }
 
-    /* Drag & Drop Target Highlight */
+    /* Drag & Drop Target Outline */
     .drag-over-target {
-      outline: 3px dashed #F59E0B !important;
-      outline-offset: -5px;
+      outline: 2px dashed #FEF08A !important;
+      outline-offset: -4px;
+      z-index: 30;
     }
 
     /* Panning Cursors */
@@ -238,487 +212,400 @@
       cursor: grabbing !important;
       user-select: none;
     }
-
-    /*Locked Swatch Molten Indicator */
-    .swatch-locked {
-      box-shadow: inset 0 0 0 2px #EA580C, 0 4px 10px rgba(0, 0, 0, 0.85) !important;
-    }
   </style>
 </head>
-<body class="flex flex-col h-screen select-none bg-soot text-ash">
+<body class="flex flex-col h-screen select-none bg-basalt text-ash relative">
 
-  <!-- SVG Color Vision Deficiency (CVD) Optical Filters -->
-  <svg class="hidden" aria-hidden="true">
-    <defs>
-      <filter id="cvd-protanopia">
-        <feColorMatrix type="matrix" values="
-          0.567, 0.433, 0,     0, 0
-          0.558, 0.442, 0,     0, 0
-          0,     0.242, 0.758, 0, 0
-          0,     0,     0,     1, 0" />
-      </filter>
-      <filter id="cvd-deuteranopia">
-        <feColorMatrix type="matrix" values="
-          0.625, 0.375, 0,   0, 0
-          0.7,   0.3,   0,   0, 0
-          0,     0.3,   0.7, 0, 0
-          0,     0,     0,   1, 0" />
-      </filter>
-      <filter id="cvd-tritanopia">
-        <feColorMatrix type="matrix" values="
-          0.95, 0.05,  0,     0, 0
-          0,    0.433, 0.567, 0, 0
-          0,    0.475, 0.525, 0, 0
-          0,    0,     0,     1, 0" />
-      </filter>
-    </defs>
-  </svg>
+  <!-- Ambient Cavern Ember & Spark Canvas (Background + Anvil Strike Sparks) -->
+  <canvas id="forge-fx-canvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
 
   <!-- ===================================================================== -->
-  <!-- 1. TOP GANTRY CONTROL PLATE                                           -->
+  <!-- 1. TOP CONTROL BAR (PLAIN LABELS, NO GIMMICK METAPHORS)               -->
   <!-- ===================================================================== -->
-  <header class="iron-plate border-b-2 border-iron px-3 sm:px-4 py-2 flex flex-wrap items-center justify-between gap-2.5 z-30 shrink-0">
-    <!-- Left: Foundry Brand + Primary Controls -->
-    <div class="flex flex-wrap items-center gap-2 sm:gap-3">
-      <!-- Brand Stamp -->
-      <div class="flex items-center gap-2.5 pr-2 border-r-2 border-iron">
-        <div class="w-8 h-8 kiln-recess flex items-center justify-center border-2 border-molten">
-          <svg class="w-4 h-4 text-amberheat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
-            <path d="M4 20h16"/>
-            <path d="M6 16h12l1-9H5l1 9Z"/>
-            <path d="M9 7V4h6v3"/>
-          </svg>
-        </div>
-        <div>
-          <div class="font-display font-bold tracking-wider text-sm sm:text-base text-ash leading-none">
-            CHROMA<span class="text-molten">//</span>FORGE
-          </div>
-          <div class="text-[9px] font-mono text-slag tracking-widest uppercase mt-0.5">
-            SMELTER UNIT MK-IV
-          </div>
-        </div>
-      </div>
+  <header class="basalt-slab px-3 py-2 flex flex-wrap items-center justify-between gap-2 z-30 shrink-0">
+    <!-- Left: Generate + Color Count + Seamless/Framed + Undo/Redo -->
+    <div class="flex flex-wrap items-center gap-2">
+      <!-- Primary White-Hot Metal Generate Button -->
+      <button id="btn-generate" title="Generate new unlocked colors (Spacebar)"
+        class="whitehot-btn px-4 py-1.5 rounded-sm text-xs uppercase tracking-wider flex items-center gap-2">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/>
+        </svg>
+        <span>Generate</span>
+        <kbd class="hidden sm:inline-block text-[10px] font-mono bg-black/25 text-black px-1.5 py-0.2 rounded-sm font-semibold">Space</kbd>
+      </button>
 
-      <!-- Crucible Slot Counter (N-Colors) -->
-      <div class="flex items-center kiln-recess p-0.5" title="Active Crucible Slot Count (1–24)">
-        <span class="text-[10px] font-mono text-slag uppercase px-2 hidden sm:inline">SLOTS</span>
-        <button id="btn-count-dec" aria-label="Decrease slot count"
-          class="mech-btn w-7 h-7 flex items-center justify-center font-mono font-bold text-xs">
+      <!-- Colors Count (- / +) -->
+      <div class="flex items-center carved-recess px-1 py-0.5 rounded-sm" title="Number of Colors (2–24)">
+        <span class="text-[11px] text-cinder px-2 hidden sm:inline">Colors</span>
+        <button id="btn-count-dec" aria-label="Decrease color count"
+          class="forge-btn w-6 h-6 flex items-center justify-center font-mono font-bold text-xs rounded-sm">
           -
         </button>
-        <div id="count-display" class="px-2.5 text-xs font-mono font-bold text-amberheat min-w-[2.4rem] text-center">
-          07
+        <div id="count-display" class="px-2.5 text-xs font-mono font-bold text-whitehot min-w-[2.1rem] text-center">
+          6
         </div>
-        <button id="btn-count-inc" aria-label="Increase slot count"
-          class="mech-btn w-7 h-7 flex items-center justify-center font-mono font-bold text-xs">
+        <button id="btn-count-inc" aria-label="Increase color count"
+          class="forge-btn w-6 h-6 flex items-center justify-center font-mono font-bold text-xs rounded-sm">
           +
         </button>
       </div>
 
-      <!-- IGNITE FORGE Primary CTA -->
-      <button id="btn-generate" title="Smelt new unlocked colors (Spacebar)"
-        class="ignite-btn px-3.5 py-1.5 text-xs font-display tracking-wider uppercase flex items-center gap-2">
-        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2c1.5 3.5 4 5.5 4 9a4 4 0 1 1-8 0c0-1.5.5-3 1.5-4.5C9.5 8 10.5 9 11 9c0-2.5.5-4.5 1-7z"/>
-          <path d="M12 22a7 7 0 0 0 7-7c0-3.5-2-6.5-5-8.5.5 2 0 3.5-1 4.5-.5-2-2-3.5-3-5-2.5 2-5 5-5 9a7 7 0 0 0 7 7z" fill-opacity="0.45"/>
-        </svg>
-        <span>IGNITE FORGE</span>
-        <kbd class="hidden md:inline-block text-[10px] font-mono bg-soot/85 text-amberheat px-1.5 py-0.5 border border-iron">SPACE</kbd>
+      <!-- Seamless vs Framed Toggle (Defaults to Seamless) -->
+      <div class="flex items-center carved-recess p-0.5 rounded-sm" title="Toggle between gapless/borderless tiles or framed tiles">
+        <button id="btn-mode-seamless" class="forge-btn forge-btn-active px-2.5 py-1 text-xs font-medium rounded-sm">
+          Seamless
+        </button>
+        <button id="btn-mode-framed" class="forge-btn px-2.5 py-1 text-xs font-medium rounded-sm">
+          Framed
+        </button>
+      </div>
+
+      <!-- Labels Visibility Toggle -->
+      <button id="btn-toggle-labels" title="Toggle text overlays on swatches (Shortcut: H)"
+        class="forge-btn px-2.5 py-1 text-xs font-medium rounded-sm flex items-center gap-1.5">
+        <span>Labels:</span>
+        <span id="labels-state-text" class="font-mono text-whitehot">Hover</span>
       </button>
 
-      <!-- Undo / Redo Mechanical Keys -->
+      <!-- Undo / Redo -->
       <div class="flex items-center gap-1">
         <button id="btn-undo" title="Undo (Ctrl+Z)" disabled
-          class="mech-btn px-2 py-1.5 text-[11px] font-mono flex items-center gap-1">
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          class="forge-btn px-2.5 py-1 text-xs rounded-sm flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/>
           </svg>
-          <span class="hidden xl:inline">UNDO</span>
+          <span class="hidden xl:inline">Undo</span>
         </button>
         <button id="btn-redo" title="Redo (Ctrl+Y)" disabled
-          class="mech-btn px-2 py-1.5 text-[11px] font-mono flex items-center gap-1">
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          class="forge-btn px-2.5 py-1 text-xs rounded-sm flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/>
           </svg>
-          <span class="hidden xl:inline">REDO</span>
+          <span class="hidden xl:inline">Redo</span>
         </button>
       </div>
     </div>
 
-    <!-- Right: Perceptual Guard, Optical CVD Filter & Vault Trigger -->
+    <!-- Center: 7 View Modes -->
+    <nav id="view-switcher" aria-label="View Modes" class="flex flex-wrap items-center gap-1">
+      <!-- Populated dynamically -->
+    </nav>
+
+    <!-- Right: Similarity Guard + Pinned Tray Toggle + Save / Load -->
     <div class="flex flex-wrap items-center gap-2">
-      <!-- Anti-Similarity ΔE Guard Selector -->
-      <div class="kiln-recess px-2 py-1 flex items-center gap-1.5 text-[11px]" title="CIELAB Perceptual Anti-Similarity Guard">
-        <span class="text-slag uppercase hidden sm:inline">GUARD:</span>
-        <select id="guard-select" class="bg-transparent text-ash font-mono text-[11px] focus:outline-none cursor-pointer">
-          <option value="26" class="bg-kiln text-ash">STRICT (ΔE 26)</option>
-          <option value="22" selected class="bg-kiln text-ash">STANDARD (ΔE 22)</option>
-          <option value="14" class="bg-kiln text-ash">RELAXED (ΔE 14)</option>
+      <!-- Perceptual Similarity Guard -->
+      <div class="carved-recess px-2 py-1 rounded-sm flex items-center gap-1.5 text-xs" title="Prevent auto-generating colors that are too similar">
+        <span class="text-cinder hidden md:inline">Guard:</span>
+        <select id="guard-select" class="bg-transparent text-ash font-mono text-xs focus:outline-none cursor-pointer">
+          <option value="26" class="bg-slab text-ash">Strict</option>
+          <option value="20" selected class="bg-slab text-ash">Normal</option>
+          <option value="12" class="bg-slab text-ash">Relaxed</option>
+          <option value="0" class="bg-slab text-ash">Off</option>
         </select>
       </div>
 
-      <!-- Optical Vision Simulator (CVD) -->
-      <div class="kiln-recess px-2 py-1 flex items-center gap-1.5 text-[11px]" title="Color Vision Deficiency Optical Filter">
-        <span class="text-slag uppercase hidden sm:inline">OPTICS:</span>
-        <select id="cvd-select" class="bg-transparent text-ash font-mono text-[11px] focus:outline-none cursor-pointer">
-          <option value="none" class="bg-kiln text-ash">NORMAL</option>
-          <option value="protanopia" class="bg-kiln text-ash">PROTANOPIA</option>
-          <option value="deuteranopia" class="bg-kiln text-ash">DEUTERANOPIA</option>
-          <option value="tritanopia" class="bg-kiln text-ash">TRITANOPIA</option>
-        </select>
-      </div>
-
-      <!-- Vault / Export Trigger -->
-      <button id="btn-open-drawer"
-        class="mech-btn px-3 py-1.5 text-xs font-display font-bold tracking-wider uppercase flex items-center gap-1.5">
-        <svg class="w-3.5 h-3.5 text-amberheat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-          <rect x="3" y="3" width="18" height="18" rx="2"/>
-          <circle cx="12" cy="12" r="4"/>
-          <line x1="12" y1="8" x2="12" y2="4"/>
-          <line x1="12" y1="20" x2="12" y2="16"/>
+      <!-- Pinned Colors Bar Toggle -->
+      <button id="btn-toggle-pins" title="Toggle Pinned Colors tray"
+        class="forge-btn px-2.5 py-1 text-xs rounded-sm flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5 text-magma" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M16 3H8v6l-2 4v2h5v6h2v-6h5v-2l-2-4V3z"/>
         </svg>
-        <span>VAULT // IO</span>
+        <span>Pinned</span>
+        <span id="pinned-count" class="font-mono text-[11px] bg-basalt px-1.5 py-0.2 rounded-sm text-whitehot">0</span>
+      </button>
+
+      <!-- Save / Load Modal Trigger -->
+      <button id="btn-open-drawer"
+        class="forge-btn px-3 py-1 text-xs font-medium rounded-sm flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+          <polyline points="17 21 17 13 7 13 7 21"/>
+          <polyline points="7 3 7 8 15 8"/>
+        </svg>
+        <span>Save / Load</span>
       </button>
     </div>
   </header>
 
   <!-- ===================================================================== -->
-  <!-- 2. MODE MANIFOLD & INGOT RACK (EXTERNAL PINNED DOCK)                  -->
+  <!-- 2. COLLAPSIBLE PINNED COLORS BAR (EXTERNAL PALETTE)                   -->
   <!-- ===================================================================== -->
-  <section class="bg-recess border-b-2 border-iron px-3 sm:px-4 py-1.5 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-2 shrink-0 z-20">
-    <!-- Left: 7 View Mode Selector Switches + Mode Context Controls -->
-    <div class="flex flex-wrap items-center gap-1.5">
-      <span class="text-[10px] font-mono uppercase tracking-widest text-slag mr-1 hidden sm:inline">MANIFOLD:</span>
-      <nav id="view-switcher" aria-label="View Modes" class="flex flex-wrap items-center gap-1">
-        <!-- Populated dynamically -->
-      </nav>
-
-      <!-- Mode-specific auxiliary mechanical controls (Mosaic re-cut, Scatter options, Construct chassis) -->
-      <div id="mode-aux-controls" class="flex items-center gap-1.5 pl-2 border-l-2 border-iron ml-1 empty:hidden">
-        <!-- Populated dynamically per view -->
+  <section id="pinned-tray" class="hidden bg-cavern border-b border-chisel px-3 py-1.5 flex items-center justify-between gap-3 shrink-0 z-20">
+    <div class="flex items-center gap-2 overflow-x-auto py-0.5 flex-1 min-w-0">
+      <span class="text-xs font-medium text-cinder shrink-0">Pinned Colors:</span>
+      <div id="pinned-list" class="flex items-center gap-1.5">
+        <!-- Pinned Swatches Injected Here -->
       </div>
     </div>
 
-    <!-- Right: Recessed Ingot Rack (External Pinned Swatches) -->
-    <div class="kiln-recess px-2.5 py-1 flex items-center justify-between gap-2 min-w-0 lg:max-w-[52%] flex-1">
-      <div class="flex items-center gap-2 overflow-x-auto py-0.5 flex-1 min-w-0">
-        <div class="flex items-center gap-1.5 text-[11px] font-display font-bold tracking-wider text-slag uppercase shrink-0">
-          <span class="w-2 h-2 bg-molten inline-block"></span>
-          <span>INGOT RACK</span>
-          <span id="pinned-count" class="font-mono text-[10px] bg-kiln border border-iron px-1.5 py-0.2 text-amberheat">0</span>
-        </div>
-
-        <div id="pinned-list" class="flex items-center gap-1.5">
-          <!-- Pinned Ingot Swatches Injected Here -->
-        </div>
-      </div>
-
-      <div class="flex items-center gap-1 shrink-0">
-        <button id="btn-load-pinned-to-active" title="Load all pinned ingots into active crucible"
-          class="mech-btn text-[10px] font-mono uppercase px-2 py-0.5 text-amberheat hidden">
-          SMELT ALL
-        </button>
-        <button id="btn-clear-pinned" title="Purge Ingot Rack"
-          class="mech-btn text-[10px] font-mono uppercase px-2 py-0.5 text-slag hover:text-red-400 hidden">
-          PURGE
-        </button>
-      </div>
+    <div class="flex items-center gap-1.5 shrink-0">
+      <button id="btn-pin-all-active" title="Pin all current colors"
+        class="forge-btn text-[11px] px-2.5 py-1 rounded-sm">
+        Pin Current Palette
+      </button>
+      <button id="btn-load-pinned-to-active" title="Replace active palette with pinned colors"
+        class="forge-btn text-[11px] px-2.5 py-1 rounded-sm text-whitehot hidden">
+        Use as Active Palette
+      </button>
+      <button id="btn-clear-pinned" title="Clear all pinned colors"
+        class="forge-btn text-[11px] px-2.5 py-1 rounded-sm text-cinder hover:text-red-400 hidden">
+        Clear
+      </button>
     </div>
   </section>
 
   <!-- ===================================================================== -->
-  <!-- 3. CENTRAL FRAMED DRAFTING TABLE VIEWPORT                             -->
+  <!-- 3. MAIN VIEWPORT STAGE + FLOATING MODE CONTROLS + BOTTOM STRIP        -->
   <!-- ===================================================================== -->
-  <main class="flex-1 relative overflow-hidden flex flex-col bg-soot">
-    <!-- Top Horizontal Calibration Ruler -->
-    <div class="h-4 w-full ruler-top border-b-2 border-iron flex items-center justify-between px-3 text-[9px] font-mono text-slag shrink-0 select-none">
-      <span>000 MM // CRUCIBLE DRAFTING TABLE</span>
-      <span id="status-readout">MODE: 01.GRID // PERCEPTUAL ΔE GUARD ACTIVE</span>
-      <span>SCALE 1:1</span>
+  <main id="main-frame" class="flex-1 relative overflow-hidden flex flex-col lava-underglow">
+    <!-- Floating Auxiliary Controls for Mosaic / Scatter / UI / Creature -->
+    <div id="mode-aux-controls"
+      class="hidden absolute top-3 left-1/2 -translate-x-1/2 z-30 basalt-slab px-3 py-1.5 rounded-sm flex flex-wrap items-center gap-3 text-xs border border-bronze shadow-2xl">
+      <!-- Populated dynamically per view -->
     </div>
 
-    <div class="flex-1 flex overflow-hidden relative">
-      <!-- Left Vertical Calibration Ruler -->
-      <div class="w-4 h-full ruler-left border-r-2 border-iron hidden sm:flex flex-col items-center justify-between py-2 text-[8px] font-mono text-slag shrink-0 select-none">
-        <span>Y+</span>
-        <span>0</span>
-        <span>Y-</span>
-      </div>
+    <!-- Primary Stage Container -->
+    <div id="stage" class="flex-1 w-full h-full relative overflow-hidden">
+      <!-- Active View Renders Here -->
+    </div>
 
-      <!-- Active View Stage -->
-      <div id="stage" class="flex-1 h-full relative overflow-hidden drafting-surface">
-        <!-- Active View Mode renders here -->
-      </div>
+    <!-- Compact Seamless Active Palette Dock (Shown in Mosaic, Scatter, UI Mockup, Creature) -->
+    <div id="bottom-palette-dock" class="hidden h-14 w-full bg-basalt border-t border-chisel shrink-0 z-20 flex">
+      <!-- Populated dynamically so users can always lock/edit/swap/pin colors in full-canvas views -->
     </div>
   </main>
 
   <!-- ===================================================================== -->
-  <!-- 4. FLOATING MANUAL SMELTER COLOR TUNER POPOVER                        -->
+  <!-- 4. MANUAL COLOR PICKER POPOVER                                        -->
   <!-- ===================================================================== -->
-  <div id="color-popover" class="hidden fixed z-50 w-80 iron-plate p-3.5 text-xs shadow-2xl">
-    <div class="flex items-center justify-between pb-2 mb-3 border-b-2 border-iron">
-      <div class="flex items-center gap-2.5">
-        <span id="popover-preview" class="w-6 h-6 border-2 border-iron"></span>
-        <div>
-          <div class="font-display font-bold text-ash uppercase tracking-wider text-xs" id="popover-slot-label">CRUCIBLE #01</div>
-          <div class="text-[11px] font-mono text-amberheat truncate max-w-[170px]" id="popover-color-name">~ Obsidian</div>
+  <div id="color-popover" class="hidden fixed z-50 w-72 basalt-slab border border-bronze p-3.5 text-xs rounded-sm shadow-2xl">
+    <div class="flex items-center justify-between pb-2 mb-3 border-b border-chisel">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <span id="popover-preview" class="w-6 h-6 border border-white/20 shrink-0"></span>
+        <div class="min-w-0">
+          <div class="font-semibold text-ash text-xs" id="popover-slot-label">Color 1</div>
+          <div class="text-[11px] font-mono text-amber-300 truncate" id="popover-color-name"></div>
         </div>
       </div>
-      <button id="popover-close" class="mech-btn px-2 py-1 text-xs font-mono">✕</button>
+      <button id="popover-close" class="forge-btn px-2 py-0.5 text-xs font-mono">✕</button>
     </div>
 
-    <!-- Hex Input + System Color Well + Copy -->
-    <div class="flex items-center gap-2 mb-3.5">
-      <label class="relative w-10 h-8 kiln-recess cursor-pointer shrink-0 overflow-hidden" title="System Optical Picker">
+    <!-- Native Color Input + Hex Input + Copy -->
+    <div class="flex items-center gap-1.5 mb-3">
+      <label class="relative w-9 h-8 carved-recess cursor-pointer shrink-0 overflow-hidden" title="System Color Picker">
         <input type="color" id="popover-native-picker" class="absolute -inset-2 w-14 h-14 cursor-pointer border-0 p-0" />
       </label>
       <input type="text" id="popover-hex-input" maxlength="7" placeholder="#RRGGBB"
-        class="flex-1 kiln-recess px-2.5 py-1.5 font-mono text-xs text-ash uppercase focus:outline-none focus:border-molten" />
-      <button id="popover-copy-btn" title="Copy HEX"
-        class="mech-btn px-2.5 py-1.5 font-mono text-[11px] uppercase">
-        COPY
+        class="flex-1 carved-recess px-2.5 py-1.5 font-mono text-xs text-ash uppercase focus:outline-none focus:border-magma" />
+      <button id="popover-copy-btn" class="forge-btn px-2.5 py-1.5 font-mono text-[11px]">
+        Copy
       </button>
     </div>
 
-    <!-- HSL Calibration Sliders -->
-    <div class="space-y-3">
+    <!-- HSL Sliders -->
+    <div class="space-y-2.5">
       <div>
-        <div class="flex justify-between text-[10px] font-mono uppercase text-slag mb-1">
-          <span>HUE ANGLE</span>
-          <span class="text-ash font-bold" id="popover-h-val">180°</span>
+        <div class="flex justify-between text-[11px] text-cinder mb-1">
+          <span>Hue</span>
+          <span class="text-ash font-mono" id="popover-h-val">180°</span>
         </div>
-        <input type="range" id="popover-h" min="0" max="360" class="smelter-slider"
+        <input type="range" id="popover-h" min="0" max="360" class="forge-slider"
           style="background: linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);" />
       </div>
 
       <div>
-        <div class="flex justify-between text-[10px] font-mono uppercase text-slag mb-1">
-          <span>CHROMA SATURATION</span>
-          <span class="text-ash font-bold" id="popover-s-val">70%</span>
+        <div class="flex justify-between text-[11px] text-cinder mb-1">
+          <span>Saturation</span>
+          <span class="text-ash font-mono" id="popover-s-val">70%</span>
         </div>
-        <input type="range" id="popover-s" min="0" max="100" class="smelter-slider" />
+        <input type="range" id="popover-s" min="0" max="100" class="forge-slider" />
       </div>
 
       <div>
-        <div class="flex justify-between text-[10px] font-mono uppercase text-slag mb-1">
-          <span>LUMINANCE</span>
-          <span class="text-ash font-bold" id="popover-l-val">50%</span>
+        <div class="flex justify-between text-[11px] text-cinder mb-1">
+          <span>Lightness</span>
+          <span class="text-ash font-mono" id="popover-l-val">50%</span>
         </div>
-        <input type="range" id="popover-l" min="0" max="100" class="smelter-slider" />
+        <input type="range" id="popover-l" min="0" max="100" class="forge-slider" />
       </div>
     </div>
   </div>
 
   <!-- ===================================================================== -->
-  <!-- 5. FOUNDRY VAULT & EXPORT SLIDE-OVER CONSOLE                          -->
+  <!-- 5. SAVE / LOAD SLIDE-OVER DRAWER                                      -->
   <!-- ===================================================================== -->
   <div id="drawer-backdrop" class="hidden fixed inset-0 bg-black/75 z-40"></div>
   <aside id="palettes-drawer"
-    class="fixed top-0 right-0 h-full w-full max-w-md iron-plate border-l-2 border-iron z-50 transform translate-x-full transition-transform duration-150 flex flex-col">
-    <div class="px-4 py-3 border-b-2 border-iron bg-recess flex items-center justify-between">
-      <div>
-        <h2 class="font-display font-bold text-sm uppercase tracking-wider text-ash">FOUNDRY VAULT // DATA IO</h2>
-        <div class="text-[10px] font-mono text-slag">STORAGE, SCHEMATICS & EXPORT</div>
-      </div>
-      <button id="btn-close-drawer" class="mech-btn px-2.5 py-1 text-xs font-mono">CLOSE [ESC]</button>
+    class="fixed top-0 right-0 h-full w-full max-w-md basalt-slab border-l border-bronze z-50 transform translate-x-full transition-transform duration-150 flex flex-col">
+    <div class="px-4 py-3 border-b border-chisel flex items-center justify-between">
+      <h2 class="font-semibold text-sm text-ash">Save / Load Palettes</h2>
+      <button id="btn-close-drawer" class="forge-btn px-2.5 py-1 text-xs">Close</button>
     </div>
 
     <div class="flex-1 overflow-y-auto p-4 space-y-5 text-xs">
-      <!-- Save Active Crucible Palette -->
-      <div class="kiln-recess p-3.5 space-y-2.5">
-        <div class="font-display font-bold uppercase tracking-wider text-ash flex items-center justify-between">
-          <span>STAMP ACTIVE CRUCIBLE</span>
-          <span class="text-[11px] font-mono text-amberheat" id="drawer-active-count">07 SLOTS</span>
+      <!-- Save Current Palette -->
+      <div class="carved-recess p-3.5 space-y-2.5">
+        <div class="font-medium text-ash flex items-center justify-between">
+          <span>Save Active Palette</span>
+          <span class="text-[11px] font-mono text-amber-300" id="drawer-active-count">6 colors</span>
         </div>
         <div class="flex gap-2">
-          <input type="text" id="save-active-name" placeholder="DESIGNATION (E.G. IRONWORKS UI)"
-            class="flex-1 bg-soot border-2 border-iron px-2.5 py-1.5 font-mono text-xs text-ash placeholder-slag/60 focus:outline-none focus:border-molten" />
-          <button id="btn-save-active" class="ignite-btn px-3.5 py-1.5 text-xs font-display uppercase tracking-wider shrink-0">
-            STAMP
+          <input type="text" id="save-active-name" placeholder="Palette name..."
+            class="flex-1 bg-basalt border border-chisel px-2.5 py-1.5 text-xs text-ash placeholder-cinder/50 focus:outline-none focus:border-magma" />
+          <button id="btn-save-active" class="whitehot-btn px-3.5 py-1.5 text-xs rounded-sm shrink-0">
+            Save
           </button>
         </div>
       </div>
 
-      <!-- Save Ingot Rack (Pinned Swatches) -->
-      <div class="kiln-recess p-3.5 space-y-2.5">
-        <div class="font-display font-bold uppercase tracking-wider text-ash flex items-center justify-between">
-          <span>STAMP INGOT RACK (PINS)</span>
-          <span class="text-[11px] font-mono text-amberheat" id="drawer-pinned-count">00 INGOTS</span>
+      <!-- Save Pinned Palette -->
+      <div class="carved-recess p-3.5 space-y-2.5">
+        <div class="font-medium text-ash flex items-center justify-between">
+          <span>Save Pinned Colors</span>
+          <span class="text-[11px] font-mono text-amber-300" id="drawer-pinned-count">0 pinned</span>
         </div>
         <div class="flex gap-2">
-          <input type="text" id="save-pinned-name" placeholder="DESIGNATION (E.G. MOLTEN ACCENTS)"
-            class="flex-1 bg-soot border-2 border-iron px-2.5 py-1.5 font-mono text-xs text-ash placeholder-slag/60 focus:outline-none focus:border-molten" />
-          <button id="btn-save-pinned" class="mech-btn px-3 py-1.5 text-xs font-display font-bold uppercase tracking-wider shrink-0">
-            SAVE RACK
+          <input type="text" id="save-pinned-name" placeholder="Pinned collection name..."
+            class="flex-1 bg-basalt border border-chisel px-2.5 py-1.5 text-xs text-ash placeholder-cinder/50 focus:outline-none focus:border-magma" />
+          <button id="btn-save-pinned" class="forge-btn px-3 py-1.5 text-xs shrink-0">
+            Save Pinned
           </button>
         </div>
       </div>
 
-      <!-- Data Export & Import -->
-      <div class="kiln-recess p-3.5 space-y-3">
-        <div class="font-display font-bold uppercase tracking-wider text-ash">SCHEMATIC EXPORT // IMPORT</div>
+      <!-- Export / Import -->
+      <div class="carved-recess p-3.5 space-y-3">
+        <div class="font-medium text-ash">Export & Import</div>
         <div class="grid grid-cols-2 gap-2">
-          <button id="btn-export-css" class="mech-btn py-2 px-3 font-mono text-[11px] uppercase text-center">
-            COPY CSS :ROOT
+          <button id="btn-export-css" class="forge-btn py-2 px-3 font-mono text-[11px] text-center">
+            Copy CSS Variables
           </button>
-          <button id="btn-export-json" class="mech-btn py-2 px-3 font-mono text-[11px] uppercase text-center">
-            COPY JSON ARRAY
+          <button id="btn-export-json" class="forge-btn py-2 px-3 font-mono text-[11px] text-center">
+            Copy HEX JSON
           </button>
         </div>
-        <div class="pt-2 border-t-2 border-iron space-y-2">
-          <label class="block text-[10px] font-mono uppercase text-slag">LOAD HEX MANIFEST OR JSON</label>
+        <div class="pt-2 border-t border-chisel space-y-2">
+          <label class="block text-[11px] text-cinder">Paste HEX list or JSON to load:</label>
           <div class="flex gap-2">
-            <input type="text" id="import-json-input" placeholder='["#110F0E", "#1E1916", "#EA580C"]'
-              class="flex-1 bg-soot border-2 border-iron px-2.5 py-1.5 font-mono text-[11px] text-ash placeholder-slag/60 focus:outline-none focus:border-molten" />
-            <button id="btn-import-json" class="mech-btn px-3 py-1.5 font-mono text-[11px] uppercase">
-              LOAD
+            <input type="text" id="import-json-input" placeholder='["#181312", "#EA580C", "#FEF08A"]'
+              class="flex-1 bg-basalt border border-chisel px-2.5 py-1.5 font-mono text-[11px] text-ash placeholder-cinder/50 focus:outline-none focus:border-magma" />
+            <button id="btn-import-json" class="forge-btn px-3 py-1.5 text-xs">
+              Import
             </button>
           </div>
         </div>
       </div>
 
-      <!-- Saved Vault Schematics -->
+      <!-- Saved Palettes List -->
       <div class="space-y-2">
-        <div class="flex items-center justify-between border-b-2 border-iron pb-1">
-          <span class="font-display font-bold uppercase tracking-wider text-ash">LOCAL VAULT ARCHIVE</span>
-          <span class="text-[10px] font-mono text-slag">BROWSER STORAGE</span>
-        </div>
-        <div id="saved-palettes-list" class="space-y-2">
-          <!-- Populated dynamically -->
-        </div>
+        <div class="font-medium text-ash border-b border-chisel pb-1">Saved Palettes</div>
+        <div id="saved-palettes-list" class="space-y-2"></div>
       </div>
 
-      <!-- Preloaded Foundry Master Schematics -->
+      <!-- Preset Palettes -->
       <div class="space-y-2 pb-4">
-        <div class="border-b-2 border-iron pb-1">
-          <span class="font-display font-bold uppercase tracking-wider text-ash">STANDARD FOUNDRY SCHEMATICS</span>
-        </div>
-        <div id="starter-palettes-list" class="space-y-2">
-          <!-- Populated dynamically -->
-        </div>
+        <div class="font-medium text-ash border-b border-chisel pb-1">Presets</div>
+        <div id="starter-palettes-list" class="space-y-2"></div>
       </div>
     </div>
   </aside>
 
-  <!-- ===================================================================== -->
-  <!-- MECHANICAL STAMP TOAST NOTIFICATION                                   -->
-  <!-- ===================================================================== -->
+  <!-- Toast Notification -->
   <div id="toast"
-    class="fixed bottom-5 right-5 z-50 pointer-events-none opacity-0 translate-y-2 transition-all duration-150 iron-plate border-2 border-molten text-ash text-xs font-mono px-3.5 py-2 shadow-2xl flex items-center gap-2.5">
-    <span id="toast-dot" class="w-3 h-3 border border-ash bg-amberheat"></span>
-    <span id="toast-msg">COPIED #FFFFFF</span>
+    class="fixed bottom-5 right-5 z-50 pointer-events-none opacity-0 translate-y-2 transition-all duration-150 basalt-slab border border-magma text-ash text-xs font-mono px-3.5 py-2 shadow-2xl flex items-center gap-2.5">
+    <span id="toast-dot" class="w-3 h-3 border border-white/40 bg-amber-400"></span>
+    <span id="toast-msg">Copied</span>
   </div>
 
   <script>
     /**
      * =========================================================================
-     * 1. EMBEDDED PIGMENT, METALLURGICAL & X11 COLOR DATABASE (~320 NAMES)
+     * 1. NAMED COLOR DATABASE (~320 DISTINCT PIGMENTS, MINERALS & X11 COLORS)
+     *    Only displayed if a random or picked color is perceptually very close!
      * =========================================================================
      */
     const COLOR_DATABASE = [
-      // Soot, Iron, Slag & Neutrals
-      ["Anthracite Soot", "#110F0E"], ["Kiln Brick", "#1E1916"], ["Cast Iron", "#332D29"],
-      ["Warm Ash", "#EAE6E1"], ["Slag Gray", "#9A9087"], ["Obsidian", "#0B0C10"],
-      ["Carbon Black", "#16181D"], ["Foundry Slate", "#1E222B"], ["Charcoal", "#2B2F3A"],
-      ["Graphite", "#383E4C"], ["Iron Ore", "#474E5D"], ["Pewter", "#646B7A"],
-      ["Steel Gray", "#7A8291"], ["Silver Mist", "#9BA3B2"], ["Ash Gray", "#B4BBC7"],
-      ["Dove Gray", "#CBD0D8"], ["Cloud White", "#E5E8EE"], ["Alabaster", "#F4F3EF"],
-      ["Ivory", "#FAF8F2"], ["Pure Snow", "#FFFFFF"], ["Pitch Black", "#000000"],
-      ["Onyx", "#141414"], ["Basalt", "#262629"], ["Flint", "#52525B"],
-      ["Zinc", "#71717A"], ["Warm Stone", "#78716C"], ["Taupe", "#8B8178"],
-      ["Greige", "#A8A29E"], ["Sandstone", "#D6CFC7"], ["Parchment", "#EFECE6"],
-      ["Bone", "#E3DEC9"], ["Smelter Smoke", "#473E39"],
+      ["Obsidian", "#0B090A"], ["Basalt", "#181312"], ["Onyx", "#141414"],
+      ["Charcoal", "#2B2F3A"], ["Graphite", "#383E4C"], ["Slate", "#475569"],
+      ["Gunmetal", "#2A3439"], ["Iron", "#48494B"], ["Pewter", "#646B7A"],
+      ["Steel Gray", "#7A8291"], ["Silver", "#C0C0C0"], ["Ash", "#B4BBC7"],
+      ["Alabaster", "#F4F3EF"], ["Ivory", "#FAF8F2"], ["Pure White", "#FFFFFF"],
+      ["Pitch Black", "#000000"], ["Warm Stone", "#78716C"], ["Sandstone", "#D6CFC7"],
+      ["Parchment", "#EFECE6"], ["Bone", "#E3DEC9"], ["Zinc", "#71717A"],
 
-      // Molten Reds, Scarlets & Crimsons
-      ["Crimson", "#DC143C"], ["Alizarin Crimson", "#E32636"], ["Vermilion", "#E34234"],
+      ["Crimson", "#DC143C"], ["Alizarin", "#E32636"], ["Vermilion", "#E34234"],
       ["Cinnabar", "#E44D2E"], ["Scarlet", "#FF2400"], ["Carmine", "#960018"],
-      ["Venetian Red", "#C80815"], ["Ruby", "#E0115F"], ["Garnet", "#733635"],
-      ["Oxblood", "#4A0404"], ["Burgundy", "#800020"], ["Maroon", "#6B1D2F"],
-      ["Sangria", "#92000A"], ["Rosewood", "#65000B"], ["Firebrick", "#B22222"],
-      ["Terracotta", "#C85A32"], ["Iron Rust", "#B7410E"], ["Burnt Sienna", "#E97451"],
-      ["Coral Red", "#FF4040"], ["Salmon", "#FA8072"], ["Blush Rose", "#F4A4A4"],
+      ["Ruby", "#E0115F"], ["Garnet", "#733635"], ["Oxblood", "#4A0404"],
+      ["Burgundy", "#800020"], ["Maroon", "#6B1D2F"], ["Sangria", "#92000A"],
+      ["Rosewood", "#65000B"], ["Firebrick", "#B22222"], ["Terracotta", "#C85A32"],
+      ["Rust", "#B7410E"], ["Burnt Sienna", "#E97451"], ["Coral", "#FF7F50"],
+      ["Salmon", "#FA8072"], ["Blush", "#F4A4A4"], ["Cardinal", "#C41E3A"],
 
-      // Magentas, Rose & Pinks
       ["Amaranth", "#E52B50"], ["Cerise", "#DE3163"], ["Fuchsia", "#FF00FF"],
       ["Magenta", "#D9006C"], ["Hot Pink", "#FF69B4"], ["Flamingo", "#FC8EAC"],
-      ["Bubblegum", "#FFC1CC"], ["Carnation", "#FFA6C9"], ["Blossom", "#F9C5D1"],
-      ["Dusty Rose", "#C08081"], ["Mauve", "#E0B0FF"], ["Orchid", "#DA70D6"],
-      ["Raspberry", "#E30B5D"], ["Hibiscus", "#B6316C"], ["Watermelon", "#FD4659"],
-      ["Peony", "#DF7399"], ["Rhodonite", "#C96A88"], ["Mulberry", "#C54B8C"],
+      ["Carnation", "#FFA6C9"], ["Dusty Rose", "#C08081"], ["Mauve", "#E0B0FF"],
+      ["Orchid", "#DA70D6"], ["Raspberry", "#E30B5D"], ["Hibiscus", "#B6316C"],
+      ["Mulberry", "#C54B8C"], ["Peony", "#DF7399"], ["Watermelon", "#FD4659"],
 
-      // Molten Oranges, Ambers & Coppers
-      ["Molten Slag", "#EA580C"], ["Forge Amber", "#F59E0B"], ["Tangerine", "#F28500"],
+      ["Molten Orange", "#EA580C"], ["Amber", "#F59E0B"], ["Tangerine", "#F28500"],
       ["Mandarin", "#F37A48"], ["Cadmium Orange", "#ED872D"], ["Pumpkin", "#FF7518"],
       ["Persimmon", "#EC5800"], ["Apricot", "#FBCEB1"], ["Peach", "#FFE5B4"],
-      ["Cantaloupe", "#FFA62F"], ["Marigold", "#EAA221"], ["Amber", "#FFBF00"],
-      ["Smelted Copper", "#B87333"], ["Cast Bronze", "#CD7F32"], ["Cinnamon", "#D2691E"],
-      ["Raw Sienna", "#D68A59"], ["Ochre", "#CC7722"], ["Papaya", "#FFEFD5"],
-      ["Marmalade", "#D16002"], ["Furnace Flame", "#E25822"],
+      ["Marigold", "#EAA221"], ["Copper", "#B87333"], ["Bronze", "#CD7F32"],
+      ["Cinnamon", "#D2691E"], ["Raw Sienna", "#D68A59"], ["Ochre", "#CC7722"],
+      ["Flame", "#E25822"], ["Papaya", "#FFEFD5"],
 
-      // Yellows, Golds & Brass
       ["Cadmium Yellow", "#FFF600"], ["Lemon", "#FFF44F"], ["Canary", "#FFEF00"],
       ["Saffron", "#F4C430"], ["Gamboge", "#E49B0F"], ["Aureolin", "#FDEE00"],
-      ["Bullion Gold", "#FFD700"], ["Honey", "#EB9605"], ["Mustard", "#FFDB58"],
-      ["Dandelion", "#F0E130"], ["Buttercup", "#F3E5AB"], ["Cream", "#FFFDD0"],
-      ["Flax", "#EEDC82"], ["Tarnished Brass", "#B5A642"], ["Citrine", "#E4D00A"],
-      ["Sulfur", "#E8E838"], ["Chartreuse", "#7FFF00"], ["Electric Lime", "#CCFF00"],
+      ["Gold", "#FFD700"], ["Honey", "#EB9605"], ["Mustard", "#FFDB58"],
+      ["Buttercup", "#F3E5AB"], ["Cream", "#FFFDD0"], ["Flax", "#EEDC82"],
+      ["Brass", "#B5A642"], ["Citrine", "#E4D00A"], ["Chartreuse", "#7FFF00"],
+      ["Lime", "#CCFF00"], ["White Gold", "#FEF08A"],
 
-      // Greens, Patinas & Emeralds
       ["Viridian", "#40826D"], ["Emerald", "#50C878"], ["Malachite", "#0BDA51"],
       ["Jade", "#00A86B"], ["Celadon", "#ACE1AF"], ["Mint", "#98FF98"],
       ["Seafoam", "#93E9BE"], ["Pistachio", "#93C572"], ["Sage", "#8A9A5B"],
-      ["Moss", "#8A9A5B"], ["Fern", "#4F7942"], ["Forest Green", "#228B22"],
+      ["Moss", "#6A7F46"], ["Fern", "#4F7942"], ["Forest Green", "#228B22"],
       ["Hunter Green", "#355E3B"], ["Pine", "#01796F"], ["Cypress", "#2B4C3F"],
       ["Olive", "#808000"], ["Olive Drab", "#6B8E23"], ["Khaki", "#C3B091"],
       ["Avocado", "#568203"], ["Kelly Green", "#4CBB17"], ["Shamrock", "#009E60"],
-      ["Spring Green", "#00FF7F"], ["Meadow", "#68B968"], ["Absinthe", "#7FDD4C"],
-      ["Eucalyptus", "#44D7A8"], ["Copper Verdigris", "#43B3AE"], ["Lichen", "#8A9A86"],
+      ["Spring Green", "#00FF7F"], ["Eucalyptus", "#44D7A8"], ["Verdigris", "#43B3AE"],
 
-      // Cyans, Teals & Aquas
       ["Cyan", "#00FFFF"], ["Aqua", "#00E5EE"], ["Turquoise", "#40E0D0"],
       ["Aquamarine", "#7FFFD4"], ["Teal", "#008080"], ["Deep Teal", "#004D4D"],
       ["Peacock", "#005F69"], ["Lagoon", "#017987"], ["Glacier", "#80B3C4"],
-      ["Ice Blue", "#D6ECEF"], ["Robin Egg", "#00CCCC"], ["Cerulean Frost", "#6D9BC3"],
-      ["Pacific Blue", "#1CA9C9"], ["Capri", "#00BFFF"], ["Aegean", "#1F456E"],
+      ["Ice Blue", "#D6ECEF"], ["Robin Egg", "#00CCCC"], ["Cerulean", "#007BA7"],
+      ["Pacific Blue", "#1CA9C9"], ["Aegean", "#1F456E"],
 
-      // Blues, Tempered Steels & Cobalts
       ["Cobalt Blue", "#0047AB"], ["Ultramarine", "#120A8F"], ["Prussian Blue", "#003153"],
-      ["Cerulean", "#007BA7"], ["Sapphire", "#0F52BA"], ["Lapis Lazuli", "#26619C"],
-      ["Indigo", "#4B0082"], ["Navy", "#000080"], ["Midnight Blue", "#191970"],
-      ["Royal Blue", "#4169E1"], ["Cornflower", "#6495ED"], ["Periwinkle", "#CCCCFF"],
-      ["Sky Blue", "#87CEEB"], ["Baby Blue", "#89CFF0"], ["Powder Blue", "#B0E0E6"],
-      ["Tempered Steel", "#4682B4"], ["Denim", "#1560BD"], ["Azure", "#007FFF"],
-      ["Dodger Blue", "#1E90FF"], ["Electric Blue", "#7DF9FF"], ["Yale Blue", "#0F4D92"],
-      ["Delft Blue", "#1F305E"], ["Slate Blue", "#6A5ACD"], ["Dusk Blue", "#47597E"],
+      ["Sapphire", "#0F52BA"], ["Lapis Lazuli", "#26619C"], ["Indigo", "#4B0082"],
+      ["Navy", "#000080"], ["Midnight Blue", "#191970"], ["Royal Blue", "#4169E1"],
+      ["Cornflower", "#6495ED"], ["Periwinkle", "#CCCCFF"], ["Sky Blue", "#87CEEB"],
+      ["Powder Blue", "#B0E0E6"], ["Steel Blue", "#4682B4"], ["Denim", "#1560BD"],
+      ["Azure", "#007FFF"], ["Dodger Blue", "#1E90FF"], ["Electric Blue", "#7DF9FF"],
 
-      // Violets & Plums
       ["Tyrian Purple", "#66023C"], ["Violet", "#8F00FF"], ["Amethyst", "#9966CC"],
       ["Lavender", "#E6E6FA"], ["Lilac", "#C8A2C8"], ["Wisteria", "#C9A0DC"],
       ["Heliotrope", "#DF73FF"], ["Plum", "#8E4585"], ["Eggplant", "#614051"],
-      ["Aubergine", "#3B0918"], ["Byzantium", "#702963"], ["Heather", "#B7A8B8"],
-      ["Iris", "#5A4FCF"], ["Grape", "#6F2DA8"], ["Mulberry Wine", "#5E214B"],
-      ["Thistle", "#D8BFD8"], ["Lavender Mist", "#B57EDC"], ["Ultra Violet", "#645394"],
+      ["Aubergine", "#3B0918"], ["Byzantium", "#702963"], ["Iris", "#5A4FCF"],
+      ["Grape", "#6F2DA8"], ["Thistle", "#D8BFD8"], ["Ultra Violet", "#645394"],
 
-      // Browns, Umbers & Earth
       ["Raw Umber", "#826644"], ["Burnt Umber", "#8A3324"], ["Sepia", "#704214"],
       ["Chocolate", "#7B3F00"], ["Espresso", "#3C2415"], ["Coffee", "#6F4E37"],
       ["Mocha", "#967969"], ["Chestnut", "#954535"], ["Mahogany", "#C04000"],
-      ["Walnut", "#5D432C"], ["Hazel", "#8E7618"], ["Caramel", "#FFD59A"],
-      ["Toffee", "#755139"], ["Tan", "#D2B48C"], ["Beige", "#F5F5DC"],
-      ["Ecru", "#C2B280"], ["Fawn", "#E5AA70"], ["Bistre", "#3D2B1F"]
+      ["Walnut", "#5D432C"], ["Caramel", "#FFD59A"], ["Tan", "#D2B48C"],
+      ["Beige", "#F5F5DC"], ["Bistre", "#3D2B1F"]
     ];
 
     /**
      * =========================================================================
-     * 2. PERCEPTUAL COLOR MATH (HEX, RGB, HSL, CIELAB & DELTA-E)
+     * 2. PERCEPTUAL COLOR MATH (24-BIT RGB, HSL, CIELAB & CONDITIONAL NAMING)
      * =========================================================================
      */
     function normalizeHex(hex) {
       if (!hex) return "#000000";
       let h = String(hex).trim().replace(/^#/, "");
-      if (h.length === 3) {
-        h = h.split("").map(c => c + c).join("");
-      }
+      if (h.length === 3) h = h.split("").map(c => c + c).join("");
       if (!/^[0-9A-Fa-f]{6}$/.test(h)) return null;
       return "#" + h.toUpperCase();
     }
@@ -726,11 +613,7 @@
     function hexToRgb(hex) {
       const clean = normalizeHex(hex) || "#000000";
       const num = parseInt(clean.slice(1), 16);
-      return {
-        r: (num >> 16) & 255,
-        g: (num >> 8) & 255,
-        b: num & 255
-      };
+      return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
     }
 
     function rgbToHex(r, g, b) {
@@ -754,11 +637,7 @@
           case b: h = ((r - g) / d + 4) / 6; break;
         }
       }
-      return {
-        h: Math.round(h * 360),
-        s: Math.round(s * 100),
-        l: Math.round(l * 100)
-      };
+      return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
     }
 
     function hslToRgb(h, s, l) {
@@ -769,12 +648,12 @@
       const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
       const m = l - c / 2;
       let r1 = 0, g1 = 0, b1 = 0;
-      if (h < 60) { r1 = c; g1 = x; b1 = 0; }
-      else if (h < 120) { r1 = x; g1 = c; b1 = 0; }
-      else if (h < 180) { r1 = 0; g1 = c; b1 = x; }
-      else if (h < 240) { r1 = 0; g1 = x; b1 = c; }
-      else if (h < 300) { r1 = x; g1 = 0; b1 = c; }
-      else { r1 = c; g1 = 0; b1 = x; }
+      if (h < 60) { r1 = c; g1 = x; }
+      else if (h < 120) { r1 = x; g1 = c; }
+      else if (h < 180) { g1 = c; b1 = x; }
+      else if (h < 240) { g1 = x; b1 = c; }
+      else if (h < 300) { r1 = x; b1 = c; }
+      else { r1 = c; b1 = x; }
       return {
         r: Math.round((r1 + m) * 255),
         g: Math.round((g1 + m) * 255),
@@ -804,12 +683,7 @@
 
       const f = t => t > 0.008856 ? Math.cbrt(t) : (7.787 * t) + (16 / 116);
       const fx = f(x), fy = f(y), fz = f(z);
-
-      return {
-        L: (116 * fy) - 16,
-        a: 500 * (fx - fy),
-        b: 200 * (fy - fz)
-      };
+      return { L: (116 * fy) - 16, a: 500 * (fx - fy), b: 200 * (fy - fz) };
     }
 
     function hexToLab(hex) {
@@ -830,6 +704,12 @@
       lab: hexToLab(hex)
     }));
 
+    /**
+     * Conditional Closest Color Name:
+     * - If ΔE <= 1.2: exact name
+     * - If 1.2 < ΔE <= 6.5: "~ Name"
+     * - If ΔE > 6.5: returns empty string "" (never force an inaccurate name)
+     */
     const nameCache = new Map();
     function getClosestColorName(hex) {
       const key = normalizeHex(hex);
@@ -845,8 +725,13 @@
           if (d === 0) break;
         }
       }
-      const label = minD <= 2.3 ? best.name : `~ ${best.name}`;
-      const res = { label, exactName: best.name, distance: minD };
+      let label = "";
+      if (minD <= 1.2) {
+        label = best.name;
+      } else if (minD <= 6.5) {
+        label = `~ ${best.name}`;
+      }
+      const res = { label, distance: minD };
       nameCache.set(key, res);
       return res;
     }
@@ -861,7 +746,7 @@
     }
 
     function getContrastText(hex) {
-      return getRelativeLuminance(hex) > 0.34 ? "#110F0E" : "#EAE6E1";
+      return getRelativeLuminance(hex) > 0.34 ? "#110D0C" : "#F5F2EB";
     }
 
     function hexWithAlpha(hex, alpha) {
@@ -871,55 +756,209 @@
 
     /**
      * =========================================================================
-     * 3. APPLICATION STATE, SCHEMATICS & HISTORY
+     * 3. AMBIENT MAGMA CAVERN EMBER & ANVIL STRIKE SPARK ENGINE
      * =========================================================================
      */
-    const STORAGE_KEY_SAVED = "chromaforge_smelter_saved_v2";
-    const STORAGE_KEY_PINNED = "chromaforge_smelter_pinned_v2";
+    const forgeFx = {
+      canvas: null,
+      ctx: null,
+      embers: [],
+      sparks: [],
+      shockwaves: [],
+      init() {
+        this.canvas = document.getElementById("forge-fx-canvas");
+        this.ctx = this.canvas.getContext("2d");
+        this.resize();
+        window.addEventListener("resize", () => this.resize());
+
+        // Seed subtle rising cavern embers
+        for (let i = 0; i < 18; i++) {
+          this.embers.push(this.makeEmber(true));
+        }
+        requestAnimationFrame(() => this.loop());
+      },
+      resize() {
+        if (!this.canvas) return;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+      },
+      makeEmber(randomY = false) {
+        return {
+          x: Math.random() * window.innerWidth,
+          y: randomY ? Math.random() * window.innerHeight : window.innerHeight + 10,
+          vx: (Math.random() - 0.5) * 0.35,
+          vy: -(0.25 + Math.random() * 0.55),
+          size: 1 + Math.random() * 1.8,
+          alpha: 0.15 + Math.random() * 0.35,
+          color: Math.random() > 0.4 ? "#FB923C" : "#FEF08A"
+        };
+      },
+      triggerAnvilStrike(originX, originY) {
+        // Spawn white-hot flying anvil sparks
+        const count = 34;
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 2.5 + Math.random() * 9.5;
+          this.sparks.push({
+            x: originX,
+            y: originY,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - 1.5,
+            gravity: 0.22,
+            life: 1.0,
+            decay: 0.024 + Math.random() * 0.025,
+            size: 1.4 + Math.random() * 2.2,
+            color: i % 3 === 0 ? "#FFFFFF" : i % 2 === 0 ? "#FEF08A" : "#FB923C"
+          });
+        }
+        this.shockwaves.push({
+          x: originX,
+          y: originY,
+          radius: 8,
+          maxRadius: 110,
+          alpha: 0.75
+        });
+
+        // Brief white-hot seam flash on the main stage frame
+        const frame = document.getElementById("main-frame");
+        frame.classList.remove("strike-flash");
+        void frame.offsetWidth;
+        frame.classList.add("strike-flash");
+
+        const btn = document.getElementById("btn-generate");
+        btn.classList.add("anvil-struck");
+        setTimeout(() => btn.classList.remove("anvil-struck"), 110);
+      },
+      loop() {
+        const ctx = this.ctx;
+        const W = this.canvas.width;
+        const H = this.canvas.height;
+        ctx.clearRect(0, 0, W, H);
+
+        // Subtle rising background embers near bottom edge
+        for (let i = 0; i < this.embers.length; i++) {
+          const e = this.embers[i];
+          e.x += e.vx;
+          e.y += e.vy;
+          if (e.y < H * 0.55) {
+            e.alpha *= 0.985;
+          }
+          if (e.y < H * 0.3 || e.alpha < 0.02) {
+            this.embers[i] = this.makeEmber(false);
+            continue;
+          }
+          ctx.fillStyle = e.color;
+          ctx.globalAlpha = e.alpha;
+          ctx.beginPath();
+          ctx.arc(e.x, e.y, e.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Shockwave rings
+        for (let i = this.shockwaves.length - 1; i >= 0; i--) {
+          const sw = this.shockwaves[i];
+          sw.radius += (sw.maxRadius - sw.radius) * 0.22;
+          sw.alpha *= 0.84;
+          if (sw.alpha < 0.03) {
+            this.shockwaves.splice(i, 1);
+            continue;
+          }
+          ctx.strokeStyle = "#FEF08A";
+          ctx.lineWidth = 2;
+          ctx.globalAlpha = sw.alpha;
+          ctx.beginPath();
+          ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        // High-velocity Anvil Strike sparks
+        for (let i = this.sparks.length - 1; i >= 0; i--) {
+          const sp = this.sparks[i];
+          const prevX = sp.x;
+          const prevY = sp.y;
+          sp.x += sp.vx;
+          sp.y += sp.vy;
+          sp.vy += sp.gravity;
+          sp.vx *= 0.97;
+          sp.life -= sp.decay;
+          if (sp.life <= 0) {
+            this.sparks.splice(i, 1);
+            continue;
+          }
+          ctx.strokeStyle = sp.color;
+          ctx.lineWidth = sp.size;
+          ctx.globalAlpha = sp.life;
+          ctx.beginPath();
+          ctx.moveTo(prevX, prevY);
+          ctx.lineTo(sp.x, sp.y);
+          ctx.stroke();
+        }
+
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(() => this.loop());
+      }
+    };
+
+    /**
+     * =========================================================================
+     * 4. APPLICATION STATE & PRESETS
+     * =========================================================================
+     */
+    const STORAGE_KEY_SAVED = "chromaforge_studio_saved_v3";
+    const STORAGE_KEY_PINNED = "chromaforge_studio_pinned_v3";
 
     const STARTER_PALETTES = [
       {
-        name: "DWARVEN SMELTER MK-I (7)",
-        colors: ["#110F0E", "#1E1916", "#EAE6E1", "#EA580C", "#26201C", "#332D29", "#F59E0B"]
+        name: "Magma Cavern & White Gold",
+        colors: ["#120E0D", "#1E1614", "#F5EFE6", "#EA580C", "#2B1F1B", "#3D2B24", "#FEF08A"]
       },
       {
-        name: "CAST IRON & VERDIGRIS (7)",
-        colors: ["#121615", "#1C2422", "#E2ECE9", "#E34234", "#232E2B", "#32423E", "#43B3AE"]
+        name: "Deep Slate & Copper",
+        colors: ["#0F1419", "#182028", "#E6EDF5", "#E34234", "#212C37", "#2F3E4E", "#D68A59"]
       },
       {
-        name: "BESSEMER STEELWORKS (8)",
-        colors: ["#0F1318", "#182029", "#E6ECF2", "#FF7518", "#202B38", "#2E3D4F", "#4682B4", "#F4C430"]
+        name: "Obsidian & Verdigris",
+        colors: ["#0D1312", "#16201E", "#E4F0EC", "#F59E0B", "#1F2E2B", "#2C423E", "#43B3AE"]
       },
       {
-        name: "VOLCANIC SLAG & BRASS (9)",
-        colors: ["#141010", "#211A1A", "#F4EFEA", "#FF2400", "#2B2222", "#3D3131", "#CD7F32", "#B5A642", "#7A8291"]
+        name: "Warm Stone & Crimson",
+        colors: ["#161412", "#211E1B", "#EFECE6", "#DC143C", "#2B2723", "#3B3530", "#E49B0F"]
       }
     ];
 
     const VIEW_MODES = [
-      { id: "grid", code: "01.GRID" },
-      { id: "mosaic", code: "02.MOSAIC" },
-      { id: "ui", code: "03.CONSOLE UI" },
-      { id: "dots", code: "04.SCATTER" },
-      { id: "strips", code: "05.STRIPS" },
-      { id: "gradients", code: "06.RAMP" },
-      { id: "creature", code: "07.CONSTRUCT" }
+      { id: "grid", label: "Grid" },
+      { id: "mosaic", label: "Mosaic" },
+      { id: "ui", label: "UI Mockup" },
+      { id: "dots", label: "Scatter" },
+      { id: "strips", label: "Strips" },
+      { id: "gradients", label: "Gradients" },
+      { id: "creature", label: "Creature" }
     ];
 
     const state = {
       slots: [],
       view: "grid",
-      cvd: "none",
-      baseDeltaE: 22,
+      seamless: true, // Default: gapless & borderless
+      labelMode: "hover", // 'hover' | 'always' | 'off'
+      baseDeltaE: 20,
       pinned: [],
       savedLibraries: [],
       history: [],
       historyIndex: -1,
       editingSlotIndex: null,
+      highlightedSlotIndex: null,
+      // High-density Mosaic parameters
       mosaicSeed: 42,
+      mosaicCount: 280,
+      mosaicCluster: 35, // 0..100
+      // High-density Scatter parameters
       dotsSeed: 101,
-      dotsBackdrop: "soot", // 'soot' | 'iron' | 'ash'
-      creatureArchetype: "sentinel", // 'sentinel' | 'walker' | 'valkyrie'
+      dotsCount: 420,
+      dotsVariedSize: true,
+      dotsBackdrop: "dark", // 'dark' | 'gray' | 'light' | 'slot1'
+      // Creature parameters
+      creatureArchetype: "titan", // 'titan' | 'wraith' | 'construct'
       dragSourceIndex: null
     };
 
@@ -930,31 +969,41 @@
 
     /**
      * =========================================================================
-     * 4. PERCEPTUAL ANTI-SIMILARITY GENERATOR
+     * 5. FULL-SPECTRUM CONTINUOUS 24-BIT RANDOM GENERATOR + ΔE GUARD
      * =========================================================================
      */
+    function randomFullSpectrumHex() {
+      // Mix uniform 24-bit RGB and full-spectrum continuous HSL so deep, vivid, and pastel tones all appear naturally
+      if (Math.random() < 0.5) {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        return rgbToHex(r, g, b);
+      } else {
+        const h = Math.random() * 360;
+        const s = 5 + Math.random() * 95;
+        const l = 6 + Math.random() * 88;
+        return hslToHex(h, s, l);
+      }
+    }
+
+    function getEffectiveThreshold(count) {
+      const base = state.baseDeltaE;
+      if (base <= 0) return 0;
+      if (count <= 7) return base;
+      return Math.max(8.0, base - (count - 7) * 0.75);
+    }
+
     function generateDistinctColor(existingLabs, minThreshold) {
-      let bestHex = "#EA580C";
+      let bestHex = randomFullSpectrumHex();
+      if (minThreshold <= 0 || existingLabs.length === 0) return bestHex;
+
       let bestMinDist = -1;
-      const maxAttempts = 52;
+      const maxAttempts = 60;
 
       for (let attempt = 0; attempt < maxAttempts; attempt++) {
-        let h, s, l;
-        if (attempt % 3 === 0 && existingLabs.length > 0) {
-          const baseHue = Math.floor(Math.random() * 360);
-          h = (baseHue + [30, 60, 120, 150, 180, 210][attempt % 6]) % 360;
-          s = 28 + Math.floor(Math.random() * 62);
-          l = 16 + Math.floor(Math.random() * 70);
-        } else {
-          h = Math.floor(Math.random() * 360);
-          s = 10 + Math.floor(Math.random() * 84);
-          l = 10 + Math.floor(Math.random() * 80);
-        }
-
-        const candidateHex = hslToHex(h, s, l);
+        const candidateHex = randomFullSpectrumHex();
         const candidateLab = hexToLab(candidateHex);
-
-        if (existingLabs.length === 0) return candidateHex;
 
         let minDist = Infinity;
         for (let i = 0; i < existingLabs.length; i++) {
@@ -974,13 +1023,13 @@
       return bestHex;
     }
 
-    function getEffectiveThreshold(count) {
-      const base = state.baseDeltaE;
-      if (count <= 7) return base;
-      return Math.max(9.0, base - (count - 7) * 0.8);
-    }
+    function generatePalette(pushToHistory = true, triggerFx = true) {
+      if (triggerFx) {
+        const btn = document.getElementById("btn-generate");
+        const rect = btn.getBoundingClientRect();
+        forgeFx.triggerAnvilStrike(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      }
 
-    function generatePalette(pushToHistory = true) {
       const count = state.slots.length;
       const threshold = getEffectiveThreshold(count);
 
@@ -1001,7 +1050,7 @@
     }
 
     function setPaletteCount(newCount) {
-      const clamped = Math.max(1, Math.min(24, newCount));
+      const clamped = Math.max(2, Math.min(24, newCount));
       if (clamped === state.slots.length) return;
 
       if (clamped < state.slots.length) {
@@ -1023,13 +1072,21 @@
       renderAll();
     }
 
+    function rotateSlots() {
+      if (state.slots.length < 2) return;
+      const first = state.slots.shift();
+      state.slots.push(first);
+      pushHistory();
+      renderAll();
+    }
+
     function pushHistory() {
       const snapshot = state.slots.map(s => ({ hex: s.hex, locked: s.locked }));
       if (state.historyIndex < state.history.length - 1) {
         state.history = state.history.slice(0, state.historyIndex + 1);
       }
       state.history.push(snapshot);
-      if (state.history.length > 30) {
+      if (state.history.length > 35) {
         state.history.shift();
       } else {
         state.historyIndex++;
@@ -1067,7 +1124,7 @@
 
     /**
      * =========================================================================
-     * 5. SLOT ACTIONS: LOCK, PIN, SWAP, COPY, MANUAL EDIT
+     * 6. SLOT ACTIONS: LOCK, PIN, SWAP, COPY, MANUAL PICKER
      * =========================================================================
      */
     function toggleLock(index) {
@@ -1104,13 +1161,14 @@
       const normalized = normalizeHex(hex);
       if (!normalized) return;
       if (state.pinned.includes(normalized)) {
-        showToast(`INGOT ${normalized} ALREADY IN RACK`, normalized);
+        showToast(`${normalized} already pinned`, normalized);
         return;
       }
       state.pinned.push(normalized);
       savePinnedToStorage();
+      document.getElementById("pinned-tray").classList.remove("hidden");
       renderPinnedDock();
-      showToast(`CAST ${normalized} TO INGOT RACK`, normalized);
+      showToast(`Pinned ${normalized}`, normalized);
     }
 
     function unpinColor(hex) {
@@ -1126,7 +1184,7 @@
       }
       if (targetIdx === -1) targetIdx = 0;
       updateSlotHex(targetIdx, hex, true);
-      showToast(`APPLIED ${hex} -> SLOT #${String(targetIdx + 1).padStart(2, "0")}`, hex);
+      showToast(`Applied ${hex} to Color ${targetIdx + 1}`, hex);
     }
 
     function copyTextToClipboard(text, toastLabel) {
@@ -1142,28 +1200,28 @@
         if (navigator.clipboard) navigator.clipboard.writeText(text).catch(() => {});
       }
       document.body.removeChild(textarea);
-      showToast(toastLabel || `STAMPED ${text} TO CLIPBOARD`, text.startsWith("#") ? text : "#EA580C");
+      showToast(toastLabel || `Copied ${text}`, text.startsWith("#") ? text : "#FEF08A");
     }
 
     let toastTimer = null;
-    function showToast(message, dotColor = "#EA580C") {
+    function showToast(message, dotColor = "#FEF08A") {
       const toast = document.getElementById("toast");
       const msgEl = document.getElementById("toast-msg");
       const dotEl = document.getElementById("toast-dot");
-      msgEl.textContent = message.toUpperCase();
-      dotEl.style.backgroundColor = normalizeHex(dotColor) || "#EA580C";
+      msgEl.textContent = message;
+      dotEl.style.backgroundColor = normalizeHex(dotColor) || "#FEF08A";
       toast.classList.remove("opacity-0", "translate-y-2");
       toast.classList.add("opacity-100", "translate-y-0");
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => {
         toast.classList.add("opacity-0", "translate-y-2");
         toast.classList.remove("opacity-100", "translate-y-0");
-      }, 1800);
+      }, 1700);
     }
 
     /**
      * =========================================================================
-     * 6. MANUAL SMELTER COLOR TUNER POPOVER
+     * 7. MANUAL COLOR PICKER POPOVER
      * =========================================================================
      */
     function openColorPopover(index, anchorEl) {
@@ -1175,9 +1233,9 @@
 
       const rect = anchorEl
         ? anchorEl.getBoundingClientRect()
-        : { left: window.innerWidth / 2 - 160, top: window.innerHeight / 2 - 130, bottom: window.innerHeight / 2 };
-      const popW = 320;
-      const popH = 280;
+        : { left: window.innerWidth / 2 - 144, top: window.innerHeight / 2 - 130, bottom: window.innerHeight / 2, width: 0 };
+      const popW = 288;
+      const popH = 265;
       let left = rect.left + (rect.width ? rect.width / 2 - popW / 2 : 0);
       let top = rect.bottom + 8;
 
@@ -1204,8 +1262,8 @@
       const nameInfo = getClosestColorName(hex);
 
       document.getElementById("popover-preview").style.backgroundColor = hex;
-      document.getElementById("popover-slot-label").textContent = `CRUCIBLE #${String(idx + 1).padStart(2, "0")}`;
-      document.getElementById("popover-color-name").textContent = nameInfo.label;
+      document.getElementById("popover-slot-label").textContent = `Color ${idx + 1}`;
+      document.getElementById("popover-color-name").textContent = nameInfo.label || "";
       document.getElementById("popover-native-picker").value = hex;
       document.getElementById("popover-hex-input").value = hex;
 
@@ -1247,8 +1305,7 @@
 
       document.getElementById("popover-copy-btn").addEventListener("click", () => {
         if (state.editingSlotIndex === null) return;
-        const hex = state.slots[state.editingSlotIndex].hex;
-        copyTextToClipboard(hex);
+        copyTextToClipboard(state.slots[state.editingSlotIndex].hex);
       });
 
       const handleHslSlide = (commitHistory) => {
@@ -1256,8 +1313,7 @@
         const h = parseInt(document.getElementById("popover-h").value, 10);
         const s = parseInt(document.getElementById("popover-s").value, 10);
         const l = parseInt(document.getElementById("popover-l").value, 10);
-        const newHex = hslToHex(h, s, l);
-        updateSlotHex(state.editingSlotIndex, newHex, commitHistory);
+        updateSlotHex(state.editingSlotIndex, hslToHex(h, s, l), commitHistory);
         syncPopoverValues();
       };
 
@@ -1277,7 +1333,7 @@
 
     /**
      * =========================================================================
-     * 7. DRAG & DROP HELPER FOR ALL VIEWS
+     * 8. DRAG & DROP AND COMPACT SWATCH CONTROLS
      * =========================================================================
      */
     function attachSlotDragHandlers(el, index) {
@@ -1306,6 +1362,11 @@
       el.addEventListener("drop", e => {
         e.preventDefault();
         el.classList.remove("drag-over-target");
+        const pinnedHex = e.dataTransfer.getData("text/pinned-hex");
+        if (pinnedHex) {
+          updateSlotHex(index, pinnedHex, true);
+          return;
+        }
         const src = state.dragSourceIndex !== null ? state.dragSourceIndex : parseInt(e.dataTransfer.getData("text/plain"), 10);
         if (!isNaN(src) && src !== index) {
           swapSlots(src, index);
@@ -1313,25 +1374,20 @@
       });
     }
 
-    /**
-     * =========================================================================
-     * 8. MECHANICAL SLOT ACTION BAR (ZERO GLASSMORPHISM)
-     * =========================================================================
-     */
     function createSlotControlsBar(index, compact = false) {
       const slot = state.slots[index];
       const isPinned = state.pinned.includes(slot.hex);
       const bar = document.createElement("div");
-      bar.className = "inline-flex items-center gap-0.5 bg-soot border-2 border-iron p-0.5 shadow-md";
+      bar.className = "inline-flex items-center gap-0.5 bg-basalt/90 border border-chisel p-0.5 rounded-sm shadow-lg";
 
       const makeBtn = (title, html, onClick, active = false) => {
         const b = document.createElement("button");
         b.type = "button";
         b.title = title;
-        b.className = `px-1.5 py-1 text-[10px] font-mono transition cursor-pointer ${
+        b.className = `px-1.5 py-1 text-[10px] font-mono transition cursor-pointer rounded-sm ${
           active
-            ? "bg-molten text-soot font-bold"
-            : "bg-kiln text-ash hover:bg-iron hover:text-amberheat"
+            ? "bg-magma text-basalt font-bold"
+            : "bg-slab text-ash hover:bg-chisel hover:text-whitehot"
         }`;
         b.innerHTML = html;
         b.onclick = e => {
@@ -1342,35 +1398,41 @@
       };
 
       if (!compact && index > 0) {
-        bar.appendChild(makeBtn("Swap Left (<)", "&lt;", () => swapSlots(index, index - 1)));
+        bar.appendChild(makeBtn("Swap Left", "&lt;", () => swapSlots(index, index - 1)));
       }
 
-      // Lock Bolt
       const lockIcon = slot.locked
         ? `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a5 5 0 0 0-5 5v3H5v12h14V10h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 1 1 6 0v3H9V7z"/></svg>`
-        : `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="11" width="16" height="10"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>`;
-      bar.appendChild(makeBtn(slot.locked ? "Unbolt Slot" : "Bolt Slot (Lock)", lockIcon, () => toggleLock(index), slot.locked));
+        : `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>`;
+      bar.appendChild(makeBtn(slot.locked ? "Unlock" : "Lock", lockIcon, () => toggleLock(index), slot.locked));
 
-      // Manual Tuner
-      const tuneIcon = `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`;
-      const tuneBtn = makeBtn("Manual Smelter Tuner", tuneIcon, (e, btn) => openColorPopover(index, btn));
-      tuneBtn.setAttribute("data-open-popover", "true");
-      bar.appendChild(tuneBtn);
+      const pickIcon = `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`;
+      const pickBtn = makeBtn("Edit Color", pickIcon, (e, btn) => openColorPopover(index, btn));
+      pickBtn.setAttribute("data-open-popover", "true");
+      bar.appendChild(pickBtn);
 
-      // Pin to Ingot Rack
-      const pinIcon = `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="${isPinned ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2.2"><path d="M16 3H8v6l-2 4v2h5v6h2v-6h5v-2l-2-4V3z"/></svg>`;
-      bar.appendChild(makeBtn(isPinned ? "Pinned in Ingot Rack" : "Cast to Ingot Rack (Pin)", pinIcon, () => pinColor(slot.hex), isPinned));
+      const pinIcon = `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="${isPinned ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2"><path d="M16 3H8v6l-2 4v2h5v6h2v-6h5v-2l-2-4V3z"/></svg>`;
+      bar.appendChild(makeBtn(isPinned ? "Pinned" : "Pin Color", pinIcon, () => pinColor(slot.hex), isPinned));
 
       if (!compact && index < state.slots.length - 1) {
-        bar.appendChild(makeBtn("Swap Right (>)", "&gt;", () => swapSlots(index, index + 1)));
+        bar.appendChild(makeBtn("Swap Right", "&gt;", () => swapSlots(index, index + 1)));
       }
 
       return bar;
     }
 
     /**
+     * Helper for label overlay visibility based on state.labelMode ('hover' | 'always' | 'off')
+     */
+    function getOverlayVisibilityClass(locked = false) {
+      if (state.labelMode === "off") return "opacity-0 pointer-events-none";
+      if (state.labelMode === "always" || locked) return "opacity-100";
+      return "opacity-0 group-hover:opacity-100 focus-within:opacity-100";
+    }
+
+    /**
      * =========================================================================
-     * 9. VIEW MODE 01: SQUARE(ISH) GRID (PANNABLE WHEN LARGE)
+     * 9. VIEW MODE 1: GRID (SEAMLESS GAPLESS DEFAULT OR FRAMED)
      * =========================================================================
      */
     function renderGridView(container) {
@@ -1379,9 +1441,9 @@
       const vw = Math.max(320, rect.width);
       const vh = Math.max(300, rect.height);
 
-      const minTile = 168;
-      const gap = 12;
-      const pad = 20;
+      const gap = state.seamless ? 0 : 12;
+      const pad = state.seamless ? 0 : 16;
+      const minTile = 160;
 
       const aspect = vw / vh;
       let cols = Math.max(1, Math.round(Math.sqrt(n * aspect)));
@@ -1390,65 +1452,82 @@
 
       const fitW = Math.floor((vw - pad * 2 - gap * (cols - 1)) / cols);
       const fitH = Math.floor((vh - pad * 2 - gap * (rows - 1)) / rows);
-      const idealSize = Math.min(fitW, fitH);
-      const tileSize = Math.max(minTile, Math.min(340, idealSize));
 
-      const totalGridW = cols * tileSize + (cols - 1) * gap + pad * 2;
-      const totalGridH = rows * tileSize + (rows - 1) * gap + pad * 2;
-      const needsPan = totalGridW > vw || totalGridH > vh;
+      const colW = Math.max(minTile, fitW);
+      const rowH = Math.max(minTile, fitH);
+
+      const totalGridW = cols * colW + (cols - 1) * gap + pad * 2;
+      const totalGridH = rows * rowH + (rows - 1) * gap + pad * 2;
+      const needsPan = totalGridW > vw + 2 || totalGridH > vh + 2;
 
       const viewport = document.createElement("div");
-      viewport.className = `w-full h-full relative overflow-auto flex items-center justify-center ${needsPan ? "pan-grab" : ""}`;
+      viewport.className = `w-full h-full relative overflow-auto ${needsPan ? "pan-grab" : "flex items-center justify-center"}`;
 
       const grid = document.createElement("div");
       grid.style.display = "grid";
-      grid.style.gridTemplateColumns = `repeat(${cols}, ${tileSize}px)`;
-      grid.style.gap = `${gap}px`;
-      grid.style.padding = `${pad}px`;
-      if (needsPan) grid.style.margin = "auto";
+      if (state.seamless && !needsPan) {
+        grid.style.width = "100%";
+        grid.style.height = "100%";
+        grid.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+        grid.style.gridAutoRows = `1fr`;
+      } else {
+        grid.style.gridTemplateColumns = `repeat(${cols}, ${colW}px)`;
+        grid.style.gridAutoRows = `${rowH}px`;
+        grid.style.gap = `${gap}px`;
+        grid.style.padding = `${pad}px`;
+      }
 
       state.slots.forEach((slot, idx) => {
         const fg = getContrastText(slot.hex);
         const nameInfo = getClosestColorName(slot.hex);
 
+        // If the last row has fewer items in Seamless mode, span remaining columns so no background gap shows
+        const isLast = idx === n - 1;
+        const remainder = n % cols;
+        const spanCols = (isLast && remainder !== 0) ? (cols - remainder + 1) : 1;
+
         const card = document.createElement("div");
-        card.style.width = `${tileSize}px`;
-        card.style.height = `${tileSize}px`;
+        if (spanCols > 1) {
+          card.style.gridColumn = `span ${spanCols}`;
+        }
         card.style.backgroundColor = slot.hex;
         card.style.color = fg;
-        card.className = `border-2 border-iron p-3 flex flex-col justify-between relative group transition-transform duration-100 ${
-          slot.locked ? "swatch-locked" : "shadow-lg"
+        card.className = `p-3 flex flex-col justify-between relative group transition-opacity ${
+          state.seamless ? "" : "border-2 border-chisel shadow-lg"
         }`;
         attachSlotDragHandlers(card, idx);
 
-        // Top Plate Stamp
+        const visClass = getOverlayVisibilityClass(slot.locked);
+
+        // Top Lock Indicator
         const top = document.createElement("div");
-        top.className = "flex items-center justify-between text-[10px] font-mono";
+        top.className = `flex items-center justify-between text-[10px] font-mono transition-opacity duration-150 ${visClass}`;
         top.innerHTML = `
-          <span class="bg-soot text-ash border border-iron px-1.5 py-0.5 font-bold">#${String(idx + 1).padStart(2, "0")}</span>
-          ${slot.locked ? `<span class="bg-molten text-soot font-bold px-1.5 py-0.5 uppercase tracking-wider">BOLTED</span>` : `<span></span>`}
+          <span class="opacity-70 font-semibold">${idx + 1}</span>
+          ${slot.locked ? `<span class="bg-basalt/80 text-whitehot px-1.5 py-0.5 rounded-sm font-semibold">Locked</span>` : `<span></span>`}
         `;
 
-        // Center Readout Plate
+        // Center HEX + Conditional Close Name
         const mid = document.createElement("div");
-        mid.className = "my-auto flex flex-col items-center text-center";
+        mid.className = `my-auto flex flex-col items-center text-center transition-opacity duration-150 ${visClass}`;
 
         const hexBtn = document.createElement("button");
         hexBtn.className = "font-mono font-bold text-base sm:text-lg tracking-wider uppercase hover:underline cursor-pointer";
         hexBtn.textContent = slot.hex;
         hexBtn.title = "Click to copy HEX";
         hexBtn.onclick = e => { e.stopPropagation(); copyTextToClipboard(slot.hex); };
-
-        const nameEl = document.createElement("div");
-        nameEl.className = "text-[11px] font-mono opacity-85 mt-0.5 truncate max-w-full px-1";
-        nameEl.textContent = nameInfo.label;
-
         mid.appendChild(hexBtn);
-        mid.appendChild(nameEl);
 
-        // Bottom Mechanical Controls
+        if (nameInfo.label) {
+          const nameEl = document.createElement("div");
+          nameEl.className = "text-xs font-medium opacity-85 mt-0.5 truncate max-w-full px-2";
+          nameEl.textContent = nameInfo.label;
+          mid.appendChild(nameEl);
+        }
+
+        // Bottom Controls
         const bottom = document.createElement("div");
-        bottom.className = `flex justify-center transition-opacity ${slot.locked ? "opacity-100" : "opacity-90 sm:opacity-0 sm:group-hover:opacity-100"}`;
+        bottom.className = `flex justify-center transition-opacity duration-150 ${visClass}`;
         bottom.appendChild(createSlotControlsBar(idx, false));
 
         card.appendChild(top);
@@ -1461,54 +1540,42 @@
       container.appendChild(viewport);
 
       if (needsPan) {
-        let isPanning = false;
-        let startX = 0, startY = 0, scrollLeft = 0, scrollTop = 0;
-
-        viewport.addEventListener("mousedown", e => {
-          if (e.target.closest("button") || e.target.closest("[draggable='true']")) return;
-          isPanning = true;
-          viewport.classList.add("pan-grabbing");
-          startX = e.pageX - viewport.offsetLeft;
-          startY = e.pageY - viewport.offsetTop;
-          scrollLeft = viewport.scrollLeft;
-          scrollTop = viewport.scrollTop;
-        });
-
-        window.addEventListener("mouseup", () => {
-          isPanning = false;
-          viewport.classList.remove("pan-grabbing");
-        });
-
-        viewport.addEventListener("mousemove", e => {
-          if (!isPanning) return;
-          e.preventDefault();
-          const x = e.pageX - viewport.offsetLeft;
-          const y = e.pageY - viewport.offsetTop;
-          viewport.scrollLeft = scrollLeft - (x - startX);
-          viewport.scrollTop = scrollTop - (y - startY);
-        });
-
-        const panBadge = document.createElement("div");
-        panBadge.className = "absolute bottom-3 right-3 iron-plate px-3 py-1.5 text-[11px] font-mono text-slag flex items-center gap-2.5 shadow-xl";
-        panBadge.innerHTML = `<span>GANTRY PAN ACTIVE (${cols}×${rows})</span>`;
-        const centerBtn = document.createElement("button");
-        centerBtn.className = "text-amberheat hover:underline font-bold cursor-pointer uppercase";
-        centerBtn.textContent = "[CENTER]";
-        centerBtn.onclick = () => {
-          viewport.scrollTo({
-            left: (viewport.scrollWidth - viewport.clientWidth) / 2,
-            top: (viewport.scrollHeight - viewport.clientHeight) / 2,
-            behavior: "smooth"
-          });
-        };
-        panBadge.appendChild(centerBtn);
-        container.appendChild(panBadge);
+        enableDragPanning(viewport);
       }
+    }
+
+    function enableDragPanning(viewport) {
+      let isPanning = false;
+      let startX = 0, startY = 0, scrollLeft = 0, scrollTop = 0;
+
+      viewport.addEventListener("mousedown", e => {
+        if (e.target.closest("button") || e.target.closest("[draggable='true']")) return;
+        isPanning = true;
+        viewport.classList.add("pan-grabbing");
+        startX = e.pageX - viewport.offsetLeft;
+        startY = e.pageY - viewport.offsetTop;
+        scrollLeft = viewport.scrollLeft;
+        scrollTop = viewport.scrollTop;
+      });
+      window.addEventListener("mouseup", () => {
+        isPanning = false;
+        viewport.classList.remove("pan-grabbing");
+      });
+      viewport.addEventListener("mousemove", e => {
+        if (!isPanning) return;
+        e.preventDefault();
+        const x = e.pageX - viewport.offsetLeft;
+        const y = e.pageY - viewport.offsetTop;
+        viewport.scrollLeft = scrollLeft - (x - startX);
+        viewport.scrollTop = scrollTop - (y - startY);
+      });
     }
 
     /**
      * =========================================================================
-     * 10. VIEW MODE 02: RANDOM MOSAIC (EQUAL-AREA TESSELLATION)
+     * 10. VIEW MODE 2: MOSAIC (HIGH-DENSITY SHARD CLUTTER VISUALIZER)
+     *     Renders 80 to 500 Voronoi/jittered crystal shards across the screen
+     *     with zero text boxes and equal color distribution.
      * =========================================================================
      */
     function seededRng(seed) {
@@ -1517,275 +1584,244 @@
       return () => (s = (s * 16807) % 2147483647) / 2147483647;
     }
 
-    function partitionPolygonEqualArea(poly, count, rng) {
-      if (count <= 1) return [poly];
-      const k = Math.floor(count / 2);
-      const ratio = k / count;
-
-      let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-      poly.forEach(([x, y]) => {
-        if (x < minX) minX = x; if (x > maxX) maxX = x;
-        if (y < minY) minY = y; if (y > maxY) maxY = y;
-      });
-
-      const horizontal = (maxY - minY) > (maxX - minX);
-      const tilt = (rng() - 0.5) * 0.28;
-
-      const polyArea = pts => {
-        let a = 0;
-        for (let i = 0; i < pts.length; i++) {
-          const [x1, y1] = pts[i];
-          const [x2, y2] = pts[(i + 1) % pts.length];
-          a += x1 * y2 - x2 * y1;
+    function clipPolygonHalfPlane(poly, nx, ny, c) {
+      const out = [];
+      const len = poly.length;
+      if (len === 0) return out;
+      for (let i = 0; i < len; i++) {
+        const p1 = poly[i];
+        const p2 = poly[(i + 1) % len];
+        const d1 = p1[0] * nx + p1[1] * ny - c;
+        const d2 = p2[0] * nx + p2[1] * ny - c;
+        if (d1 <= 0) out.push(p1);
+        if ((d1 < 0 && d2 > 0) || (d1 > 0 && d2 < 0)) {
+          const t = d1 / (d1 - d2);
+          out.push([
+            p1[0] + t * (p2[0] - p1[0]),
+            p1[1] + t * (p2[1] - p1[1])
+          ]);
         }
-        return Math.abs(a) / 2;
-      };
-
-      const nx = horizontal ? tilt : 1;
-      const ny = horizontal ? 1 : tilt;
-      const proj = poly.map(([x, y]) => x * nx + y * ny);
-      const lo = Math.min(...proj), hi = Math.max(...proj);
-      const total = polyArea(poly);
-      const target = total * ratio;
-
-      const sliceAt = (threshold) => {
-        const left = [], right = [];
-        for (let i = 0; i < poly.length; i++) {
-          const p1 = poly[i];
-          const p2 = poly[(i + 1) % poly.length];
-          const d1 = p1[0] * nx + p1[1] * ny - threshold;
-          const d2 = p2[0] * nx + p2[1] * ny - threshold;
-          if (d1 <= 0) left.push(p1);
-          if (d1 >= 0) right.push(p1);
-          if ((d1 < 0 && d2 > 0) || (d1 > 0 && d2 < 0)) {
-            const t = d1 / (d1 - d2);
-            const inter = [p1[0] + t * (p2[0] - p1[0]), p1[1] + t * (p2[1] - p1[1])];
-            left.push(inter);
-            right.push(inter);
-          }
-        }
-        return { left, right };
-      };
-
-      let low = lo, high = hi, bestSplit = sliceAt((lo + hi) / 2);
-      for (let iter = 0; iter < 22; iter++) {
-        const mid = (low + high) / 2;
-        const split = sliceAt(mid);
-        bestSplit = split;
-        const aLeft = polyArea(split.left);
-        if (aLeft < target) low = mid;
-        else high = mid;
       }
-
-      return [
-        ...partitionPolygonEqualArea(bestSplit.left, k, rng),
-        ...partitionPolygonEqualArea(bestSplit.right, count - k, rng)
-      ];
+      return out;
     }
 
     function renderMosaicView(container) {
+      const canvas = document.createElement("canvas");
+      canvas.className = "w-full h-full block cursor-pointer";
+      container.appendChild(canvas);
+
+      const rect = container.getBoundingClientRect();
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const W = Math.max(320, rect.width);
+      const H = Math.max(260, rect.height);
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+
+      const ctx = canvas.getContext("2d");
+      ctx.scale(dpr, dpr);
+
       const n = state.slots.length;
-      const W = 1200, H = 760;
-      const rng = seededRng(state.mosaicSeed + n * 17);
-      const rootPoly = [[0, 0], [W, 0], [W, H], [0, H]];
-      const cells = partitionPolygonEqualArea(rootPoly, n, rng);
+      const totalCells = state.mosaicCount;
+      const rng = seededRng(state.mosaicSeed + n * 19 + totalCells);
 
-      const wrapper = document.createElement("div");
-      wrapper.className = "w-full h-full p-3 sm:p-5 flex flex-col items-center justify-center relative";
+      // Generate stratified jittered Voronoi seed points across the viewport
+      const aspect = W / H;
+      const cols = Math.max(4, Math.round(Math.sqrt(totalCells * aspect)));
+      const rows = Math.max(4, Math.round(totalCells / cols));
+      const cellW = W / cols;
+      const cellH = H / rows;
 
-      const frame = document.createElement("div");
-      frame.className = "w-full h-full border-2 border-iron shadow-2xl relative bg-soot overflow-hidden";
+      // Optional cluster centers for color grouping
+      const clusterStrength = state.mosaicCluster / 100;
+      const anchors = [];
+      for (let i = 0; i < n; i++) {
+        anchors.push({
+          x: rng() * W,
+          y: rng() * H,
+          slotIndex: i
+        });
+      }
 
-      const svgNS = "http://www.w3.org/2000/svg";
-      const svg = document.createElementNS(svgNS, "svg");
-      svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-      svg.setAttribute("preserveAspectRatio", "none");
-      svg.className = "w-full h-full block";
+      const sites = [];
+      let idxCounter = 0;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const sx = (c + 0.15 + rng() * 0.7) * cellW;
+          const sy = (r + 0.15 + rng() * 0.7) * cellH;
+          sites.push({
+            r, c,
+            x: sx,
+            y: sy,
+            slotIndex: idxCounter % n
+          });
+          idxCounter++;
+        }
+      }
 
-      cells.forEach((pts, idx) => {
-        const slot = state.slots[idx];
-        if (!slot) return;
-        const nameInfo = getClosestColorName(slot.hex);
+      // Shuffle balanced slot assignments, blending with spatial cluster preference if clusterStrength > 0
+      for (let i = sites.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        const tmp = sites[i].slotIndex;
+        sites[i].slotIndex = sites[j].slotIndex;
+        sites[j].slotIndex = tmp;
+      }
 
-        let cx = 0, cy = 0;
-        pts.forEach(([x, y]) => { cx += x; cy += y; });
-        cx /= pts.length;
-        cy /= pts.length;
+      if (clusterStrength > 0) {
+        sites.forEach(s => {
+          if (rng() < clusterStrength) {
+            let bestA = anchors[0];
+            let minD = Infinity;
+            for (let k = 0; k < anchors.length; k++) {
+              const d = Math.hypot(s.x - anchors[k].x, s.y - anchors[k].y) + (rng() - 0.5) * 140;
+              if (d < minD) {
+                minD = d;
+                bestA = anchors[k];
+              }
+            }
+            s.slotIndex = bestA.slotIndex;
+          }
+        });
+      }
 
-        const g = document.createElementNS(svgNS, "g");
-        g.className = "cursor-pointer group";
+      // 2D Grid lookup for fast local Voronoi cell clipping
+      const gridMap = Array.from({ length: rows }, () => Array(cols).fill(null));
+      sites.forEach(s => { gridMap[s.r][s.c] = s; });
 
-        const poly = document.createElementNS(svgNS, "polygon");
-        poly.setAttribute("points", pts.map(p => `${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(" "));
-        poly.setAttribute("fill", slot.hex);
-        poly.setAttribute("stroke", "#110F0E");
-        poly.setAttribute("stroke-width", "4");
-        poly.setAttribute("stroke-linejoin", "miter");
+      const renderedPolys = [];
 
-        poly.addEventListener("click", () => copyTextToClipboard(slot.hex));
-        g.appendChild(poly);
+      sites.forEach(site => {
+        const pad = Math.max(cellW, cellH) * 2.4;
+        let poly = [
+          [Math.max(0, site.x - pad), Math.max(0, site.y - pad)],
+          [Math.min(W, site.x + pad), Math.max(0, site.y - pad)],
+          [Math.min(W, site.x + pad), Math.min(H, site.y + pad)],
+          [Math.max(0, site.x - pad), Math.min(H, site.y + pad)]
+        ];
 
-        const fo = document.createElementNS(svgNS, "foreignObject");
-        const boxW = 175, boxH = 84;
-        fo.setAttribute("x", Math.max(8, Math.min(W - boxW - 8, cx - boxW / 2)));
-        fo.setAttribute("y", Math.max(8, Math.min(H - boxH - 8, cy - boxH / 2)));
-        fo.setAttribute("width", boxW);
-        fo.setAttribute("height", boxH);
+        const rMin = Math.max(0, site.r - 2);
+        const rMax = Math.min(rows - 1, site.r + 2);
+        const cMin = Math.max(0, site.c - 2);
+        const cMax = Math.min(cols - 1, site.c + 2);
 
-        const badge = document.createElement("div");
-        badge.className = "w-full h-full flex flex-col items-center justify-center text-center select-none";
-        attachSlotDragHandlers(badge, idx);
+        for (let nr = rMin; nr <= rMax; nr++) {
+          for (let nc = cMin; nc <= cMax; nc++) {
+            if (nr === site.r && nc === site.c) continue;
+            const other = gridMap[nr][nc];
+            if (!other) continue;
+            const nx = other.x - site.x;
+            const ny = other.y - site.y;
+            const midX = (site.x + other.x) * 0.5;
+            const midY = (site.y + other.y) * 0.5;
+            const c = midX * nx + midY * ny;
+            poly = clipPolygonHalfPlane(poly, nx, ny, c);
+            if (poly.length === 0) break;
+          }
+          if (poly.length === 0) break;
+        }
 
-        const plate = document.createElement("div");
-        plate.className = `bg-soot/90 border border-iron px-2 py-1 text-ash ${slot.locked ? "border-molten" : ""}`;
+        if (poly.length < 3) return;
+        const hex = state.slots[site.slotIndex]?.hex || "#000000";
 
-        const hexLine = document.createElement("div");
-        hexLine.className = "font-mono font-bold text-xs tracking-wider cursor-pointer hover:text-amberheat";
-        hexLine.textContent = `${slot.locked ? "[L] " : ""}${slot.hex}`;
-        hexLine.onclick = e => { e.stopPropagation(); copyTextToClipboard(slot.hex); };
+        ctx.beginPath();
+        ctx.moveTo(poly[0][0], poly[0][1]);
+        for (let i = 1; i < poly.length; i++) {
+          ctx.lineTo(poly[i][0], poly[i][1]);
+        }
+        ctx.closePath();
+        ctx.fillStyle = hex;
+        ctx.fill();
 
-        const nameLine = document.createElement("div");
-        nameLine.className = "text-[10px] font-mono text-slag truncate max-w-[140px]";
-        nameLine.textContent = nameInfo.label;
+        // In Seamless mode, stroke with the exact same color (0.6px) to eliminate canvas anti-aliasing seams.
+        // In Framed mode, stroke with dark basalt mortar lines.
+        if (state.seamless) {
+          ctx.strokeStyle = hex;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        } else {
+          ctx.strokeStyle = "#0B090A";
+          ctx.lineWidth = 1.6;
+          ctx.stroke();
+        }
 
-        plate.appendChild(hexLine);
-        plate.appendChild(nameLine);
-
-        const ctrlWrap = document.createElement("div");
-        ctrlWrap.className = "mt-1 opacity-0 group-hover:opacity-100 transition-opacity";
-        ctrlWrap.appendChild(createSlotControlsBar(idx, true));
-
-        badge.appendChild(plate);
-        badge.appendChild(ctrlWrap);
-        fo.appendChild(badge);
-        g.appendChild(fo);
-        svg.appendChild(g);
+        renderedPolys.push({ site, poly });
       });
 
-      frame.appendChild(svg);
-      wrapper.appendChild(frame);
-      container.appendChild(wrapper);
+      // Clicking any shard highlights/opens its slot in the bottom palette dock
+      canvas.addEventListener("click", e => {
+        const b = canvas.getBoundingClientRect();
+        const mx = e.clientX - b.left;
+        const my = e.clientY - b.top;
+        let closestSite = null;
+        let minD = Infinity;
+        for (let i = 0; i < sites.length; i++) {
+          const d = (sites[i].x - mx) ** 2 + (sites[i].y - my) ** 2;
+          if (d < minD) {
+            minD = d;
+            closestSite = sites[i];
+          }
+        }
+        if (closestSite) {
+          highlightBottomSlot(closestSite.slotIndex);
+        }
+      });
     }
 
     /**
      * =========================================================================
-     * 11. VIEW MODE 03: CONSOLE UI MOCKUP (10-TOKEN INDUSTRIAL TELEMETRY)
+     * 11. VIEW MODE 3: UI MOCKUP (CLEAN INTERACTIVE APPLICATION PREVIEW)
      * =========================================================================
      */
-    const UI_ROLES = [
-      { key: "bg", label: "BG", desc: "Primary Console Background" },
-      { key: "bgAccent", label: "BG ACCENT", desc: "Recessed Header/Sub-surface" },
-      { key: "text", label: "PLAIN TEXT", desc: "Primary Readout Text" },
-      { key: "urgent", label: "URGENT TEXT", desc: "Critical Thermal Alert" },
-      { key: "panel", label: "UI PANEL", desc: "Instrument Plate Fill" },
-      { key: "hover", label: "UI HOVER", desc: "Active Row Highlight" },
-      { key: "button", label: "BUTTON", desc: "Primary Actuator CTA" },
-      { key: "muted", label: "MUTED TEXT", desc: "Secondary Gauge Labels" },
-      { key: "border", label: "BORDER", desc: "2px Structural Seam" },
-      { key: "accent2", label: "ACCENT II", desc: "Auxiliary Telemetry Trace" }
-    ];
-
     function renderUiMockupView(container) {
       const slots = state.slots;
       const n = slots.length;
 
-      const bg = slots[0]?.hex || "#110F0E";
-      const bgAccent = slots[1]?.hex || (getRelativeLuminance(bg) > 0.4 ? "#DCD7D0" : "#171311");
+      const bg = slots[0]?.hex || "#0F1115";
+      const bgAccent = slots[1]?.hex || (getRelativeLuminance(bg) > 0.4 ? "#E5E7EB" : "#181B22");
       const plainText = slots[2]?.hex || getContrastText(bg);
-      const urgentText = slots[3]?.hex || "#EA580C";
+      const urgentText = slots[3]?.hex || "#EF4444";
       const panel = slots[4]?.hex || bgAccent;
-      const hover = slots[5]?.hex || hexWithAlpha(plainText, 0.1);
+      const hover = slots[5]?.hex || hexWithAlpha(plainText, 0.12);
       const button = slots[6]?.hex || "#F59E0B";
       const buttonFg = getContrastText(button);
-      const mutedText = slots[7]?.hex || hexWithAlpha(plainText, 0.6);
-      const border = slots[8]?.hex || hexWithAlpha(plainText, 0.22);
+      const mutedText = slots[7]?.hex || hexWithAlpha(plainText, 0.62);
+      const border = slots[8]?.hex || (state.seamless ? "transparent" : hexWithAlpha(plainText, 0.16));
       const accent2 = slots[9]?.hex || button;
 
       const wrapper = document.createElement("div");
-      wrapper.className = "w-full h-full flex flex-col overflow-y-auto p-3 sm:p-5 gap-3";
+      wrapper.className = "w-full h-full overflow-y-auto p-3 sm:p-6 pt-14 flex items-center justify-center";
 
-      // Top Token Mapping Manifold Strip
-      const roleBar = document.createElement("div");
-      roleBar.className = "iron-plate p-2.5 flex flex-wrap items-center justify-between gap-2 shrink-0";
-
-      const roleChips = document.createElement("div");
-      roleChips.className = "flex flex-wrap items-center gap-1.5";
-
-      UI_ROLES.forEach((role, idx) => {
-        const hasSlot = idx < n;
-        const hex = hasSlot ? slots[idx].hex : [bg, bgAccent, plainText, urgentText, panel, hover, button, mutedText, border, accent2][idx];
-        const chip = document.createElement("div");
-        chip.className = `flex items-center gap-1.5 px-2 py-1 border-2 text-[10px] font-mono ${
-          hasSlot
-            ? "bg-recess border-iron text-ash cursor-grab hover:border-molten"
-            : "bg-recess/40 border-iron/50 text-slag opacity-70"
-        }`;
-        if (hasSlot) attachSlotDragHandlers(chip, idx);
-
-        chip.innerHTML = `
-          <span class="w-3 h-3 border border-ash/30 shrink-0" style="background:${hex}"></span>
-          <span class="font-bold">${String(idx + 1).padStart(2, "0")}.${role.label}</span>
-          ${!hasSlot ? `<span class="text-[9px]">[AUTO]</span>` : ``}
-        `;
-        if (hasSlot) {
-          chip.title = `${role.desc} — Click to tune Slot #${idx + 1}, or drag to swap role`;
-          chip.onclick = () => openColorPopover(idx, chip);
-        }
-        roleChips.appendChild(chip);
-      });
-
-      roleBar.appendChild(roleChips);
-      wrapper.appendChild(roleBar);
-
-      // Live Interactive Smelter Telemetry Mockup
       const mockup = document.createElement("div");
       mockup.style.backgroundColor = bg;
       mockup.style.color = plainText;
-      mockup.style.borderColor = border;
-      mockup.className = "flex-1 border-2 shadow-2xl overflow-hidden flex flex-col min-h-[430px]";
+      mockup.style.borderColor = state.seamless ? "transparent" : border;
+      mockup.className = `w-full max-w-5xl min-h-[440px] ${state.seamless ? "" : "border-2"} shadow-2xl overflow-hidden flex flex-col md:flex-row rounded-sm`;
 
-      // Mockup Header Bar
-      const nav = document.createElement("div");
-      nav.style.backgroundColor = bgAccent;
-      nav.style.borderColor = border;
-      nav.className = "px-4 py-3 border-b-2 flex flex-wrap items-center justify-between gap-4";
-      nav.innerHTML = `
-        <div class="flex items-center gap-3">
-          <div class="w-3.5 h-3.5" style="background:${button}"></div>
-          <span class="font-display font-bold text-sm uppercase tracking-wider">SECTOR 04 // BLAST FURNACE TELEMETRY</span>
-          <span class="text-[10px] font-mono px-2 py-0.5 border font-bold uppercase" style="background:${hexWithAlpha(accent2, 0.15)}; border-color:${accent2}; color:${accent2}">PRESSURE NOMINAL</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="text-[11px] font-mono hidden sm:inline" style="color:${mutedText}">CORE TEMP: 1,420°C</span>
-          <button type="button" style="background:${button}; color:${buttonFg}; border-color:${plainText}" class="text-xs font-display font-bold uppercase tracking-wider px-3.5 py-1.5 border-2 shadow-sm cursor-pointer">
-            VENT MANIFOLD
-          </button>
+      // Sidebar (BG Accent)
+      const sidebar = document.createElement("aside");
+      sidebar.style.backgroundColor = bgAccent;
+      sidebar.style.borderColor = border;
+      sidebar.className = `w-full md:w-56 p-4 flex flex-col justify-between gap-4 ${state.seamless ? "" : "border-b md:border-b-0 md:border-r"}`;
+
+      const navTop = document.createElement("div");
+      navTop.className = "space-y-4";
+      navTop.innerHTML = `
+        <div class="flex items-center gap-2.5 px-2">
+          <span class="w-3.5 h-3.5 rounded-sm" style="background:${button}"></span>
+          <span class="font-semibold text-sm tracking-tight">Workspace</span>
         </div>
       `;
-      mockup.appendChild(nav);
 
-      // Mockup Console Body
-      const body = document.createElement("div");
-      body.className = "flex-1 grid grid-cols-1 md:grid-cols-12 gap-4 p-4";
-
-      // Left Conduit Column
-      const sidebar = document.createElement("div");
-      sidebar.style.backgroundColor = panel;
-      sidebar.style.borderColor = border;
-      sidebar.className = "md:col-span-4 border-2 p-3 flex flex-col justify-between gap-3";
-
-      const navList = document.createElement("div");
-      navList.className = "space-y-1.5";
-      const conduits = [
-        { name: "01. CRUCIBLE PRESSURE", active: true },
-        { name: "02. SLAG SEPARATOR VALVES", active: false },
-        { name: "03. BELLOWS TURBINE RPM", active: false },
-        { name: "04. INGOT QUENCH TANKS", active: false }
+      const menuList = document.createElement("div");
+      menuList.className = "space-y-1";
+      const navItems = [
+        { label: "Overview", active: true },
+        { label: "Projects", active: false },
+        { label: "Activity", active: false },
+        { label: "Settings", active: false }
       ];
-      conduits.forEach(item => {
+      navItems.forEach(item => {
         const row = document.createElement("div");
-        row.style.borderColor = item.active ? accent2 : "transparent";
-        row.className = "px-3 py-2 border-l-4 text-xs font-mono font-semibold flex items-center justify-between transition-colors cursor-pointer";
+        row.className = "px-3 py-2 rounded-sm text-xs font-medium flex items-center justify-between cursor-pointer transition-colors";
         if (item.active) {
           row.style.backgroundColor = hover;
           row.style.color = plainText;
@@ -1802,250 +1838,231 @@
             row.style.color = mutedText;
           }
         });
-        row.innerHTML = `<span>${item.name}</span>${item.active ? `<span class="w-2 h-2" style="background:${accent2}"></span>` : ""}`;
-        navList.appendChild(row);
+        row.innerHTML = `<span>${item.label}</span>${item.active ? `<span class="w-1.5 h-1.5 rounded-full" style="background:${button}"></span>` : ""}`;
+        menuList.appendChild(row);
       });
-      sidebar.appendChild(navList);
+      navTop.appendChild(menuList);
+      sidebar.appendChild(navTop);
 
-      // Urgent Thermal Warning Box
-      const urgentBox = document.createElement("div");
-      urgentBox.style.backgroundColor = hexWithAlpha(urgentText, 0.12);
-      urgentBox.style.borderColor = urgentText;
-      urgentBox.className = "border-2 p-3 text-xs space-y-1";
-      urgentBox.innerHTML = `
-        <div class="font-display font-bold uppercase tracking-wider flex items-center gap-1.5" style="color:${urgentText}">
-          <span>▲</span><span>URGENT OVERHEAT WARNING</span>
+      // Urgent Banner inside Sidebar
+      const alertBox = document.createElement("div");
+      alertBox.style.backgroundColor = hexWithAlpha(urgentText, 0.14);
+      alertBox.style.borderColor = state.seamless ? "transparent" : urgentText;
+      alertBox.className = `${state.seamless ? "" : "border"} p-3 rounded-sm text-xs space-y-1`;
+      alertBox.innerHTML = `
+        <div class="font-semibold flex items-center gap-1.5" style="color:${urgentText}">
+          <span>●</span><span>Urgent Notice</span>
         </div>
-        <p class="text-[11px] font-mono leading-relaxed" style="color:${plainText}">
-          Conduit #03 exceeds thermal threshold. Engage secondary coolant pump immediately.
+        <p class="text-[11px] leading-relaxed" style="color:${plainText}">
+          2 tasks require review before deployment.
         </p>
       `;
-      sidebar.appendChild(urgentBox);
-      body.appendChild(sidebar);
+      sidebar.appendChild(alertBox);
+      mockup.appendChild(sidebar);
 
-      // Right Telemetry Gauges & Valve Matrix
-      const mainCol = document.createElement("div");
-      mainCol.className = "md:col-span-8 flex flex-col gap-4";
+      // Main Content Area
+      const content = document.createElement("div");
+      content.className = "flex-1 p-5 flex flex-col gap-5";
 
-      const metricsRow = document.createElement("div");
-      metricsRow.className = "grid grid-cols-1 sm:grid-cols-3 gap-3";
-      const metrics = [
-        { label: "KILN OUTPUT", value: "840 TONS", delta: "+6.2% YIELD", isUrgent: false },
-        { label: "LINE VOLTAGE", value: "480.2 KV", delta: "STABLE", isUrgent: false },
-        { label: "VALVE #03 TEMP", value: "1,690 °C", delta: "CRITICAL", isUrgent: true }
-      ];
-      metrics.forEach(m => {
-        const card = document.createElement("div");
-        card.style.backgroundColor = panel;
-        card.style.borderColor = border;
-        card.className = "border-2 p-3 flex flex-col justify-between";
-        card.innerHTML = `
-          <span class="text-[10px] font-mono uppercase" style="color:${mutedText}">${m.label}</span>
-          <div class="flex items-baseline justify-between mt-2">
-            <span class="text-lg font-display font-bold tracking-wide" style="color:${m.isUrgent ? urgentText : plainText}">${m.value}</span>
-            <span class="text-[10px] font-mono font-bold" style="color:${m.isUrgent ? urgentText : accent2}">${m.delta}</span>
-          </div>
-        `;
-        metricsRow.appendChild(card);
-      });
-      mainCol.appendChild(metricsRow);
-
-      // Interactive Valve Row Table (Tests UI Hover Token)
-      const tableCard = document.createElement("div");
-      tableCard.style.backgroundColor = panel;
-      tableCard.style.borderColor = border;
-      tableCard.className = "flex-1 border-2 p-4 flex flex-col justify-between gap-3";
-
-      const tableHeader = document.createElement("div");
-      tableHeader.className = "flex flex-wrap items-center justify-between gap-2 pb-2 border-b-2";
-      tableHeader.style.borderColor = border;
-      tableHeader.innerHTML = `
+      // Header row with Primary Button
+      const header = document.createElement("div");
+      header.className = "flex flex-wrap items-center justify-between gap-3";
+      header.innerHTML = `
         <div>
-          <h3 class="text-xs font-display font-bold uppercase tracking-wider">SMELTER MANIFOLD GATES (HOVER ROWS TO TEST HOVER TOKEN)</h3>
-          <p class="text-[11px] font-mono" style="color:${mutedText}">Click any token badge above to calibrate colors live</p>
+          <h2 class="text-base font-semibold">Project Overview</h2>
+          <p class="text-xs" style="color:${mutedText}">Live preview of your active palette tokens</p>
         </div>
         <div class="flex items-center gap-2">
-          <span style="background:${bgAccent}; border-color:${border}; color:${mutedText}" class="text-[11px] font-mono px-2.5 py-1 border-2">FILTER: ALL GATES</span>
-          <button type="button" style="background:${button}; color:${buttonFg}" class="text-[11px] font-mono font-bold px-3 py-1 cursor-pointer uppercase">ENGAGE</button>
+          <button type="button" style="background:${panel}; color:${plainText}; border-color:${border}" class="px-3 py-1.5 text-xs font-medium rounded-sm ${state.seamless ? "" : "border"} cursor-pointer">
+            Filter
+          </button>
+          <button type="button" style="background:${button}; color:${buttonFg}" class="px-3.5 py-1.5 text-xs font-semibold rounded-sm shadow-sm cursor-pointer">
+            New Release
+          </button>
         </div>
       `;
-      tableCard.appendChild(tableHeader);
+      content.appendChild(header);
 
-      const rowsWrap = document.createElement("div");
-      rowsWrap.className = "divide-y-2";
-      rowsWrap.style.borderColor = border;
-      const gates = [
-        { id: "GATE-ALPHA-01", status: "SEALED // NOMINAL", urgent: false, psi: "2,400 PSI" },
-        { id: "GATE-BETA-02", status: "THERMAL SPIKE", urgent: true, psi: "3,950 PSI" },
-        { id: "GATE-GAMMA-03", status: "FLOWING // ACTIVE", urgent: false, psi: "2,180 PSI" }
+      // Stat Cards (UI Panel)
+      const cardsGrid = document.createElement("div");
+      cardsGrid.className = `grid grid-cols-1 sm:grid-cols-3 ${state.seamless ? "gap-0" : "gap-3"}`;
+      const stats = [
+        { title: "Active Tasks", val: "24", tag: "+4 today", urgent: false },
+        { title: "Response Time", val: "142 ms", tag: "Optimal", urgent: false },
+        { title: "Open Alerts", val: "3", tag: "Action Needed", urgent: true }
       ];
-      gates.forEach(ep => {
+      stats.forEach(st => {
+        const c = document.createElement("div");
+        c.style.backgroundColor = panel;
+        c.style.borderColor = border;
+        c.className = `${state.seamless ? "" : "border rounded-sm"} p-3.5 flex flex-col justify-between`;
+        c.innerHTML = `
+          <span class="text-[11px]" style="color:${mutedText}">${st.title}</span>
+          <div class="flex items-baseline justify-between mt-2">
+            <span class="text-lg font-bold" style="color:${st.urgent ? urgentText : plainText}">${st.val}</span>
+            <span class="text-[11px] font-medium" style="color:${st.urgent ? urgentText : accent2}">${st.tag}</span>
+          </div>
+        `;
+        cardsGrid.appendChild(c);
+      });
+      content.appendChild(cardsGrid);
+
+      // Multi-Color Bar Chart using all N palette colors + Interactive Hover List
+      const bottomSplit = document.createElement("div");
+      bottomSplit.className = `grid grid-cols-1 lg:grid-cols-12 ${state.seamless ? "gap-0" : "gap-4"} flex-1`;
+
+      // Interactive Hover List
+      const listPanel = document.createElement("div");
+      listPanel.style.backgroundColor = panel;
+      listPanel.style.borderColor = border;
+      listPanel.className = `lg:col-span-7 ${state.seamless ? "" : "border rounded-sm"} p-4 flex flex-col justify-between`;
+      listPanel.innerHTML = `<div class="text-xs font-semibold mb-2">Recent Items (Hover to test highlight)</div>`;
+
+      const listRows = document.createElement("div");
+      listRows.className = "space-y-1";
+      const rowsData = [
+        { name: "Design System Tokens", status: "Ready", urgent: false },
+        { name: "Production Build #42", status: "Blocked", urgent: true },
+        { name: "API Contrast Check", status: "Passed", urgent: false }
+      ];
+      rowsData.forEach(item => {
         const r = document.createElement("div");
-        r.style.borderColor = border;
-        r.className = "py-2.5 px-3 flex items-center justify-between text-xs font-mono transition-colors cursor-pointer";
+        r.className = "px-3 py-2 rounded-sm flex items-center justify-between text-xs transition-colors cursor-pointer";
         r.addEventListener("mouseenter", () => { r.style.backgroundColor = hover; });
         r.addEventListener("mouseleave", () => { r.style.backgroundColor = "transparent"; });
         r.innerHTML = `
-          <div class="flex items-center gap-2.5">
-            <span class="w-2.5 h-2.5" style="background:${ep.urgent ? urgentText : accent2}"></span>
-            <span class="font-bold">${ep.id}</span>
-          </div>
-          <div class="flex items-center gap-4">
-            <span class="font-bold" style="color:${ep.urgent ? urgentText : mutedText}">${ep.status}</span>
-            <span style="color:${mutedText}">${ep.psi}</span>
-          </div>
+          <span class="font-medium">${item.name}</span>
+          <span class="font-mono text-[11px] font-semibold" style="color:${item.urgent ? urgentText : mutedText}">${item.status}</span>
         `;
-        rowsWrap.appendChild(r);
+        listRows.appendChild(r);
       });
-      tableCard.appendChild(rowsWrap);
+      listPanel.appendChild(listRows);
+      bottomSplit.appendChild(listPanel);
 
-      if (n > 10) {
-        const extraBar = document.createElement("div");
-        extraBar.style.borderColor = border;
-        extraBar.className = "pt-2.5 border-t-2 flex flex-wrap items-center gap-1.5";
-        const lbl = document.createElement("span");
-        lbl.style.color = mutedText;
-        lbl.className = "text-[10px] font-mono uppercase mr-1";
-        lbl.textContent = "AUXILIARY INGOTS:";
-        extraBar.appendChild(lbl);
+      // Palette Distribution Bar Preview (uses all N colors)
+      const chartPanel = document.createElement("div");
+      chartPanel.style.backgroundColor = panel;
+      chartPanel.style.borderColor = border;
+      chartPanel.className = `lg:col-span-5 ${state.seamless ? "" : "border rounded-sm"} p-4 flex flex-col justify-between`;
+      chartPanel.innerHTML = `<div class="text-xs font-semibold mb-2">All ${n} Palette Colors</div>`;
 
-        for (let i = 10; i < n; i++) {
-          const hex = slots[i].hex;
-          const tag = document.createElement("span");
-          tag.style.backgroundColor = hex;
-          tag.style.color = getContrastText(hex);
-          tag.className = "text-[10px] font-mono font-bold px-2 py-0.5 border border-black/30 cursor-pointer";
-          tag.textContent = `#${String(i + 1).padStart(2, "0")} ${hex}`;
-          tag.onclick = () => openColorPopover(i, tag);
-          extraBar.appendChild(tag);
-        }
-        tableCard.appendChild(extraBar);
-      }
+      const barsWrap = document.createElement("div");
+      barsWrap.className = `flex items-end h-28 ${state.seamless ? "gap-0" : "gap-1.5"} pt-2`;
+      slots.forEach((s, idx) => {
+        const bar = document.createElement("div");
+        const hPct = 35 + ((idx * 29) % 65);
+        bar.style.height = `${hPct}%`;
+        bar.style.backgroundColor = s.hex;
+        bar.className = "flex-1 transition-all hover:opacity-85 cursor-pointer";
+        bar.title = `Color ${idx + 1}: ${s.hex}`;
+        bar.onclick = () => highlightBottomSlot(idx);
+        barsWrap.appendChild(bar);
+      });
+      chartPanel.appendChild(barsWrap);
+      bottomSplit.appendChild(chartPanel);
 
-      mainCol.appendChild(tableCard);
-      body.appendChild(mainCol);
-      mockup.appendChild(body);
+      content.appendChild(bottomSplit);
+      mockup.appendChild(content);
       wrapper.appendChild(mockup);
       container.appendChild(wrapper);
     }
 
     /**
      * =========================================================================
-     * 12. VIEW MODE 04: RANDOM SCATTERED DOTS (EVEN NON-OVERLAPPING ORBS)
+     * 12. VIEW MODE 4: SCATTER (HIGH-DENSITY DOT CLUTTER VISUALIZER)
+     *     Renders 150 to 800 scattered dots across the whole screen using all N
+     *     colors in equal proportion, with zero text boxes.
      * =========================================================================
      */
     function renderScatteredDotsView(container) {
-      const n = state.slots.length;
+      const canvas = document.createElement("canvas");
+      canvas.className = "w-full h-full block cursor-pointer";
+      container.appendChild(canvas);
+
       const rect = container.getBoundingClientRect();
-      const W = Math.max(360, rect.width);
-      const H = Math.max(340, rect.height);
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const W = Math.max(320, rect.width);
+      const H = Math.max(260, rect.height);
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+
+      const ctx = canvas.getContext("2d");
+      ctx.scale(dpr, dpr);
 
       const bgMap = {
-        soot: "#110F0E",
-        iron: "#26211E",
-        ash: "#D6D1C9"
+        dark: "#0B090A",
+        gray: "#222222",
+        light: "#F5F5F4",
+        slot1: state.slots[0]?.hex || "#0B090A"
       };
-      const boardBg = bgMap[state.dotsBackdrop] || bgMap.soot;
+      ctx.fillStyle = bgMap[state.dotsBackdrop] || bgMap.dark;
+      ctx.fillRect(0, 0, W, H);
 
-      const board = document.createElement("div");
-      board.style.backgroundColor = boardBg;
-      board.className = "w-full h-full relative overflow-hidden transition-colors duration-150";
+      const n = state.slots.length;
+      const totalDots = state.dotsCount;
+      const rng = seededRng(state.dotsSeed + n * 31 + totalDots);
 
-      const usableArea = (W - 80) * (H - 90);
-      const maxDiameter = Math.sqrt((usableArea * 0.44) / Math.max(1, n));
-      const diameter = Math.max(68, Math.min(168, Math.floor(maxDiameter)));
-      const radius = diameter / 2;
-      const minGap = Math.max(14, radius * 0.25);
+      const dots = [];
+      const baseArea = (W * H) / totalDots;
+      const baseRadius = Math.max(3.5, Math.min(22, Math.sqrt(baseArea) * 0.34));
 
-      const rng = seededRng(state.dotsSeed + n * 31);
-      const positions = [];
-      const padX = radius + 28;
-      const padTop = radius + 28;
-      const padBottom = radius + 44;
+      for (let i = 0; i < totalDots; i++) {
+        const slotIndex = i % n;
+        const r = state.dotsVariedSize
+          ? baseRadius * (0.45 + rng() * 1.15)
+          : baseRadius;
+        const x = r + rng() * (W - r * 2);
+        const y = r + rng() * (H - r * 2);
+        dots.push({ x, y, r, slotIndex });
+      }
 
-      for (let i = 0; i < n; i++) {
-        let placed = null;
-        for (let attempt = 0; attempt < 450; attempt++) {
-          const cx = padX + rng() * Math.max(10, W - padX * 2);
-          const cy = padTop + rng() * Math.max(10, H - padTop - padBottom);
-          let overlaps = false;
-          for (let j = 0; j < positions.length; j++) {
-            const dx = cx - positions[j].x;
-            const dy = cy - positions[j].y;
-            if (Math.hypot(dx, dy) < diameter + minGap) {
-              overlaps = true;
-              break;
-            }
-          }
-          if (!overlaps) {
-            placed = { x: cx, y: cy };
+      // Shuffle draw order so no single color sits exclusively on top
+      for (let i = dots.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        const tmp = dots[i];
+        dots[i] = dots[j];
+        dots[j] = tmp;
+      }
+
+      dots.forEach(d => {
+        const hex = state.slots[d.slotIndex]?.hex || "#FFFFFF";
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = hex;
+        ctx.fill();
+
+        if (!state.seamless) {
+          ctx.strokeStyle = "rgba(0,0,0,0.45)";
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+        }
+      });
+
+      // Clicking a dot highlights its color in the bottom dock
+      canvas.addEventListener("click", e => {
+        const b = canvas.getBoundingClientRect();
+        const mx = e.clientX - b.left;
+        const my = e.clientY - b.top;
+        for (let i = dots.length - 1; i >= 0; i--) {
+          const d = dots[i];
+          if (Math.hypot(d.x - mx, d.y - my) <= d.r + 3) {
+            highlightBottomSlot(d.slotIndex);
             break;
           }
         }
-        if (!placed) {
-          const cols = Math.ceil(Math.sqrt(n * (W / H)));
-          const col = i % cols;
-          const row = Math.floor(i / cols);
-          const cellW = (W - 60) / cols;
-          const cellH = (H - 70) / Math.ceil(n / cols);
-          placed = {
-            x: 30 + cellW * (col + 0.5),
-            y: 30 + cellH * (row + 0.5)
-          };
-        }
-        positions.push(placed);
-      }
-
-      positions.forEach((pos, idx) => {
-        const slot = state.slots[idx];
-        const fg = getContrastText(slot.hex);
-        const nameInfo = getClosestColorName(slot.hex);
-
-        const orb = document.createElement("div");
-        orb.style.width = `${diameter}px`;
-        orb.style.height = `${diameter}px`;
-        orb.style.left = `${pos.x - radius}px`;
-        orb.style.top = `${pos.y - radius}px`;
-        orb.style.backgroundColor = slot.hex;
-        orb.style.color = fg;
-        orb.style.borderRadius = "9999px";
-        orb.className = `absolute border-2 border-iron shadow-2xl flex flex-col items-center justify-center text-center p-2 transition-transform duration-100 hover:scale-105 hover:z-20 group cursor-pointer ${
-          slot.locked ? "swatch-locked" : ""
-        }`;
-        attachSlotDragHandlers(orb, idx);
-
-        const hexEl = document.createElement("div");
-        hexEl.className = `font-mono font-bold ${diameter < 90 ? "text-[10px]" : "text-xs"} tracking-tight hover:underline`;
-        hexEl.textContent = `${slot.locked ? "[L] " : ""}${slot.hex}`;
-        hexEl.onclick = e => { e.stopPropagation(); copyTextToClipboard(slot.hex); };
-        orb.appendChild(hexEl);
-
-        if (diameter >= 88) {
-          const nameEl = document.createElement("div");
-          nameEl.className = "text-[10px] font-mono opacity-85 truncate max-w-[85%] mt-0.5";
-          nameEl.textContent = nameInfo.label;
-          orb.appendChild(nameEl);
-        }
-
-        const actionWrap = document.createElement("div");
-        actionWrap.className = "absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-30";
-        actionWrap.appendChild(createSlotControlsBar(idx, true));
-        orb.appendChild(actionWrap);
-
-        board.appendChild(orb);
       });
-
-      container.appendChild(board);
     }
 
     /**
      * =========================================================================
-     * 13. VIEW MODE 05: STRIPS (SCROLLABLE FULL-HEIGHT COLUMNS)
+     * 13. VIEW MODE 5: STRIPS (SEAMLESS GAPLESS DEFAULT OR FRAMED)
      * =========================================================================
      */
     function renderStripsView(container) {
       const stripTrack = document.createElement("div");
-      stripTrack.className = "w-full h-full flex overflow-x-auto overflow-y-hidden";
+      stripTrack.className = `w-full h-full flex overflow-x-auto overflow-y-hidden ${
+        state.seamless ? "gap-0 p-0" : "gap-2.5 p-3"
+      }`;
 
       state.slots.forEach((slot, idx) => {
         const fg = getContrastText(slot.hex);
@@ -2054,38 +2071,41 @@
         const col = document.createElement("div");
         col.style.backgroundColor = slot.hex;
         col.style.color = fg;
-        col.style.flex = "1 0 148px";
-        col.style.minWidth = "148px";
-        col.className = `h-full flex flex-col justify-between items-center py-6 px-3 relative group border-r-2 border-iron last:border-r-0 ${
-          slot.locked ? "swatch-locked" : ""
+        col.style.flex = "1 0 135px";
+        col.style.minWidth = "135px";
+        col.className = `h-full flex flex-col justify-between items-center py-6 px-3 relative group ${
+          state.seamless ? "" : "border-2 border-chisel shadow-lg"
         }`;
         attachSlotDragHandlers(col, idx);
 
+        const visClass = getOverlayVisibilityClass(slot.locked);
+
         const top = document.createElement("div");
-        top.className = "flex flex-col items-center gap-1";
+        top.className = `flex flex-col items-center gap-1 transition-opacity duration-150 ${visClass}`;
         top.innerHTML = `
-          <span class="bg-soot text-ash border border-iron px-2 py-0.5 text-[10px] font-mono font-bold">#${String(idx + 1).padStart(2, "0")}</span>
-          ${slot.locked ? `<span class="bg-molten text-soot text-[9px] font-mono font-bold px-1.5 py-0.5 uppercase">BOLTED</span>` : ""}
+          <span class="text-[11px] font-mono opacity-75 font-semibold">${idx + 1}</span>
+          ${slot.locked ? `<span class="bg-basalt/80 text-whitehot text-[10px] font-mono px-1.5 py-0.5 rounded-sm">Locked</span>` : ""}
         `;
 
         const center = document.createElement("div");
-        center.className = `transition-opacity ${slot.locked ? "opacity-100" : "opacity-90 sm:opacity-0 sm:group-hover:opacity-100"}`;
+        center.className = `transition-opacity duration-150 ${visClass}`;
         center.appendChild(createSlotControlsBar(idx, false));
 
         const bottom = document.createElement("div");
-        bottom.className = "bg-soot/90 border-2 border-iron px-3 py-2 text-center w-full";
+        bottom.className = `text-center w-full transition-opacity duration-150 ${visClass}`;
 
         const hexBtn = document.createElement("button");
-        hexBtn.className = "font-mono font-bold text-sm sm:text-base text-ash hover:text-amberheat tracking-wider cursor-pointer block mx-auto";
+        hexBtn.className = "font-mono font-bold text-sm sm:text-base tracking-wider hover:underline cursor-pointer block mx-auto";
         hexBtn.textContent = slot.hex;
         hexBtn.onclick = () => copyTextToClipboard(slot.hex);
-
-        const nameEl = document.createElement("div");
-        nameEl.className = "text-[10px] font-mono text-slag mt-0.5 truncate max-w-full";
-        nameEl.textContent = nameInfo.label;
-
         bottom.appendChild(hexBtn);
-        bottom.appendChild(nameEl);
+
+        if (nameInfo.label) {
+          const nameEl = document.createElement("div");
+          nameEl.className = "text-xs font-medium opacity-85 mt-0.5 truncate max-w-full";
+          nameEl.textContent = nameInfo.label;
+          bottom.appendChild(nameEl);
+        }
 
         col.appendChild(top);
         col.appendChild(center);
@@ -2098,77 +2118,103 @@
 
     /**
      * =========================================================================
-     * 14. VIEW MODE 06: RAMP (GRADIENT STRIPS WITH MECHANICAL NEEDLE ARROWS)
+     * 14. VIEW MODE 6: GRADIENTS (LIGHTNESS RAMP WITH SUBTLE ARROW MARKER)
      * =========================================================================
      */
     function renderGradientStripsView(container) {
       const track = document.createElement("div");
-      track.className = "w-full h-full flex overflow-x-auto overflow-y-hidden";
+      track.className = `w-full h-full flex overflow-x-auto overflow-y-hidden ${
+        state.seamless ? "gap-0 p-0" : "gap-2.5 p-3"
+      }`;
 
       state.slots.forEach((slot, idx) => {
         const hsl = hexToHsl(slot.hex);
         const fg = getContrastText(slot.hex);
         const nameInfo = getClosestColorName(slot.hex);
 
-        const topTint = hslToHex(hsl.h, hsl.s, 95);
-        const botShade = hslToHex(hsl.h, hsl.s, 6);
-        const stopPct = Math.max(5, Math.min(95, 100 - hsl.l));
+        const topTint = hslToHex(hsl.h, hsl.s, 96);
+        const botShade = hslToHex(hsl.h, hsl.s, 5);
+        const stopPct = Math.max(4, Math.min(96, 100 - hsl.l));
 
         const col = document.createElement("div");
-        col.style.flex = "1 0 154px";
-        col.style.minWidth = "154px";
+        col.style.flex = "1 0 140px";
+        col.style.minWidth = "140px";
         col.style.background = `linear-gradient(to bottom, ${topTint} 0%, ${slot.hex} ${stopPct}%, ${botShade} 100%)`;
-        col.className = "h-full relative flex flex-col justify-between items-center py-5 px-2.5 border-r-2 border-iron last:border-r-0 group cursor-crosshair";
-        col.title = "Click anywhere along vertical ramp to calibrate luminance";
+        col.className = `h-full relative flex flex-col justify-between items-center py-5 px-2.5 group cursor-ns-resize ${
+          state.seamless ? "" : "border-2 border-chisel shadow-lg"
+        }`;
+        col.title = "Click or drag vertically to adjust lightness";
 
-        col.addEventListener("click", e => {
-          if (e.target.closest("button") || e.target.closest("[data-no-scrub]")) return;
+        const pickLightnessFromEvent = (e, commitHistory) => {
           const rect = col.getBoundingClientRect();
           const ratio = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
-          const pickedL = Math.round(95 - ratio * 89);
+          const pickedL = Math.round(96 - ratio * 91);
           const newHex = hslToHex(hsl.h, hsl.s, pickedL);
-          updateSlotHex(idx, newHex, true);
+          updateSlotHex(idx, newHex, commitHistory);
+        };
+
+        let draggingRamp = false;
+        col.addEventListener("mousedown", e => {
+          if (e.target.closest("button") || e.target.closest("[data-no-scrub]")) return;
+          draggingRamp = true;
+          pickLightnessFromEvent(e, false);
+        });
+        window.addEventListener("mousemove", e => {
+          if (!draggingRamp) return;
+          pickLightnessFromEvent(e, false);
+        });
+        window.addEventListener("mouseup", e => {
+          if (!draggingRamp) return;
+          draggingRamp = false;
+          pickLightnessFromEvent(e, true);
         });
 
-        // Mechanical Needle Marker showing where the active color sits on the gradient
+        // Subtle Arrow Marker showing where the generated/selected color lies on the gradient
         const marker = document.createElement("div");
         marker.style.top = `${stopPct}%`;
         marker.style.color = fg;
-        marker.className = "absolute left-0 right-0 -translate-y-1/2 pointer-events-none flex items-center justify-between px-1 z-10";
+        marker.className = "absolute left-0 right-0 -translate-y-1/2 pointer-events-none flex items-center justify-between px-1.5 z-10";
         marker.innerHTML = `
-          <div class="bg-soot text-amberheat border border-iron px-1 py-0.5 text-[9px] font-mono font-bold leading-none">▶</div>
-          <div class="flex-1 h-[2px] mx-1" style="background:${fg}"></div>
-          <div class="bg-soot text-amberheat border border-iron px-1 py-0.5 text-[9px] font-mono font-bold leading-none">◀</div>
+          <div class="flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 drop-shadow" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M3 3l9 5-9 5V3z"/>
+            </svg>
+            <span class="w-3 h-[1.5px] opacity-80" style="background:${fg}"></span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-3 h-[1.5px] opacity-80" style="background:${fg}"></span>
+            <svg class="w-3.5 h-3.5 drop-shadow" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M13 3L4 8l9 5V3z"/>
+            </svg>
+          </div>
         `;
         col.appendChild(marker);
 
-        // Top Readout Plate
+        const visClass = getOverlayVisibilityClass(slot.locked);
+
+        // Top Readout
         const topPlate = document.createElement("div");
         topPlate.setAttribute("data-no-scrub", "true");
-        topPlate.className = `z-20 iron-plate px-2.5 py-2 text-center w-full max-w-[144px] ${slot.locked ? "border-molten" : ""}`;
+        topPlate.className = `z-20 bg-basalt/80 px-2.5 py-1.5 rounded-sm text-center transition-opacity duration-150 ${visClass}`;
         attachSlotDragHandlers(topPlate, idx);
 
         const hexBtn = document.createElement("button");
-        hexBtn.className = "font-mono font-bold text-xs text-ash hover:text-amberheat tracking-wider cursor-pointer block mx-auto";
+        hexBtn.className = "font-mono font-bold text-xs text-ash hover:text-whitehot tracking-wider cursor-pointer block mx-auto";
         hexBtn.textContent = slot.hex;
         hexBtn.onclick = e => { e.stopPropagation(); copyTextToClipboard(slot.hex); };
-
-        const nameEl = document.createElement("div");
-        nameEl.className = "text-[10px] font-mono text-slag truncate mt-0.5";
-        nameEl.textContent = nameInfo.label;
-
-        const lumTag = document.createElement("div");
-        lumTag.className = "text-[9px] font-mono text-amberheat mt-0.5";
-        lumTag.textContent = `LUM ${hsl.l}% // H ${hsl.h}°`;
-
         topPlate.appendChild(hexBtn);
-        topPlate.appendChild(nameEl);
-        topPlate.appendChild(lumTag);
+
+        if (nameInfo.label) {
+          const nameEl = document.createElement("div");
+          nameEl.className = "text-[10px] text-cinder truncate mt-0.5 max-w-[120px]";
+          nameEl.textContent = nameInfo.label;
+          topPlate.appendChild(nameEl);
+        }
 
         // Bottom Controls
         const botWrap = document.createElement("div");
         botWrap.setAttribute("data-no-scrub", "true");
-        botWrap.className = "z-20";
+        botWrap.className = `z-20 transition-opacity duration-150 ${visClass}`;
         botWrap.appendChild(createSlotControlsBar(idx, false));
 
         col.appendChild(topPlate);
@@ -2181,205 +2227,226 @@
 
     /**
      * =========================================================================
-     * 15. VIEW MODE 07: CONSTRUCT (HUMANOID SILHOUETTE CREATURE — 11 ZONES)
+     * 15. VIEW MODE 7: CREATURE (HUMANOID SILHOUETTE VISUALIZER)
+     *     Maps Skin, Accent, eyeoutL, eyeinL, eyeoutR, eyeinR, Mouth,
+     *     Hair/Horns, Armor/Cloak, Weapon/Accessories, Aura + extra orbs.
      * =========================================================================
      */
     const CREATURE_ZONES = [
-      { key: "skin", label: "SKIN // CHASSIS" },
-      { key: "accent", label: "PRIMARY ACCENT" },
-      { key: "eyeoutL", label: "EYE OUTER [L]" },
-      { key: "eyeinL", label: "EYE INNER [L]" },
-      { key: "eyeoutR", label: "EYE OUTER [R]" },
-      { key: "eyeinR", label: "EYE INNER [R]" },
-      { key: "mouth", label: "MOUTH // VENT" },
-      { key: "hair", label: "CREST // HELM" },
-      { key: "outfit", label: "MANTLE // ARMOR" },
-      { key: "accessories", label: "GEAR // CLASPS" },
-      { key: "aura", label: "CORE HALO" }
+      { key: "skin", label: "Skin" },
+      { key: "accent", label: "Accent" },
+      { key: "eyeoutL", label: "eyeoutL" },
+      { key: "eyeinL", label: "eyeinL" },
+      { key: "eyeoutR", label: "eyeoutR" },
+      { key: "eyeinR", label: "eyeinR" },
+      { key: "mouth", label: "Mouth" },
+      { key: "hair", label: "Horns / Crest" },
+      { key: "outfit", label: "Armor / Cloak" },
+      { key: "accessories", label: "Accessories" },
+      { key: "aura", label: "Aura" }
     ];
 
     function renderCreatureView(container) {
       const slots = state.slots;
       const n = slots.length;
 
-      const fallbackColors = [
-        "#9A9087", "#EA580C", "#110F0E", "#F59E0B", "#110F0E",
-        "#EA580C", "#EAE6E1", "#332D29", "#1E1916", "#CD7F32", "#473E39"
-      ];
+      // Cycle active palette slots cleanly across the 11 zones so even 4-8 colors colorize the entire creature
       const z = {};
+      const zSlotIdx = {};
       CREATURE_ZONES.forEach((zone, idx) => {
-        z[zone.key] = idx < n ? slots[idx].hex : fallbackColors[idx];
+        const mappedIdx = idx % n;
+        z[zone.key] = slots[mappedIdx].hex;
+        zSlotIdx[zone.key] = mappedIdx;
       });
 
-      const layout = document.createElement("div");
-      layout.className = "w-full h-full grid grid-cols-1 lg:grid-cols-12 overflow-y-auto";
+      const strokeAttr = state.seamless
+        ? `stroke="none"`
+        : `stroke="#0B090A" stroke-width="2.5"`;
 
-      // Left Character Crucible Bay (7 columns)
-      const stageCol = document.createElement("div");
-      stageCol.style.background = `radial-gradient(circle at 50% 45%, ${hexWithAlpha(z.aura, 0.32)} 0%, #110F0E 74%)`;
-      stageCol.className = "lg:col-span-7 relative flex flex-col items-center justify-center p-4 min-h-[390px] border-b-2 lg:border-b-0 lg:border-r-2 border-iron";
+      const stageWrap = document.createElement("div");
+      stageWrap.style.background = `radial-gradient(circle at 50% 52%, ${hexWithAlpha(z.aura, 0.28)} 0%, #0B090A 72%)`;
+      stageWrap.className = "w-full h-full flex items-center justify-center p-4 pt-12 relative overflow-hidden";
 
-      const svgWrap = document.createElement("div");
-      svgWrap.className = "relative w-full max-w-[380px] aspect-[4/4.4] flex items-center justify-center";
+      const svgContainer = document.createElement("div");
+      svgContainer.className = "w-full max-w-[440px] h-full max-h-[520px] flex items-center justify-center relative";
 
-      const crestSVG = state.creatureArchetype === "walker"
-        ? `<!-- Forge Walker Horned Respirator Crest -->
-           <path d="M138 118 L108 42 L168 88 Z" fill="${z.hair}" stroke="#110F0E" stroke-width="3"/>
-           <path d="M136 105 L120 58 L156 88 Z" fill="${z.accent}"/>
-           <path d="M262 118 L292 42 L232 88 Z" fill="${z.hair}" stroke="#110F0E" stroke-width="3"/>
-           <path d="M264 105 L280 58 L244 88 Z" fill="${z.accent}"/>
-           <path d="M132 135 Q200 66 268 135 L256 198 Q200 124 144 198 Z" fill="${z.hair}" stroke="#110F0E" stroke-width="3"/>`
-        : state.creatureArchetype === "valkyrie"
-        ? `<!-- Cyber-Valkyrie Winged Iron Crest -->
-           <path d="M136 122 L80 64 L122 116 L90 114 L134 146 Z" fill="${z.hair}" stroke="#110F0E" stroke-width="3"/>
-           <path d="M264 122 L320 64 L278 116 L310 114 L266 146 Z" fill="${z.hair}" stroke="#110F0E" stroke-width="3"/>
-           <path d="M142 124 Q200 65 258 124 L250 145 L200 112 L150 145 Z" fill="${z.hair}" stroke="#110F0E" stroke-width="3"/>
-           <polygon points="200,52 214,95 200,114 186,95" fill="${z.accent}" stroke="#110F0E" stroke-width="2"/>`
-        : `<!-- Automaton Sentinel Heavy Plated Cowl -->
-           <path d="M126 145 L138 74 L200 66 L262 74 L274 145 L258 212 L142 212 Z" fill="${z.hair}" stroke="#110F0E" stroke-width="3"/>
-           <polygon points="150,122 200,96 250,122 242,136 200,116 158,136" fill="${z.accent}"/>`;
+      const headCrestSVG = state.creatureArchetype === "wraith"
+        ? `<!-- Wraith Swept Horns & Crown -->
+           <path data-zone="hair" class="cursor-pointer hover:opacity-90" d="M145 120 L92 36 L168 92 Z" fill="${z.hair}" ${strokeAttr}/>
+           <path data-zone="accent" class="cursor-pointer hover:opacity-90" d="M142 108 L112 56 L158 92 Z" fill="${z.accent}"/>
+           <path data-zone="hair" class="cursor-pointer hover:opacity-90" d="M255 120 L308 36 L232 92 Z" fill="${z.hair}" ${strokeAttr}/>
+           <path data-zone="accent" class="cursor-pointer hover:opacity-90" d="M258 108 L288 56 L242 92 Z" fill="${z.accent}"/>
+           <path data-zone="hair" class="cursor-pointer hover:opacity-90" d="M135 135 Q200 65 265 135 L254 195 Q200 120 146 195 Z" fill="${z.hair}" ${strokeAttr}/>`
+        : state.creatureArchetype === "construct"
+        ? `<!-- Runic Construct Winged Crest -->
+           <path data-zone="hair" class="cursor-pointer hover:opacity-90" d="M136 122 L76 62 L120 118 L88 118 L134 148 Z" fill="${z.hair}" ${strokeAttr}/>
+           <path data-zone="hair" class="cursor-pointer hover:opacity-90" d="M264 122 L324 62 L280 118 L312 118 L266 148 Z" fill="${z.hair}" ${strokeAttr}/>
+           <polygon data-zone="accent" class="cursor-pointer hover:opacity-90" points="200,46 218,94 200,116 182,94" fill="${z.accent}" ${strokeAttr}/>`
+        : `<!-- Forge Titan Heavy Horned Helm -->
+           <path data-zone="hair" class="cursor-pointer hover:opacity-90" d="M132 132 Q95 75 118 38 Q142 74 166 96 Z" fill="${z.hair}" ${strokeAttr}/>
+           <path data-zone="hair" class="cursor-pointer hover:opacity-90" d="M268 132 Q305 75 282 38 Q258 74 234 96 Z" fill="${z.hair}" ${strokeAttr}/>
+           <path data-zone="hair" class="cursor-pointer hover:opacity-90" d="M130 142 L144 74 L200 62 L256 74 L270 142 Z" fill="${z.hair}" ${strokeAttr}/>
+           <polygon data-zone="accent" class="cursor-pointer hover:opacity-90" points="154,120 200,92 246,120 238,134 200,112 162,134" fill="${z.accent}"/>`;
 
-      svgWrap.innerHTML = `
-        <svg viewBox="0 0 400 440" class="w-full h-full overflow-visible">
-          <!-- Core Halo Ring -->
-          <circle cx="200" cy="215" r="164" fill="none" stroke="${z.aura}" stroke-width="3" stroke-dasharray="10 6" opacity="0.8"/>
-          <circle cx="200" cy="215" r="138" fill="${z.aura}" opacity="0.16"/>
+      svgContainer.innerHTML = `
+        <svg viewBox="0 0 400 440" class="w-full h-full overflow-visible select-none">
+          <!-- Aura Halo -->
+          <circle data-zone="aura" class="cursor-pointer" cx="200" cy="215" r="168" fill="none" stroke="${z.aura}" stroke-width="4" stroke-dasharray="12 8" opacity="0.85"/>
+          <circle data-zone="aura" class="cursor-pointer" cx="200" cy="215" r="142" fill="${z.aura}" opacity="0.18"/>
 
-          <!-- Heavy Mantle / Cloak -->
-          <path d="M108 235 L74 415 L326 415 L292 235 Z" fill="${z.outfit}" stroke="#110F0E" stroke-width="3.5"/>
+          <!-- Back Cloak / Mantle -->
+          <path data-zone="outfit" class="cursor-pointer hover:opacity-95" d="M104 232 L68 420 L332 420 L296 232 Z" fill="${z.outfit}" ${strokeAttr}/>
 
-          <!-- Neck & Articulated Shoulders (Skin / Chassis) -->
-          <path d="M174 195 L226 195 L234 238 L166 238 Z" fill="${z.skin}" stroke="#110F0E" stroke-width="3"/>
-          <path d="M118 246 L200 222 L282 246 L298 368 L262 374 L248 290 L248 415 L152 415 L152 290 L138 374 L102 368 Z" fill="${z.skin}" stroke="#110F0E" stroke-width="3"/>
+          <!-- Neck & Broad Humanoid Torso / Arms (Skin) -->
+          <path data-zone="skin" class="cursor-pointer hover:opacity-95" d="M174 195 L226 195 L234 238 L166 238 Z" fill="${z.skin}" ${strokeAttr}/>
+          <path data-zone="skin" class="cursor-pointer hover:opacity-95" d="M114 244 L200 220 L286 244 L304 374 L264 380 L248 292 L248 420 L152 420 L152 292 L136 380 L96 374 Z" fill="${z.skin}" ${strokeAttr}/>
 
-          <!-- Chest Cuirass / Tunic -->
-          <path d="M142 236 L200 266 L258 236 L270 415 L130 415 Z" fill="${z.outfit}" stroke="#110F0E" stroke-width="3"/>
-          <!-- Primary Accent Trim -->
-          <path d="M154 244 L200 280 L246 244 L236 264 L200 294 L164 264 Z" fill="${z.accent}"/>
-          <rect x="193" y="290" width="14" height="125" fill="${z.accent}"/>
+          <!-- Armor Cuirass -->
+          <path data-zone="outfit" class="cursor-pointer hover:opacity-95" d="M140 236 L200 268 L260 236 L272 420 L128 420 Z" fill="${z.outfit}" ${strokeAttr}/>
 
-          <!-- Gear, Pauldron Rivets & Belt Clasp -->
-          <rect x="140" y="324" width="120" height="16" fill="${z.accessories}" stroke="#110F0E" stroke-width="2.5"/>
-          <rect x="188" y="319" width="24" height="26" fill="${z.accent}" stroke="${z.accessories}" stroke-width="3"/>
-          <rect x="134" y="244" width="18" height="18" fill="${z.accessories}" stroke="#110F0E" stroke-width="2.5"/>
-          <rect x="248" y="244" width="18" height="18" fill="${z.accessories}" stroke="#110F0E" stroke-width="2.5"/>
-          <polygon points="325,162 340,185 325,208 310,185" fill="${z.accessories}" stroke="#110F0E" stroke-width="2.5"/>
+          <!-- Primary Accent Runes / Trim -->
+          <path data-zone="accent" class="cursor-pointer hover:opacity-95" d="M152 244 L200 282 L248 244 L238 266 L200 296 L162 266 Z" fill="${z.accent}"/>
+          <rect data-zone="accent" class="cursor-pointer hover:opacity-95" x="193" y="292" width="14" height="128" fill="${z.accent}"/>
 
-          <!-- Head Chassis (Skin) -->
-          <path d="M146 132 L162 92 L238 92 L254 132 L242 188 L200 206 L158 188 Z" fill="${z.skin}" stroke="#110F0E" stroke-width="3"/>
+          <!-- Accessories (Pauldrons, Belt Clasp & Floating Relic) -->
+          <rect data-zone="accessories" class="cursor-pointer hover:opacity-95" x="138" y="326" width="124" height="16" fill="${z.accessories}" ${strokeAttr}/>
+          <rect data-zone="accessories" class="cursor-pointer hover:opacity-95" x="186" y="319" width="28" height="30" fill="${z.accessories}" ${strokeAttr}/>
+          <polygon data-zone="accessories" class="cursor-pointer hover:opacity-95" points="106,246 146,232 138,274 98,266" fill="${z.accessories}" ${strokeAttr}/>
+          <polygon data-zone="accessories" class="cursor-pointer hover:opacity-95" points="294,246 254,232 262,274 302,266" fill="${z.accessories}" ${strokeAttr}/>
+          <polygon data-zone="accessories" class="cursor-pointer hover:opacity-95" points="334,152 350,180 334,208 318,180" fill="${z.accessories}" ${strokeAttr}/>
 
-          <!-- Facial Cheek Markings (Primary Accent) -->
-          <polygon points="152,160 170,166 155,173" fill="${z.accent}"/>
-          <polygon points="248,160 230,166 245,173" fill="${z.accent}"/>
+          <!-- Head Silhouette (Skin) -->
+          <path data-zone="skin" class="cursor-pointer hover:opacity-95" d="M146 132 L162 92 L238 92 L254 132 L242 188 L200 206 L158 188 Z" fill="${z.skin}" ${strokeAttr}/>
 
-          <!-- Helm / Crest -->
-          ${crestSVG}
+          <!-- Cheek Tattoos / Markings (Accent) -->
+          <polygon data-zone="accent" class="cursor-pointer" points="152,160 172,166 156,174" fill="${z.accent}"/>
+          <polygon data-zone="accent" class="cursor-pointer" points="248,160 228,166 244,174" fill="${z.accent}"/>
 
-          <!-- Left Eye (eyeoutL & eyeinL) -->
-          <polygon points="160,146 175,138 190,146 175,156" fill="${z.eyeoutL}" stroke="#110F0E" stroke-width="2.5"/>
-          <circle cx="175" cy="147" r="5" fill="${z.eyeinL}"/>
+          <!-- Crest / Horns -->
+          ${headCrestSVG}
 
-          <!-- Right Eye (eyeoutR & eyeinR) -->
-          <polygon points="210,146 225,138 240,146 225,156" fill="${z.eyeoutR}" stroke="#110F0E" stroke-width="2.5"/>
-          <circle cx="225" cy="147" r="5" fill="${z.eyeinR}"/>
+          <!-- Left Eye: eyeoutL & eyeinL -->
+          <polygon data-zone="eyeoutL" class="cursor-pointer" points="158,146 175,137 192,146 175,156" fill="${z.eyeoutL}" ${strokeAttr}/>
+          <circle data-zone="eyeinL" class="cursor-pointer" cx="175" cy="146.5" r="5.5" fill="${z.eyeinL}"/>
 
-          <!-- Mouth / Respirator Vent -->
-          <path d="M184 180 L200 185 L216 180" fill="none" stroke="${z.mouth}" stroke-width="4" stroke-linecap="square"/>
+          <!-- Right Eye: eyeoutR & eyeinR -->
+          <polygon data-zone="eyeoutR" class="cursor-pointer" points="208,146 225,137 242,146 225,156" fill="${z.eyeoutR}" ${strokeAttr}/>
+          <circle data-zone="eyeinR" class="cursor-pointer" cx="225" cy="146.5" r="5.5" fill="${z.eyeinR}"/>
+
+          <!-- Mouth -->
+          <polygon data-zone="mouth" class="cursor-pointer" points="180,178 200,184 220,178 214,189 200,192 186,189" fill="${z.mouth}"/>
         </svg>
       `;
 
-      // Extra slots > 11 rendered as orbiting iron ember nodes
+      // Clicking any anatomical region opens the color picker for that slot and highlights it in the bottom strip
+      svgContainer.querySelectorAll("[data-zone]").forEach(el => {
+        const zoneKey = el.getAttribute("data-zone");
+        const slotIdx = zSlotIdx[zoneKey];
+        const zoneObj = CREATURE_ZONES.find(item => item.key === zoneKey);
+        el.innerHTML += `<title>${zoneObj ? zoneObj.label : zoneKey}: ${slots[slotIdx].hex} (Click to edit Color ${slotIdx + 1})</title>`;
+        el.addEventListener("click", e => {
+          e.stopPropagation();
+          highlightBottomSlot(slotIdx, true);
+        });
+      });
+
+      // If N > 11, render extra colors as orbiting orbs around the silhouette
       if (n > 11) {
-        const orbCoords = [
-          { top: "14%", left: "10%" }, { top: "14%", right: "10%" },
-          { top: "36%", left: "6%" }, { top: "36%", right: "6%" },
-          { top: "60%", left: "8%" }, { top: "60%", right: "8%" },
-          { top: "82%", left: "14%" }, { top: "82%", right: "14%" },
-          { top: "6%", left: "32%" }, { top: "6%", right: "32%" },
-          { top: "88%", left: "34%" }, { top: "88%", right: "34%" },
-          { top: "48%", left: "2%" }
-        ];
         for (let i = 11; i < n; i++) {
-          const pos = orbCoords[(i - 11) % orbCoords.length];
-          const hex = slots[i].hex;
-          const node = document.createElement("button");
-          node.style.backgroundColor = hex;
-          node.style.color = getContrastText(hex);
-          Object.assign(node.style, pos);
-          node.className = "absolute w-10 h-10 border-2 border-iron shadow-xl flex items-center justify-center font-mono text-[10px] font-bold cursor-pointer hover:border-molten transition";
-          node.textContent = `#${String(i + 1).padStart(2, "0")}`;
-          node.title = `Auxiliary Node #${i + 1}: ${hex} (Click to tune)`;
-          node.onclick = () => openColorPopover(i, node);
-          stageCol.appendChild(node);
+          const angle = ((i - 11) / (n - 11)) * Math.PI * 2 - Math.PI / 2;
+          const rx = 44 * Math.cos(angle) + 50;
+          const ry = 42 * Math.sin(angle) + 50;
+          const orb = document.createElement("button");
+          orb.style.left = `${rx}%`;
+          orb.style.top = `${ry}%`;
+          orb.style.backgroundColor = slots[i].hex;
+          orb.className = `absolute -translate-x-1/2 -translate-y-1/2 w-7 h-7 rounded-full shadow-lg cursor-pointer hover:scale-125 transition ${
+            state.seamless ? "" : "border-2 border-basalt"
+          }`;
+          orb.title = `Color ${i + 1}: ${slots[i].hex}`;
+          orb.onclick = () => highlightBottomSlot(i, true);
+          svgContainer.appendChild(orb);
         }
       }
 
-      stageCol.appendChild(svgWrap);
-      layout.appendChild(stageCol);
-
-      // Right Anatomical Zone Legend & Slot Mapper (5 columns)
-      const legendCol = document.createElement("div");
-      legendCol.className = "lg:col-span-5 p-4 flex flex-col gap-2.5 overflow-y-auto bg-soot";
-
-      const header = document.createElement("div");
-      header.className = "border-b-2 border-iron pb-2";
-      header.innerHTML = `
-        <h3 class="text-xs font-display font-bold uppercase tracking-wider text-ash">CONSTRUCT ZONE MANIFOLD (11 ZONES)</h3>
-        <p class="text-[11px] font-mono text-slag">Drag rows or click <span class="text-amberheat">&lt; &gt;</span> to swap zone assignments</p>
-      `;
-      legendCol.appendChild(header);
-
-      const list = document.createElement("div");
-      list.className = "space-y-1.5";
-
-      CREATURE_ZONES.forEach((zone, idx) => {
-        const hasSlot = idx < n;
-        const hex = z[zone.key];
-        const nameInfo = getClosestColorName(hex);
-
-        const row = document.createElement("div");
-        row.className = `flex items-center justify-between gap-2 px-3 py-2 border-2 text-xs ${
-          hasSlot
-            ? "bg-kiln border-iron hover:border-bevel"
-            : "bg-recess/50 border-iron/50 opacity-65"
-        }`;
-        if (hasSlot) attachSlotDragHandlers(row, idx);
-
-        const left = document.createElement("div");
-        left.className = "flex items-center gap-2.5 min-w-0";
-        left.innerHTML = `
-          <span class="w-6 h-6 border-2 border-iron shrink-0 cursor-pointer" style="background:${hex}" data-swatch-trigger="true"></span>
-          <div class="min-w-0">
-            <div class="font-display font-bold text-ash tracking-wide truncate">${String(idx + 1).padStart(2, "0")}. ${zone.label}</div>
-            <div class="text-[10px] font-mono text-slag truncate">${hex} // ${nameInfo.label}</div>
-          </div>
-        `;
-        if (hasSlot) {
-          left.querySelector("[data-swatch-trigger]").onclick = e => openColorPopover(idx, e.target);
-        }
-
-        row.appendChild(left);
-
-        if (hasSlot) {
-          row.appendChild(createSlotControlsBar(idx, false));
-        } else {
-          const autoTag = document.createElement("span");
-          autoTag.className = "text-[10px] font-mono text-slag px-2 py-0.5 bg-soot border border-iron";
-          autoTag.textContent = "DEFAULT";
-          row.appendChild(autoTag);
-        }
-
-        list.appendChild(row);
-      });
-
-      legendCol.appendChild(list);
-      layout.appendChild(legendCol);
-      container.appendChild(layout);
+      stageWrap.appendChild(svgContainer);
+      container.appendChild(stageWrap);
     }
 
     /**
      * =========================================================================
-     * 16. INGOT RACK (PINNED SWATCHES) & FOUNDRY VAULT DRAWER
+     * 16. BOTTOM ACTIVE PALETTE DOCK (FOR FULL-CANVAS MODES)
+     * =========================================================================
+     */
+    function renderBottomPaletteDock() {
+      const dock = document.getElementById("bottom-palette-dock");
+      const showDock = ["mosaic", "dots", "ui", "creature"].includes(state.view);
+      if (!showDock) {
+        dock.classList.add("hidden");
+        return;
+      }
+      dock.classList.remove("hidden");
+      dock.innerHTML = "";
+
+      const uiRoleNames = ["BG", "BG Accent", "Text", "Urgent", "Panel", "Hover", "Button", "Muted", "Border", "Accent 2"];
+
+      state.slots.forEach((slot, idx) => {
+        const fg = getContrastText(slot.hex);
+        const isHighlighted = state.highlightedSlotIndex === idx;
+
+        const cell = document.createElement("div");
+        cell.style.backgroundColor = slot.hex;
+        cell.style.color = fg;
+        cell.className = `flex-1 h-full flex items-center justify-between px-2 relative group cursor-pointer transition-all ${
+          state.seamless ? "" : "border-r border-chisel"
+        } ${isHighlighted ? "ring-2 ring-inset ring-whitehot z-10" : ""}`;
+        attachSlotDragHandlers(cell, idx);
+
+        let roleSub = "";
+        if (state.view === "ui" && idx < uiRoleNames.length) {
+          roleSub = uiRoleNames[idx];
+        } else if (state.view === "creature" && idx < CREATURE_ZONES.length) {
+          roleSub = CREATURE_ZONES[idx].label;
+        }
+
+        const left = document.createElement("div");
+        left.className = "min-w-0 flex flex-col";
+        left.innerHTML = `
+          <span class="font-mono font-bold text-[11px] truncate">${slot.locked ? "🔒 " : ""}${slot.hex}</span>
+          ${roleSub ? `<span class="text-[9px] opacity-80 truncate">${roleSub}</span>` : ""}
+        `;
+        cell.appendChild(left);
+
+        const actions = document.createElement("div");
+        actions.className = "opacity-0 group-hover:opacity-100 transition-opacity shrink-0";
+        actions.appendChild(createSlotControlsBar(idx, true));
+        cell.appendChild(actions);
+
+        cell.addEventListener("click", e => {
+          if (e.target.closest("button")) return;
+          openColorPopover(idx, cell);
+        });
+
+        dock.appendChild(cell);
+      });
+    }
+
+    function highlightBottomSlot(index, openPicker = false) {
+      state.highlightedSlotIndex = index;
+      renderBottomPaletteDock();
+      const dock = document.getElementById("bottom-palette-dock");
+      const targetCell = dock.children[index];
+      if (targetCell && openPicker) {
+        openColorPopover(index, targetCell);
+      } else if (state.slots[index]) {
+        const nameInfo = getClosestColorName(state.slots[index].hex);
+        showToast(`Color ${index + 1}: ${state.slots[index].hex}${nameInfo.label ? " (" + nameInfo.label + ")" : ""}`, state.slots[index].hex);
+      }
+    }
+
+    /**
+     * =========================================================================
+     * 17. PINNED COLORS TRAY & SAVE/LOAD DRAWER
      * =========================================================================
      */
     function renderPinnedDock() {
@@ -2388,11 +2455,11 @@
       const loadBtn = document.getElementById("btn-load-pinned-to-active");
       const clearBtn = document.getElementById("btn-clear-pinned");
 
-      countBadge.textContent = String(state.pinned.length).padStart(2, "0");
+      countBadge.textContent = String(state.pinned.length);
       list.innerHTML = "";
 
       if (state.pinned.length === 0) {
-        list.innerHTML = `<span class="text-[10px] font-mono text-slag/70 uppercase">NO INGOTS PINNED — CAST FAVORITE SWATCHES HERE ACROSS ROLLS</span>`;
+        list.innerHTML = `<span class="text-[11px] text-cinder/75">Click the pin icon on any color to save it here across rolls.</span>`;
         loadBtn.classList.add("hidden");
         clearBtn.classList.add("hidden");
         return;
@@ -2404,28 +2471,32 @@
       state.pinned.forEach(hex => {
         const nameInfo = getClosestColorName(hex);
         const chip = document.createElement("div");
-        chip.title = `${hex} (${nameInfo.label}) — Click hex to copy, [+] to load into active crucible`;
-        chip.className = "flex items-center gap-1.5 bg-kiln border border-iron pl-1.5 pr-1 py-0.5 text-[11px] font-mono shrink-0";
+        chip.setAttribute("draggable", "true");
+        chip.addEventListener("dragstart", e => {
+          e.dataTransfer.setData("text/pinned-hex", hex);
+        });
+        chip.title = `${hex}${nameInfo.label ? " (" + nameInfo.label + ")" : ""} — Click to copy, drag onto any slot, or click + to apply`;
+        chip.className = "flex items-center gap-1.5 bg-slab border border-chisel pl-1.5 pr-1 py-0.5 text-[11px] font-mono rounded-sm shrink-0 cursor-grab";
 
         const dot = document.createElement("span");
         dot.style.backgroundColor = hex;
-        dot.className = "w-3.5 h-3.5 border border-iron cursor-pointer";
+        dot.className = "w-3.5 h-3.5 border border-white/20 cursor-pointer";
         dot.onclick = () => copyTextToClipboard(hex);
 
         const label = document.createElement("button");
-        label.className = "text-ash hover:text-amberheat cursor-pointer font-bold";
+        label.className = "text-ash hover:text-whitehot cursor-pointer font-semibold";
         label.textContent = hex;
         label.onclick = () => copyTextToClipboard(hex);
 
         const applyBtn = document.createElement("button");
-        applyBtn.className = "text-slag hover:text-amberheat px-1 cursor-pointer font-bold";
-        applyBtn.title = "Inject into active crucible slot";
+        applyBtn.className = "text-cinder hover:text-whitehot px-1 cursor-pointer font-bold";
+        applyBtn.title = "Apply to unlocked slot";
         applyBtn.textContent = "+";
         applyBtn.onclick = () => applyPinnedToSlot(hex);
 
         const delBtn = document.createElement("button");
-        delBtn.className = "text-slag hover:text-red-400 px-1 cursor-pointer";
-        delBtn.title = "Discard ingot";
+        delBtn.className = "text-cinder hover:text-red-400 px-1 cursor-pointer";
+        delBtn.title = "Remove pin";
         delBtn.textContent = "×";
         delBtn.onclick = () => unpinColor(hex);
 
@@ -2459,25 +2530,25 @@
     }
 
     function renderDrawerContents() {
-      document.getElementById("drawer-active-count").textContent = `${String(state.slots.length).padStart(2, "0")} SLOTS`;
-      document.getElementById("drawer-pinned-count").textContent = `${String(state.pinned.length).padStart(2, "0")} INGOTS`;
+      document.getElementById("drawer-active-count").textContent = `${state.slots.length} colors`;
+      document.getElementById("drawer-pinned-count").textContent = `${state.pinned.length} pinned`;
 
       const savedList = document.getElementById("saved-palettes-list");
       savedList.innerHTML = "";
 
       if (state.savedLibraries.length === 0) {
-        savedList.innerHTML = `<div class="text-slag text-[11px] font-mono kiln-recess p-3 text-center">VAULT EMPTY — STAMP YOUR CRUCIBLE OR INGOT RACK ABOVE.</div>`;
+        savedList.innerHTML = `<div class="text-cinder text-[11px] carved-recess p-3 text-center">No saved palettes yet.</div>`;
       } else {
         state.savedLibraries.forEach(item => {
           const card = document.createElement("div");
-          card.className = "kiln-recess p-3 space-y-2";
+          card.className = "carved-recess p-3 space-y-2 rounded-sm";
 
           const top = document.createElement("div");
           top.className = "flex items-center justify-between gap-2";
           top.innerHTML = `
             <div class="min-w-0">
-              <div class="font-display font-bold text-ash uppercase truncate">${item.name}</div>
-              <div class="text-[10px] font-mono text-slag uppercase">${item.type === "pinned" ? "INGOT RACK" : "CRUCIBLE"} // ${item.colors.length} UNITS</div>
+              <div class="font-semibold text-ash truncate">${item.name}</div>
+              <div class="text-[10px] font-mono text-cinder">${item.colors.length} colors</div>
             </div>
           `;
 
@@ -2485,26 +2556,27 @@
           actions.className = "flex items-center gap-1 shrink-0";
 
           const loadActiveBtn = document.createElement("button");
-          loadActiveBtn.className = "mech-btn px-2 py-1 text-[10px] font-mono font-bold text-amberheat uppercase";
-          loadActiveBtn.textContent = "SMELT";
+          loadActiveBtn.className = "forge-btn px-2 py-1 text-[11px] text-whitehot rounded-sm";
+          loadActiveBtn.textContent = "Load";
           loadActiveBtn.onclick = () => {
             loadColorsIntoActive(item.colors);
             closeDrawer();
-            showToast(`LOADED "${item.name}"`);
+            showToast(`Loaded "${item.name}"`);
           };
 
           const loadPinsBtn = document.createElement("button");
-          loadPinsBtn.className = "mech-btn px-2 py-1 text-[10px] font-mono uppercase";
-          loadPinsBtn.textContent = "-> RACK";
+          loadPinsBtn.className = "forge-btn px-2 py-1 text-[11px] rounded-sm";
+          loadPinsBtn.textContent = "Pin All";
           loadPinsBtn.onclick = () => {
             state.pinned = [...new Set([...state.pinned, ...item.colors])];
             savePinnedToStorage();
+            document.getElementById("pinned-tray").classList.remove("hidden");
             renderPinnedDock();
-            showToast(`CAST ${item.colors.length} INGOTS TO RACK`);
+            showToast(`Pinned ${item.colors.length} colors`);
           };
 
           const delBtn = document.createElement("button");
-          delBtn.className = "mech-btn px-2 py-1 text-[10px] font-mono text-slag hover:text-red-400";
+          delBtn.className = "forge-btn px-2 py-1 text-[11px] text-cinder hover:text-red-400 rounded-sm";
           delBtn.textContent = "✕";
           delBtn.onclick = () => {
             state.savedLibraries = state.savedLibraries.filter(x => x.id !== item.id);
@@ -2518,7 +2590,7 @@
           top.appendChild(actions);
 
           const strip = document.createElement("div");
-          strip.className = "h-5 flex border-2 border-iron";
+          strip.className = "h-5 flex overflow-hidden rounded-sm";
           item.colors.forEach(c => {
             const seg = document.createElement("div");
             seg.style.backgroundColor = c;
@@ -2536,18 +2608,18 @@
       starterList.innerHTML = "";
       STARTER_PALETTES.forEach(sp => {
         const card = document.createElement("div");
-        card.className = "kiln-recess p-3 space-y-2 hover:border-molten transition cursor-pointer";
+        card.className = "carved-recess p-3 space-y-2 hover:border-magma transition cursor-pointer rounded-sm";
         card.onclick = () => {
           loadColorsIntoActive(sp.colors);
           closeDrawer();
-          showToast(`LOADED "${sp.name}"`);
+          showToast(`Loaded "${sp.name}"`);
         };
         card.innerHTML = `
           <div class="flex items-center justify-between">
-            <span class="font-display font-bold text-ash uppercase">${sp.name}</span>
-            <span class="text-[10px] font-mono text-amberheat">[LOAD]</span>
+            <span class="font-medium text-ash">${sp.name}</span>
+            <span class="text-[11px] font-mono text-amber-300">Load</span>
           </div>
-          <div class="h-4 flex border-2 border-iron">
+          <div class="h-4 flex overflow-hidden rounded-sm">
             ${sp.colors.map(c => `<div style="background:${c}" class="flex-1 h-full"></div>`).join("")}
           </div>
         `;
@@ -2580,7 +2652,7 @@
 
     /**
      * =========================================================================
-     * 17. MASTER RENDER & AUXILIARY MANIFOLD CONTROLS
+     * 18. VIEW SWITCHER & FLOATING CONTEXT CONTROLS
      * =========================================================================
      */
     function renderViewSwitcher() {
@@ -2589,15 +2661,16 @@
       VIEW_MODES.forEach(mode => {
         const btn = document.createElement("button");
         const active = state.view === mode.id;
-        btn.className = `mech-btn px-2.5 py-1 text-[11px] font-mono font-bold uppercase whitespace-nowrap ${
-          active ? "mech-switch-active" : "text-slag"
+        btn.className = `forge-btn px-2.5 py-1 text-xs font-medium rounded-sm whitespace-nowrap ${
+          active ? "forge-btn-active" : "text-cinder"
         }`;
-        btn.textContent = mode.code;
+        btn.textContent = mode.label;
         btn.onclick = () => {
           state.view = mode.id;
           renderViewSwitcher();
           renderAuxControls();
           renderStage();
+          renderBottomPaletteDock();
         };
         nav.appendChild(btn);
       });
@@ -2608,21 +2681,87 @@
       aux.innerHTML = "";
 
       if (state.view === "mosaic") {
-        const btn = document.createElement("button");
-        btn.className = "mech-btn px-2.5 py-1 text-[10px] font-mono font-bold text-amberheat uppercase";
-        btn.textContent = "RE-CUT MOSAIC";
-        btn.onclick = () => { state.mosaicSeed += 13; renderStage(); };
-        aux.appendChild(btn);
+        aux.classList.remove("hidden");
+
+        // Density Slider (80..500 shards)
+        const densWrap = document.createElement("div");
+        densWrap.className = "flex items-center gap-2";
+        densWrap.innerHTML = `
+          <span class="text-cinder">Shards:</span>
+          <input type="range" min="80" max="500" step="20" value="${state.mosaicCount}" class="forge-slider w-24" id="mosaic-density-slider" />
+          <span class="font-mono text-whitehot w-8" id="mosaic-density-val">${state.mosaicCount}</span>
+        `;
+        aux.appendChild(densWrap);
+
+        // Cluster Slider (0..100%)
+        const clustWrap = document.createElement("div");
+        clustWrap.className = "flex items-center gap-2";
+        clustWrap.innerHTML = `
+          <span class="text-cinder">Cluster:</span>
+          <input type="range" min="0" max="90" step="10" value="${state.mosaicCluster}" class="forge-slider w-20" id="mosaic-cluster-slider" />
+        `;
+        aux.appendChild(clustWrap);
+
+        // Re-roll Pattern Button
+        const rerollBtn = document.createElement("button");
+        rerollBtn.className = "forge-btn px-2.5 py-1 text-xs rounded-sm text-whitehot";
+        rerollBtn.textContent = "Re-roll Pattern";
+        rerollBtn.onclick = () => { state.mosaicSeed += 17; renderStage(); };
+        aux.appendChild(rerollBtn);
+
+        setTimeout(() => {
+          const dSlider = document.getElementById("mosaic-density-slider");
+          const cSlider = document.getElementById("mosaic-cluster-slider");
+          if (dSlider) {
+            dSlider.addEventListener("input", e => {
+              state.mosaicCount = parseInt(e.target.value, 10);
+              document.getElementById("mosaic-density-val").textContent = state.mosaicCount;
+              renderStage();
+            });
+          }
+          if (cSlider) {
+            cSlider.addEventListener("input", e => {
+              state.mosaicCluster = parseInt(e.target.value, 10);
+              renderStage();
+            });
+          }
+        }, 0);
+
       } else if (state.view === "dots") {
+        aux.classList.remove("hidden");
+
+        // Dot Count Slider (150..800)
+        const countWrap = document.createElement("div");
+        countWrap.className = "flex items-center gap-2";
+        countWrap.innerHTML = `
+          <span class="text-cinder">Dots:</span>
+          <input type="range" min="150" max="800" step="50" value="${state.dotsCount}" class="forge-slider w-24" id="dots-count-slider" />
+          <span class="font-mono text-whitehot w-8" id="dots-count-val">${state.dotsCount}</span>
+        `;
+        aux.appendChild(countWrap);
+
+        // Size Variance Toggle
+        const sizeBtn = document.createElement("button");
+        sizeBtn.className = `forge-btn px-2 py-1 text-xs rounded-sm ${state.dotsVariedSize ? "forge-btn-active" : ""}`;
+        sizeBtn.textContent = state.dotsVariedSize ? "Size: Varied" : "Size: Uniform";
+        sizeBtn.onclick = () => {
+          state.dotsVariedSize = !state.dotsVariedSize;
+          renderAuxControls();
+          renderStage();
+        };
+        aux.appendChild(sizeBtn);
+
+        // Backdrop Selector
         const backdrops = [
-          { id: "soot", label: "BG:SOOT" },
-          { id: "iron", label: "BG:IRON" },
-          { id: "ash", label: "BG:ASH" }
+          { id: "dark", label: "Dark" },
+          { id: "gray", label: "Gray" },
+          { id: "light", label: "Light" },
+          { id: "slot1", label: "Color 1" }
         ];
         backdrops.forEach(b => {
           const btn = document.createElement("button");
-          btn.className = `mech-btn px-2 py-1 text-[10px] font-mono uppercase ${
-            state.dotsBackdrop === b.id ? "mech-switch-active" : "text-slag"
+          btn.className = `forge-btn px-2 py-1 text-xs rounded-sm ${
+            state.dotsBackdrop === b.id ? "forge-btn-active" : "text-cinder"
           }`;
           btn.textContent = b.label;
           btn.onclick = () => { state.dotsBackdrop = b.id; renderAuxControls(); renderStage(); };
@@ -2630,41 +2769,61 @@
         });
 
         const rescatter = document.createElement("button");
-        rescatter.className = "mech-btn px-2.5 py-1 text-[10px] font-mono font-bold text-amberheat uppercase";
-        rescatter.textContent = "RE-SCATTER";
-        rescatter.onclick = () => { state.dotsSeed += 19; renderStage(); };
+        rescatter.className = "forge-btn px-2.5 py-1 text-xs rounded-sm text-whitehot";
+        rescatter.textContent = "Re-scatter";
+        rescatter.onclick = () => { state.dotsSeed += 23; renderStage(); };
         aux.appendChild(rescatter);
+
+        setTimeout(() => {
+          const s = document.getElementById("dots-count-slider");
+          if (s) {
+            s.addEventListener("input", e => {
+              state.dotsCount = parseInt(e.target.value, 10);
+              document.getElementById("dots-count-val").textContent = state.dotsCount;
+              renderStage();
+            });
+          }
+        }, 0);
+
+      } else if (state.view === "ui") {
+        aux.classList.remove("hidden");
+        const rotBtn = document.createElement("button");
+        rotBtn.className = "forge-btn px-3 py-1 text-xs rounded-sm text-whitehot";
+        rotBtn.textContent = "Rotate Role Mapping";
+        rotBtn.onclick = () => rotateSlots();
+        aux.appendChild(rotBtn);
+
       } else if (state.view === "creature") {
+        aux.classList.remove("hidden");
         const archetypes = [
-          { id: "sentinel", label: "SENTINEL" },
-          { id: "walker", label: "WALKER" },
-          { id: "valkyrie", label: "VALKYRIE" }
+          { id: "titan", label: "Titan" },
+          { id: "wraith", label: "Wraith" },
+          { id: "construct", label: "Construct" }
         ];
         archetypes.forEach(a => {
           const btn = document.createElement("button");
-          btn.className = `mech-btn px-2 py-1 text-[10px] font-mono uppercase ${
-            state.creatureArchetype === a.id ? "mech-switch-active" : "text-slag"
+          btn.className = `forge-btn px-2.5 py-1 text-xs rounded-sm ${
+            state.creatureArchetype === a.id ? "forge-btn-active" : "text-cinder"
           }`;
           btn.textContent = a.label;
           btn.onclick = () => { state.creatureArchetype = a.id; renderAuxControls(); renderStage(); };
           aux.appendChild(btn);
         });
+
+        const rotBtn = document.createElement("button");
+        rotBtn.className = "forge-btn px-2.5 py-1 text-xs rounded-sm text-whitehot";
+        rotBtn.textContent = "Rotate Zones";
+        rotBtn.onclick = () => rotateSlots();
+        aux.appendChild(rotBtn);
+
+      } else {
+        aux.classList.add("hidden");
       }
     }
 
     function renderStage() {
       const stage = document.getElementById("stage");
       stage.innerHTML = "";
-
-      const activeModeObj = VIEW_MODES.find(m => m.id === state.view);
-      document.getElementById("status-readout").textContent =
-        `MODE: ${activeModeObj ? activeModeObj.code : "01.GRID"} // PERCEPTUAL GUARD ΔE ≥ ${getEffectiveThreshold(state.slots.length).toFixed(1)}`;
-
-      if (state.cvd === "none") {
-        stage.style.filter = "none";
-      } else {
-        stage.style.filter = `url(#cvd-${state.cvd})`;
-      }
 
       switch (state.view) {
         case "grid": renderGridView(stage); break;
@@ -2678,110 +2837,143 @@
     }
 
     function renderAll() {
-      document.getElementById("count-display").textContent = String(state.slots.length).padStart(2, "0");
-      document.getElementById("btn-count-dec").disabled = state.slots.length <= 1;
+      document.getElementById("count-display").textContent = String(state.slots.length);
+      document.getElementById("btn-count-dec").disabled = state.slots.length <= 2;
       document.getElementById("btn-count-inc").disabled = state.slots.length >= 24;
+
+      // Sync Seamless / Framed button active states
+      document.getElementById("btn-mode-seamless").classList.toggle("forge-btn-active", state.seamless);
+      document.getElementById("btn-mode-framed").classList.toggle("forge-btn-active", !state.seamless);
+
+      // Sync Labels button text
+      const labelMap = { hover: "Hover", always: "Always", off: "Off" };
+      document.getElementById("labels-state-text").textContent = labelMap[state.labelMode];
+
       renderPinnedDock();
       renderAuxControls();
       renderStage();
+      renderBottomPaletteDock();
     }
 
     function initApp() {
+      forgeFx.init();
       loadSavedFromStorage();
 
-      // Initialize with the 7-slot Dwarven Smelter theme unlocked and ready
-      const initialHexes = ["#110F0E", "#1E1916", "#EAE6E1", "#EA580C", "#28211D", "#38302B", "#F59E0B"];
-      state.slots = initialHexes.map(hex => ({
+      // Start with 6 full-spectrum generated colors
+      state.slots = Array.from({ length: 6 }, () => ({
         id: nextSlotId(),
-        hex,
+        hex: "#000000",
         locked: false
       }));
-      pushHistory();
+      generatePalette(true, false);
 
       renderViewSwitcher();
       bindPopoverEvents();
       renderAll();
 
-      // Primary Gantry Controls
-      document.getElementById("btn-generate").addEventListener("click", () => generatePalette(true));
+      // Top Bar Controls
+      document.getElementById("btn-generate").addEventListener("click", () => generatePalette(true, true));
       document.getElementById("btn-undo").addEventListener("click", undo);
       document.getElementById("btn-redo").addEventListener("click", redo);
       document.getElementById("btn-count-dec").addEventListener("click", () => setPaletteCount(state.slots.length - 1));
       document.getElementById("btn-count-inc").addEventListener("click", () => setPaletteCount(state.slots.length + 1));
 
+      document.getElementById("btn-mode-seamless").addEventListener("click", () => {
+        state.seamless = true;
+        renderAll();
+      });
+      document.getElementById("btn-mode-framed").addEventListener("click", () => {
+        state.seamless = false;
+        renderAll();
+      });
+
+      document.getElementById("btn-toggle-labels").addEventListener("click", () => {
+        const order = ["hover", "always", "off"];
+        state.labelMode = order[(order.indexOf(state.labelMode) + 1) % order.length];
+        renderAll();
+      });
+
       document.getElementById("guard-select").addEventListener("change", e => {
-        state.baseDeltaE = parseInt(e.target.value, 10) || 22;
-        renderStage();
+        state.baseDeltaE = parseInt(e.target.value, 10);
       });
 
-      document.getElementById("cvd-select").addEventListener("change", e => {
-        state.cvd = e.target.value;
-        renderStage();
+      document.getElementById("btn-toggle-pins").addEventListener("click", () => {
+        document.getElementById("pinned-tray").classList.toggle("hidden");
       });
 
-      // Ingot Rack Actions
+      // Pinned Tray Actions
+      document.getElementById("btn-pin-all-active").addEventListener("click", () => {
+        state.slots.forEach(s => {
+          if (!state.pinned.includes(s.hex)) state.pinned.push(s.hex);
+        });
+        savePinnedToStorage();
+        renderPinnedDock();
+        showToast("Pinned current palette");
+      });
+
       document.getElementById("btn-load-pinned-to-active").addEventListener("click", () => {
         if (state.pinned.length === 0) return;
         loadColorsIntoActive(state.pinned);
-        showToast("SMELTED INGOT RACK INTO ACTIVE CRUCIBLE");
+        showToast("Loaded pinned colors as active palette");
       });
 
       document.getElementById("btn-clear-pinned").addEventListener("click", () => {
         state.pinned = [];
         savePinnedToStorage();
         renderPinnedDock();
-        showToast("PURGED INGOT RACK");
+        showToast("Cleared pinned colors");
       });
 
-      // Vault Drawer Controls
+      // Save / Load Drawer
       document.getElementById("btn-open-drawer").addEventListener("click", openDrawer);
       document.getElementById("btn-close-drawer").addEventListener("click", closeDrawer);
       document.getElementById("drawer-backdrop").addEventListener("click", closeDrawer);
 
       document.getElementById("btn-save-active").addEventListener("click", () => {
         const input = document.getElementById("save-active-name");
-        const name = input.value.trim() || `CRUCIBLE (${state.slots.length} SLOTS)`;
+        const name = input.value.trim() || `Palette (${state.slots.length} colors)`;
         state.savedLibraries.unshift({
           id: Date.now().toString(),
           name,
           type: "palette",
-          colors: state.slots.map(s => s.hex),
-          createdAt: new Date().toISOString()
+          colors: state.slots.map(s => s.hex)
         });
         input.value = "";
         saveLibraryToStorage();
         renderDrawerContents();
-        showToast(`STAMPED "${name}" TO VAULT`);
+        showToast(`Saved "${name}"`);
       });
 
       document.getElementById("btn-save-pinned").addEventListener("click", () => {
         if (state.pinned.length === 0) {
-          showToast("CAST AT LEAST 1 INGOT TO RACK FIRST", "#EA580C");
+          showToast("Pin at least 1 color first");
           return;
         }
         const input = document.getElementById("save-pinned-name");
-        const name = input.value.trim() || `INGOT RACK (${state.pinned.length})`;
+        const name = input.value.trim() || `Pinned (${state.pinned.length} colors)`;
         state.savedLibraries.unshift({
           id: Date.now().toString(),
           name,
           type: "pinned",
-          colors: [...state.pinned],
-          createdAt: new Date().toISOString()
+          colors: [...state.pinned]
         });
         input.value = "";
         saveLibraryToStorage();
         renderDrawerContents();
-        showToast(`SAVED "${name}" TO VAULT`);
+        showToast(`Saved "${name}"`);
       });
 
       document.getElementById("btn-export-css").addEventListener("click", () => {
-        const css = `:root {\n${state.slots.map((s, i) => `  --ingot-${String(i + 1).padStart(2, "0")}: ${s.hex}; /* ${getClosestColorName(s.hex).label} */`).join("\n")}\n}`;
-        copyTextToClipboard(css, "COPIED CSS :ROOT VARIABLES");
+        const css = `:root {\n${state.slots.map((s, i) => {
+          const nInfo = getClosestColorName(s.hex);
+          return `  --color-${i + 1}: ${s.hex};${nInfo.label ? ` /* ${nInfo.label} */` : ""}`;
+        }).join("\n")}\n}`;
+        copyTextToClipboard(css, "Copied CSS variables");
       });
 
       document.getElementById("btn-export-json").addEventListener("click", () => {
         const json = JSON.stringify(state.slots.map(s => s.hex));
-        copyTextToClipboard(json, "COPIED JSON MANIFEST");
+        copyTextToClipboard(json, "Copied HEX JSON");
       });
 
       document.getElementById("btn-import-json").addEventListener("click", () => {
@@ -2789,13 +2981,13 @@
         if (!raw) return;
         const matches = raw.match(/#?[0-9A-Fa-f]{6}\b/g);
         if (!matches || matches.length === 0) {
-          showToast("NO VALID HEX CODES FOUND", "#EA580C");
+          showToast("No valid HEX codes found");
           return;
         }
         loadColorsIntoActive(matches);
         document.getElementById("import-json-input").value = "";
         closeDrawer();
-        showToast(`LOADED ${Math.min(24, matches.length)} UNITS INTO CRUCIBLE`);
+        showToast(`Imported ${Math.min(24, matches.length)} colors`);
       });
 
       // Keyboard Shortcuts
@@ -2810,17 +3002,19 @@
           else undo();
           return;
         }
-
         if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
           if (isTyping) return;
           e.preventDefault();
           redo();
           return;
         }
-
         if (e.code === "Space" && !isTyping) {
           e.preventDefault();
-          generatePalette(true);
+          generatePalette(true, true);
+        } else if (e.key.toLowerCase() === "h" && !isTyping) {
+          const order = ["hover", "always", "off"];
+          state.labelMode = order[(order.indexOf(state.labelMode) + 1) % order.length];
+          renderAll();
         } else if (e.key === "Escape") {
           closePopover();
           closeDrawer();
@@ -2831,10 +3025,10 @@
       window.addEventListener("resize", () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
-          if (state.view === "grid" || state.view === "dots") {
+          if (["grid", "mosaic", "dots"].includes(state.view)) {
             renderStage();
           }
-        }, 120);
+        }, 100);
       });
     }
 
