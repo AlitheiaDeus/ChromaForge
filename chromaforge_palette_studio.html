@@ -294,6 +294,19 @@
 
     <!-- Right: Similarity Guard + Pinned Tray Toggle + Save / Load -->
     <div class="flex flex-wrap items-center gap-2">
+      <!-- Harmony / Role Mode -->
+      <div class="carved-recess px-2 py-1 rounded-sm flex items-center gap-1.5 text-xs" title="Select color generation mode">
+        <span class="text-cinder hidden md:inline">Mode:</span>
+        <select id="harmony-select" class="bg-transparent text-ash font-mono text-xs focus:outline-none cursor-pointer">
+          <option value="random" selected class="bg-slab text-ash">Random</option>
+          <option value="ui-rand" class="bg-slab text-ash">UI Rand</option>
+          <option value="ui-dark" class="bg-slab text-ash">UI Dark</option>
+          <option value="ui-light" class="bg-slab text-ash">UI Light</option>
+          <option value="analogous" class="bg-slab text-ash">Analogous</option>
+          <option value="triadic" class="bg-slab text-ash">Triadic</option>
+        </select>
+      </div>
+
       <!-- Perceptual Similarity Guard -->
       <div class="carved-recess px-2 py-1 rounded-sm flex items-center gap-1.5 text-xs" title="Prevent auto-generating colors that are too similar">
         <span class="text-cinder hidden md:inline">Guard:</span>
@@ -745,6 +758,90 @@
       return 0.2126 * srgb[0] + 0.7152 * srgb[1] + 0.0722 * srgb[2];
     }
 
+    function contrastRatio(hex1, hex2) {
+      const l1 = getRelativeLuminance(hex1);
+      const l2 = getRelativeLuminance(hex2);
+      return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+    }
+
+    function oklchToRgb(L, C, H) {
+      const rad = H * Math.PI / 180;
+      const a = C * Math.cos(rad);
+      const b = C * Math.sin(rad);
+
+      const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
+      const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
+      const s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+
+      const l = l_ * l_ * l_;
+      const m = m_ * m_ * m_;
+      const s = s_ * s_ * s_;
+
+      const lr = +4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s;
+      const lg = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s;
+      const lb = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s;
+
+      const compand = v => {
+        const c = v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(Math.max(0, v), 1 / 2.4) - 0.055;
+        return Math.round(Math.max(0, Math.min(1, c)) * 255);
+      };
+
+      return { r: compand(lr), g: compand(lg), b: compand(lb) };
+    }
+
+    function oklchToHex(L, C, H) {
+      const { r, g, b } = oklchToRgb(L, C, H);
+      return rgbToHex(r, g, b);
+    }
+
+    function rgbToOklch(r, g, b) {
+      const linearize = v => {
+        v /= 255;
+        return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+      };
+      const lr = linearize(r);
+      const lg = linearize(g);
+      const lb = linearize(b);
+
+      const l = 0.4122214708 * lr + 0.5363325363 * lg + 0.0514459929 * lb;
+      const m = 0.2119034982 * lr + 0.6806995451 * lg + 0.1073969566 * lb;
+      const s = 0.0883024619 * lr + 0.2817188376 * lg + 0.6299787005 * lb;
+
+      const l_ = Math.cbrt(l);
+      const m_ = Math.cbrt(m);
+      const s_ = Math.cbrt(s);
+
+      const L = 0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_;
+      const a = 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_;
+      const okB = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_;
+
+      return {
+        L,
+        C: Math.hypot(a, okB),
+        H: ((Math.atan2(okB, a) * 180 / Math.PI) + 360) % 360
+      };
+    }
+
+    function hexToOklch(hex) {
+      const { r, g, b } = hexToRgb(hex);
+      return rgbToOklch(r, g, b);
+    }
+
+    function enforceOklchContrast(oklch, againstHex, minRatio, nudgeLighter) {
+      const cur = { L: oklch.L, C: oklch.C, H: oklch.H };
+      for (let step = 0; step < 30; step++) {
+        const hex = oklchToHex(cur.L, cur.C, cur.H);
+        if (contrastRatio(hex, againstHex) >= minRatio) {
+          return hex;
+        }
+        cur.L = nudgeLighter ? Math.min(0.97, cur.L + 0.02) : Math.max(0.08, cur.L - 0.02);
+        if (cur.L > 0.85 || cur.L < 0.20) {
+          cur.C *= 0.94;
+        }
+      }
+      return oklchToHex(cur.L, cur.C, cur.H);
+    }
+
     function getContrastText(hex) {
       return getRelativeLuminance(hex) > 0.34 ? "#110D0C" : "#F5F2EB";
     }
@@ -942,6 +1039,7 @@
       seamless: true, // Default: gapless & borderless
       labelMode: "hover", // 'hover' | 'always' | 'off'
       baseDeltaE: 20,
+      harmonyMode: "random",
       pinned: [],
       savedLibraries: [],
       history: [],
@@ -1023,6 +1121,95 @@
       return bestHex;
     }
 
+    function autoFitUiSlots(commitHistory = true) {
+      if (!state.slots.length) return;
+
+      const result = new Array(state.slots.length).fill(null);
+      const pool = [];
+      let totalLum = 0;
+
+      state.slots.forEach((slot, i) => {
+        const lum = getRelativeLuminance(slot.hex);
+        totalLum += lum;
+        if (slot.locked) {
+          result[i] = { ...slot };
+        } else {
+          pool.push({
+            slot: { ...slot },
+            lum,
+            oklch: hexToOklch(slot.hex)
+          });
+        }
+      });
+
+      const takeBest = scoreFn => {
+        if (pool.length === 0) return null;
+        let bestIdx = 0;
+        let bestScore = -Infinity;
+        for (let i = 0; i < pool.length; i++) {
+          const s = scoreFn(pool[i]);
+          if (s > bestScore) {
+            bestScore = s;
+            bestIdx = i;
+          }
+        }
+        return pool.splice(bestIdx, 1)[0].slot;
+      };
+
+      const fillSlot = (idx, scoreFn) => {
+        if (idx < result.length && result[idx] === null) {
+          result[idx] = takeBest(scoreFn);
+        }
+      };
+
+      const avgLum = totalLum / state.slots.length;
+      const isDark = avgLum < 0.42;
+
+      fillSlot(0, item => (isDark ? -item.lum : item.lum) * 2.5 - item.oklch.C * 3.0);
+      const bgHex = result[0] ? result[0].hex : (isDark ? "#121212" : "#F4F4F4");
+      const bgLum = getRelativeLuminance(bgHex);
+
+      fillSlot(4, item => -Math.abs(item.lum - (isDark ? bgLum + 0.045 : bgLum - 0.055)) * 4.0 - item.oklch.C * 2.5);
+      const panelHex = result[4] ? result[4].hex : bgHex;
+      const panelLum = getRelativeLuminance(panelHex);
+
+      fillSlot(1, item => -Math.abs(item.lum - (isDark ? bgLum + 0.03 : bgLum - 0.035)) * 4.0 - item.oklch.C * 2.0);
+      fillSlot(2, item => Math.min(contrastRatio(item.slot.hex, bgHex), contrastRatio(item.slot.hex, panelHex)) - item.oklch.C * 2.0);
+      const textLum = result[2] ? getRelativeLuminance(result[2].hex) : (isDark ? 0.9 : 0.1);
+
+      fillSlot(3, item => {
+        const h = item.oklch.H;
+        const isWarmRed = (h <= 48 || h >= 325) ? 2.5 : 0;
+        const cr = Math.min(contrastRatio(item.slot.hex, panelHex), 7);
+        return isWarmRed + item.oklch.C * 8.0 + cr * 0.4;
+      });
+
+      fillSlot(6, item => {
+        const cr = Math.min(contrastRatio(item.slot.hex, bgHex), 6);
+        return item.oklch.C * 9.0 + cr * 0.45;
+      });
+
+      fillSlot(5, item => -Math.abs(item.lum - (isDark ? panelLum + 0.06 : panelLum - 0.06)) * 4.0 - item.oklch.C * 1.5);
+
+      fillSlot(7, item => {
+        const targetLum = (panelLum + textLum) * 0.5;
+        const cr = contrastRatio(item.slot.hex, panelHex);
+        return (cr >= 2.2 ? 1.5 : 0) - Math.abs(item.lum - targetLum) * 4.0 - item.oklch.C * 1.5;
+      });
+
+      fillSlot(8, item => -Math.abs(item.lum - (isDark ? 0.24 : 0.76)) * 3.0 - item.oklch.C * 3.0);
+
+      for (let i = 9; i < result.length; i++) {
+        fillSlot(i, item => item.oklch.C);
+      }
+
+      state.slots = result;
+      if (commitHistory) {
+        pushHistory();
+        renderAll();
+      }
+    }
+
     function generatePalette(pushToHistory = true, triggerFx = true) {
       if (triggerFx) {
         const btn = document.getElementById("btn-generate");
@@ -1037,12 +1224,98 @@
         .filter(s => s.locked)
         .map(s => hexToLab(s.hex));
 
-      const nextSlots = state.slots.map(slot => {
-        if (slot.locked) return { ...slot };
-        const newHex = generateDistinctColor(acceptedLabs, threshold);
-        acceptedLabs.push(hexToLab(newHex));
-        return { ...slot, hex: newHex };
-      });
+      let nextSlots;
+      if (state.harmonyMode === "random" || state.harmonyMode === "ui-rand") {
+        nextSlots = state.slots.map(slot => {
+          if (slot.locked) return { ...slot };
+          const newHex = generateDistinctColor(acceptedLabs, threshold);
+          acceptedLabs.push(hexToLab(newHex));
+          return { ...slot, hex: newHex };
+        });
+        state.slots = nextSlots;
+        if (state.harmonyMode === "ui-rand") {
+          autoFitUiSlots(false);
+        }
+        if (pushToHistory) pushHistory();
+        renderAll();
+        return;
+      } else {
+        const firstLocked = state.slots.find(s => s.locked);
+        const baseH = firstLocked ? hexToOklch(firstLocked.hex).H : Math.random() * 360;
+
+        if (state.harmonyMode === "analogous" || state.harmonyMode === "triadic") {
+          nextSlots = state.slots.map((slot, i) => {
+            if (slot.locked) return { ...slot };
+            let chosenHex = null;
+            for (let attempt = 0; attempt < 36; attempt++) {
+              const H = state.harmonyMode === "analogous"
+                ? ((baseH + (Math.random() - 0.5) * 70) + 360) % 360
+                : ((baseH + (i % 3) * 120 + (Math.random() - 0.5) * 30) + 360) % 360;
+              const L = 0.22 + Math.random() * 0.64;
+              const C = state.harmonyMode === "analogous"
+                ? (0.06 + Math.random() * 0.16)
+                : (0.08 + Math.random() * 0.14);
+              const candidate = oklchToHex(L, C, H);
+              if (threshold === 0) {
+                chosenHex = candidate;
+                break;
+              }
+              const lab = hexToLab(candidate);
+              const tooClose = acceptedLabs.some(existing => deltaE(lab, existing) < threshold);
+              if (!tooClose) {
+                chosenHex = candidate;
+                break;
+              }
+              if (attempt === 35) chosenHex = candidate;
+            }
+            acceptedLabs.push(hexToLab(chosenHex));
+            return { ...slot, hex: chosenHex };
+          });
+        } else {
+          // ui-dark or ui-light
+          const isDark = state.harmonyMode === "ui-dark";
+          const accentH = (baseH + 145 + (Math.random() - 0.5) * 50 + 360) % 360;
+          const urgentH = 22 + Math.random() * 18;
+
+          const L0 = isDark ? (0.13 + Math.random() * 0.04) : (0.95 + Math.random() * 0.03);
+          const L4 = isDark ? (L0 + 0.06) : (L0 - 0.055);
+
+          const bgHex = (state.slots[0]?.locked)
+            ? state.slots[0].hex
+            : oklchToHex(L0, 0.012, baseH);
+          const panelHex = (state.slots[4]?.locked)
+            ? state.slots[4].hex
+            : oklchToHex(L4, 0.022, baseH);
+
+          nextSlots = state.slots.map((slot, i) => {
+            if (slot.locked) return { ...slot };
+            let hex;
+            if (i === 0) {
+              hex = bgHex;
+            } else if (i === 1) {
+              hex = oklchToHex(isDark ? (L0 + 0.045) : (L0 - 0.04), 0.018, baseH);
+            } else if (i === 2) {
+              hex = enforceOklchContrast({ L: isDark ? 0.92 : 0.16, C: 0.012, H: baseH }, panelHex || bgHex, 7.0, isDark);
+            } else if (i === 3) {
+              hex = enforceOklchContrast({ L: isDark ? 0.68 : 0.48, C: 0.19, H: urgentH }, panelHex || bgHex, 4.5, isDark);
+            } else if (i === 4) {
+              hex = panelHex;
+            } else if (i === 5) {
+              hex = oklchToHex(isDark ? (L4 + 0.06) : (L4 - 0.06), 0.03, baseH);
+            } else if (i === 6) {
+              hex = enforceOklchContrast({ L: isDark ? 0.66 : 0.52, C: 0.18, H: accentH }, bgHex, 3.5, isDark);
+            } else if (i === 7) {
+              hex = enforceOklchContrast({ L: isDark ? 0.66 : 0.44, C: 0.02, H: baseH }, panelHex || bgHex, 4.5, isDark);
+            } else if (i === 8) {
+              hex = oklchToHex(isDark ? 0.32 : 0.78, 0.025, baseH);
+            } else {
+              const extraH = (accentH + (i - 8) * 55) % 360;
+              hex = enforceOklchContrast({ L: isDark ? 0.68 : 0.50, C: 0.16, H: extraH }, panelHex || bgHex, 4.5, isDark);
+            }
+            return { ...slot, hex };
+          });
+        }
+      }
 
       state.slots = nextSlots;
       if (pushToHistory) pushHistory();
@@ -1788,7 +2061,18 @@
       const accent2 = slots[9]?.hex || button;
 
       const wrapper = document.createElement("div");
-      wrapper.className = "w-full h-full overflow-y-auto p-3 sm:p-6 pt-14 flex items-center justify-center";
+      wrapper.className = "w-full h-full overflow-y-auto p-3 sm:p-6 pt-14 flex flex-col items-center justify-center gap-3 relative";
+
+      const toolbar = document.createElement("div");
+      toolbar.className = "w-full max-w-5xl flex justify-end";
+      const autoFitBtn = document.createElement("button");
+      autoFitBtn.id = "btn-auto-fit-roles";
+      autoFitBtn.className = "forge-btn px-3 py-1.5 text-xs font-mono rounded-sm flex items-center gap-1.5";
+      autoFitBtn.title = "Sort unlocked palette slots into optimal UI roles";
+      autoFitBtn.textContent = "Auto-Fit Roles";
+      autoFitBtn.addEventListener("click", () => autoFitUiSlots(true));
+      toolbar.appendChild(autoFitBtn);
+      wrapper.appendChild(toolbar);
 
       const mockup = document.createElement("div");
       mockup.style.backgroundColor = bg;
@@ -2873,6 +3157,10 @@
 
       // Top Bar Controls
       document.getElementById("btn-generate").addEventListener("click", () => generatePalette(true, true));
+      document.getElementById("harmony-select").addEventListener("change", (e) => {
+        state.harmonyMode = e.target.value;
+        generatePalette(true, true);
+      });
       document.getElementById("btn-undo").addEventListener("click", undo);
       document.getElementById("btn-redo").addEventListener("click", redo);
       document.getElementById("btn-count-dec").addEventListener("click", () => setPaletteCount(state.slots.length - 1));
@@ -2964,9 +3252,17 @@
       });
 
       document.getElementById("btn-export-css").addEventListener("click", () => {
+        const uiVars = [
+          "--bg", "--bg-accent", "--text-plain", "--text-urgent", "--panel",
+          "--hover", "--button", "--text-muted", "--border", "--accent-2"
+        ];
+        const isUiMode = state.harmonyMode === "ui-dark" || state.harmonyMode === "ui-light";
         const css = `:root {\n${state.slots.map((s, i) => {
           const nInfo = getClosestColorName(s.hex);
-          return `  --color-${i + 1}: ${s.hex};${nInfo.label ? ` /* ${nInfo.label} */` : ""}`;
+          const varName = isUiMode
+            ? (i < uiVars.length ? uiVars[i] : `--accent-${i - 7}`)
+            : `--color-${i + 1}`;
+          return `  ${varName}: ${s.hex};${nInfo.label ? ` /* ${nInfo.label} */` : ""}`;
         }).join("\n")}\n}`;
         copyTextToClipboard(css, "Copied CSS variables");
       });
